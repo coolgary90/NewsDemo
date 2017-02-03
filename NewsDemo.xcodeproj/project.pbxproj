@@ -16,6 +16,9 @@
 		E75C64AB1E44A90C003C6245 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75C64A91E44A90C003C6245 /* LaunchScreen.storyboard */; };
 		E75C64B61E44A90D003C6245 /* NewsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64B51E44A90D003C6245 /* NewsDemoTests.m */; };
 		E75C64C11E44A90D003C6245 /* NewsDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64C01E44A90D003C6245 /* NewsDemoUITests.m */; };
+		E75C64D61E44AE97003C6245 /* NDNewsSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64D51E44AE97003C6245 /* NDNewsSources.m */; };
+		E75C64D71E44AE97003C6245 /* NDNewsSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64D51E44AE97003C6245 /* NDNewsSources.m */; };
+		E75C64D81E44AE97003C6245 /* NDNewsSources.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64D51E44AE97003C6245 /* NDNewsSources.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,8 @@
 		E75C64BC1E44A90D003C6245 /* NewsDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75C64C01E44A90D003C6245 /* NewsDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsDemoUITests.m; sourceTree = "<group>"; };
 		E75C64C21E44A90D003C6245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E75C64D41E44AE97003C6245 /* NDNewsSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsSources.h; sourceTree = "<group>"; };
+		E75C64D51E44AE97003C6245 /* NDNewsSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsSources.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,9 @@
 		E75C648C1E44A90C003C6245 = {
 			isa = PBXGroup;
 			children = (
+				E75C64D41E44AE97003C6245 /* NDNewsSources.h */,
+				E75C64D51E44AE97003C6245 /* NDNewsSources.m */,
+				E75C64D31E44AE6E003C6245 /* New Group */,
 				E75C64971E44A90C003C6245 /* NewsDemo */,
 				E75C64B41E44A90C003C6245 /* NewsDemoTests */,
 				E75C64BF1E44A90D003C6245 /* NewsDemoUITests */,
@@ -141,6 +149,13 @@
 				E75C64C21E44A90D003C6245 /* Info.plist */,
 			);
 			path = NewsDemoUITests;
+			sourceTree = "<group>";
+		};
+		E75C64D31E44AE6E003C6245 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +293,7 @@
 			files = (
 				E75C64A01E44A90C003C6245 /* ViewController.m in Sources */,
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
+				E75C64D61E44AE97003C6245 /* NDNewsSources.m in Sources */,
 				E75C649A1E44A90C003C6245 /* main.m in Sources */,
 				E75C64A61E44A90C003C6245 /* NewsDemo.xcdatamodeld in Sources */,
 			);
@@ -288,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E75C64B61E44A90D003C6245 /* NewsDemoTests.m in Sources */,
+				E75C64D71E44AE97003C6245 /* NDNewsSources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E75C64C11E44A90D003C6245 /* NewsDemoUITests.m in Sources */,
+				E75C64D81E44AE97003C6245 /* NDNewsSources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +529,7 @@
 				E75C64C71E44A90D003C6245 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E75C64C81E44A90D003C6245 /* Build configuration list for PBXNativeTarget "NewsDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +538,7 @@
 				E75C64CA1E44A90D003C6245 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E75C64CB1E44A90D003C6245 /* Build configuration list for PBXNativeTarget "NewsDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +547,7 @@
 				E75C64CD1E44A90D003C6245 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
