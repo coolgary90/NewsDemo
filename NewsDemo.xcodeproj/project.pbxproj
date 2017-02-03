@@ -88,8 +88,6 @@
 		E75C648C1E44A90C003C6245 = {
 			isa = PBXGroup;
 			children = (
-				E75C64D41E44AE97003C6245 /* NDNewsSources.h */,
-				E75C64D51E44AE97003C6245 /* NDNewsSources.m */,
 				E75C64D31E44AE6E003C6245 /* New Group */,
 				E75C64971E44A90C003C6245 /* NewsDemo */,
 				E75C64B41E44A90C003C6245 /* NewsDemoTests */,
@@ -154,6 +152,8 @@
 		E75C64D31E44AE6E003C6245 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				E75C64D41E44AE97003C6245 /* NDNewsSources.h */,
+				E75C64D51E44AE97003C6245 /* NDNewsSources.m */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
