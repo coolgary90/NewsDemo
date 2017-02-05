@@ -68,6 +68,8 @@
             
             self.tableViewNewsList.delegate=self;
             self.tableViewNewsList.dataSource=self;
+            self.tableViewNewsList.rowHeight=UITableViewAutomaticDimension;
+            
             [self.tableViewNewsList reloadData];
             
         }
@@ -130,6 +132,8 @@
          }
      }];
     cell.newsTitle.numberOfLines=0;
+    [cell.newsTitle adjustsFontSizeToFitWidth];
+    
     cell.newsDescription.numberOfLines=0;
 
     return cell;
@@ -139,6 +143,10 @@
 
     
     
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
 }
 /*
 #pragma mark - Navigation
