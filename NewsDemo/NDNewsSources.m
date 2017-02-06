@@ -6,6 +6,8 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "UIImageView+WebCache.h"
+
+#import "NDWebServices.h"
 #import "UIButton+WebCache.h"
 #import "NDNewsList.h"
 #import "NDNewsSources.h"
@@ -16,6 +18,10 @@
     NSMutableArray* newsSourcesNames;
     NSMutableArray* newsSourcesImage;
     NSMutableArray* newSourcesid;
+    NSMutableArray* newSourcesCategories;
+    NSMutableArray* newSourcesUniqueCategories;
+
+    UIActivityIndicatorView* activityIndicator;
     
 
     
@@ -32,53 +38,56 @@
     newsSourcesImage=[[NSMutableArray alloc]init];
     newsSourcesNames=[[NSMutableArray alloc]init];
     newSourcesid = [[NSMutableArray alloc]init];
+    newSourcesCategories =[[NSMutableArray alloc]init];
+    newSourcesUniqueCategories = [[NSMutableArray alloc]init];
     
-
+    jsonResponse = [[NSDictionary alloc]init];
     
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.center=self.view.center;
+    activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
+    activityIndicator.color = [UIColor blueColor];
+    [self.view addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+    NDWebServices* sharedObject = [NDWebServices sharedInstance];
+     [sharedObject getNewsSources];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"SourceListLoaded" object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(NewsSourcesReceived:) name:@"SourceListLoaded" object:nil];
     
-    NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* datatask = [session dataTaskWithURL:[NSURL URLWithString:@"https://newsapi.org/v1/sources?language=en"] completionHandler:^(NSData* data , NSURLResponse* rsponseKey , NSError* error){
-        
-        
-        if(error == nil)
-        {
-        jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSDictionary* sources = [[NSDictionary alloc]init];
-        sources = [jsonResponse objectForKey:@"sources"];
-        NSUInteger i=[sources count];
-        
-        for( int j=0; j<i; j++)
-        {
-            
-            [newsSourcesNames addObject:[[jsonResponse objectForKey:@"sources"][j]objectForKey:@"name"] ];
-             
-            
-             [newsSourcesImage addObject:[[[jsonResponse objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
-            [newSourcesid addObject:[[jsonResponse objectForKey:@"sources"][j]objectForKey:@"id"]];
-             
-
-            
-        }
-            
-            self.collectionView.delegate=self;
-            self.collectionView.dataSource=self;
-            
-            [self.collectionView reloadData];
-            
-        }
-
-        
-    }];
-    [datatask resume];
-    
-    
-    
-    
-    
-    // Do any additional setup after loading the view.
 }
+
+
+-(void)NewsSourcesReceived:(NSNotification*)info
+{
+
+    NSLog(@"received value is %@",[info.userInfo objectForKey:@"sources"]);
+    [self reloadSources:info.userInfo];
+}
+
+-( void)reloadSources:(NSDictionary*)response
+{
+    NSUInteger totalSources = [[response objectForKey:@"sources"] count];
+    for( int j=0; j<totalSources; j++)
+    {
+        [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
+        [newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
+        [newSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
+        [newSourcesCategories addObject:[[response objectForKey:@"sources"][j]objectForKey:@"category"]];
+    }
+    
+    newSourcesUniqueCategories = [newSourcesCategories valueForKeyPath:@"@distinctUnionOfObjects.self"];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+    [activityIndicator startAnimating];
+    [activityIndicator removeFromSuperview];
+    self.collectionView.delegate=self;
+    self.collectionView.dataSource=self;
+    [self.collectionView reloadData];
+    }
+    );
+   
+}
+
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -101,31 +110,20 @@
     
     UIButton* sourcebackgroundImage=(UIButton*)[cell viewWithTag:100];
     UILabel* sourceName=(UILabel*)[cell viewWithTag:101];
-    
-    
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:nil options:SDWebImageProgressiveDownload];
     sourceName.text=[newsSourcesNames objectAtIndex:indexPath.row];
-    
-    
-    
-    
     [sourcebackgroundImage sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"No-image.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
      {
-         [self.view setUserInteractionEnabled:YES];
-         NSLog(@"error %@",[error localizedDescription]);
-         //imgTerm = [[UIImage alloc]init];
          if(image)
          {
              NSLog(@"passed");
-//             [cell.imgViewIcon setUserInteractionEnabled:YES];
-//             [cell.imgViewIcon setExclusiveTouch:YES];
+             [sourcebackgroundImage setUserInteractionEnabled:YES];
+
              
          }
          else
          {
              NSLog(@"failed");
 
-//             [cell.imgViewIcon setUserInteractionEnabled:YES];
          }
      }];
     
@@ -143,7 +141,7 @@
     UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:@"newsList"];
     newsListObj.newsId=[newSourcesid objectAtIndex:indexPath.row];
-    
+    newsListObj.newsCategories = newSourcesUniqueCategories;
     [self.navigationController presentViewController:newsListObj animated:YES completion:nil];
     
     
@@ -154,6 +152,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+    
+
+//- (NSDictionary*)getNewsSources
+//{
+////        NSDictionary* __block Response;
+////        NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+////        NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
+////        NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:@"https://newsapi.org/v1/sources?language=en"] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
+////            if(error == nil)
+////            {
+////                Response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+////                return Response;
+////                
+////            }
+////        }];
+////        [dataTask resume];
+////        return Response;
+//    
+//   
+//}
+//
 /*
 #pragma mark - Navigation
 
