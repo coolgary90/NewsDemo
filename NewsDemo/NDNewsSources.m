@@ -6,7 +6,7 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "UIImageView+WebCache.h"
-
+#import "Define.h"
 #import "NDWebServices.h"
 #import "UIButton+WebCache.h"
 #import "NDNewsList.h"
@@ -20,7 +20,7 @@
     NSMutableArray* newSourcesid;
     NSMutableArray* newSourcesCategories;
     NSMutableArray* newSourcesUniqueCategories;
-
+    NSMutableArray* newsOptions;
     UIActivityIndicatorView* activityIndicator;
     
 
@@ -39,10 +39,9 @@
     newsSourcesNames=[[NSMutableArray alloc]init];
     newSourcesid = [[NSMutableArray alloc]init];
     newSourcesCategories =[[NSMutableArray alloc]init];
+    newsOptions = [[NSMutableArray alloc]init];
     newSourcesUniqueCategories = [[NSMutableArray alloc]init];
-    
     jsonResponse = [[NSDictionary alloc]init];
-    
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;
     activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
@@ -50,9 +49,9 @@
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
-     [sharedObject getNewsSources];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"SourceListLoaded" object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(NewsSourcesReceived:) name:@"SourceListLoaded" object:nil];
+     [sharedObject getNewsSources];                                 // fetching list of news sources
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(NewsSourcesReceived:) name:kNewsSourcesLoadedNotification object:nil];
     
 }
 
@@ -82,12 +81,16 @@
     [activityIndicator removeFromSuperview];
     self.collectionView.delegate=self;
     self.collectionView.dataSource=self;
+    self.collectionView.allowsMultipleSelection=YES;
     [self.collectionView reloadData];
     }
     );
    
 }
 
+
+
+# pragma mark CollectionView Delegates
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -110,6 +113,7 @@
     
     UIButton* sourcebackgroundImage=(UIButton*)[cell viewWithTag:100];
     UILabel* sourceName=(UILabel*)[cell viewWithTag:101];
+    sourceName.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     sourceName.text=[newsSourcesNames objectAtIndex:indexPath.row];
     [sourcebackgroundImage sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"No-image.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
      {
@@ -127,7 +131,8 @@
          }
      }];
     
-    [sourcebackgroundImage setContentMode:UIViewContentModeScaleAspectFit];
+    [sourcebackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
+    
     
     return cell;
     
@@ -138,13 +143,44 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:@"newsList"];
-    newsListObj.newsId=[newSourcesid objectAtIndex:indexPath.row];
-    newsListObj.newsCategories = newSourcesUniqueCategories;
-    [self.navigationController presentViewController:newsListObj animated:YES completion:nil];
     
+    UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
+    cell.layer.borderColor=[UIColor blueColor].CGColor;
+    cell.layer.borderWidth=2.0;
+    [newsOptions addObject:[newSourcesid objectAtIndex:indexPath.row]];
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     
+    UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
+    cell.layer.borderColor=[UIColor clearColor].CGColor;
+    cell.layer.borderWidth=0.0;
+    [newsOptions removeObject:[newSourcesid objectAtIndex:indexPath.row]];
+
+}
+
+#pragma mark IBActions
+//This method is responsible for navigating to next View Controller which loads selected News Sources
+ - (IBAction)continueClicked:(id)sender
+{
+    if([newsOptions count]<3)
+    {
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:KAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
+        NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:@"newsList"];
+        newsListObj.selectedNewsSources = newsOptions ;
+        newsListObj.newsCategories = newSourcesUniqueCategories;
+        [self.navigationController presentViewController:newsListObj animated:YES completion:nil];
+    }
     
 }
 - (void)didReceiveMemoryWarning {
@@ -154,26 +190,6 @@
 
 
     
-
-//- (NSDictionary*)getNewsSources
-//{
-////        NSDictionary* __block Response;
-////        NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-////        NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-////        NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:@"https://newsapi.org/v1/sources?language=en"] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
-////            if(error == nil)
-////            {
-////                Response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-////                return Response;
-////                
-////            }
-////        }];
-////        [dataTask resume];
-////        return Response;
-//    
-//   
-//}
-//
 /*
 #pragma mark - Navigation
 

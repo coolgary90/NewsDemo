@@ -6,6 +6,7 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "NDCustomCell.h"
+#import "Define.h"
 #import "NDCustomMenu.h"
 #import "NDWebServices.h"
 #import "UIButton+WebCache.h"
@@ -17,13 +18,10 @@
     NSMutableArray* newsListImage;
     NSMutableArray* newsListTitle;
     NSMutableArray* newsListDescription;
+    NSString* newsFilterValue;
     UIActivityIndicatorView* activityIndicator;
+    UIView* backgroundView;
     UISwipeGestureRecognizer* gesture;
-    
-
-    
-    
-    
 }
 
 @end
@@ -32,96 +30,77 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        NDWebServices* sharedObject = [NDWebServices sharedInstance];
-    [sharedObject getNewsList:self.newsId];
+    NDWebServices* sharedObject = [NDWebServices sharedInstance];
+    [sharedObject getNewsListFromSources:self.selectedNewsSources];
+//    [sharedObject getNewsList:self.newsId];
+    newsFilterValue=@"top";
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;
     activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
     activityIndicator.color = [UIColor blueColor];
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
-    
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewsListLoaded" object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:@"NewsListLoaded" object:nil];
+    self.tableViewNewsList.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
 
-    
-
-    
-    
-    
-    
-//    NSString* str=@"https://newsapi.org/v1/articles?source=";
-//    str= [str stringByAppendingString:[NSString stringWithFormat:@"%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",self.newsId]];
-//    
-//    
-//    NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    
-//    NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-//    NSURLSessionDataTask* datatask = [session dataTaskWithURL:[NSURL URLWithString:str] completionHandler:^(NSData* data , NSURLResponse* rsponseKey , NSError* error){
-//        
-//        NSLog(@"error %@",[error localizedDescription]);
-//        
-//        if(error == nil)
-//        {
-//            jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//            NSDictionary* articles = [[NSDictionary alloc]init];
-//            articles = [jsonResponse objectForKey:@"articles"];
-//            NSUInteger i=[articles count];
-//            
-//            for( int j=0; j<i; j++)
-//            {
-//                
-//                [newsListTitle addObject:[[jsonResponse objectForKey:@"articles"][j]objectForKey:@"title"] ];
-////
-////                
-//                [newsListImage addObject:[[jsonResponse objectForKey:@"articles"][j]objectForKey:@"urlToImage"] ];
-//                [newsListDescription addObject:[[jsonResponse objectForKey:@"articles"][j]objectForKey:@"description"]];
-////
-//                
-//                
-//            }
-//            
-//            self.tableViewNewsList.delegate=self;
-//            self.tableViewNewsList.dataSource=self;
-//            self.tableViewNewsList.rowHeight=UITableViewAutomaticDimension;
-//            
-//            [self.tableViewNewsList reloadData];
-//            
-//        }
-//        
-//        
-//    }];
-//    [datatask resume];
-
-    // Do any additional setup after loading the view.
 }
 
 - (IBAction)SortNewsClicked:(UIButton*)sender
 {
+    backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
+    backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    backgroundView.center= self.view.center;
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;
     activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
     activityIndicator.color = [UIColor blueColor];
-    [self.view addSubview:activityIndicator];
+    [backgroundView addSubview:activityIndicator];
+    [self.view addSubview:backgroundView];
     [activityIndicator startAnimating];
-
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewsListLoaded" object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:@"NewsListLoaded" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
     NSUInteger tagValue = sender.tag;
     if(tagValue == 0)
     {
-    [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"top"];
+        newsFilterValue=@"top";
+        self.topFilterButton.backgroundColor=kColorSelectedFilter;
+        self.latestFilterButton.backgroundColor=kColorUnSelectedFilter;
+        self.popularFilterButton.backgroundColor=kColorUnSelectedFilter;
+
+
+        
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+        
+//    [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"top"];
         
     }
     else if (tagValue == 1)
     {
-        [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"latest"];
+        newsFilterValue=@"latest";
+        self.topFilterButton.backgroundColor=kColorUnSelectedFilter;
+        self.latestFilterButton.backgroundColor=kColorSelectedFilter;
+        self.popularFilterButton.backgroundColor=kColorUnSelectedFilter;
+
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+
+
+//        [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"latest"];
 
     }
     else if (tagValue == 2)
     {
-        [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"popular"];
+        newsFilterValue=@"popular";
+        self.topFilterButton.backgroundColor=kColorUnSelectedFilter;
+        self.latestFilterButton.backgroundColor=kColorUnSelectedFilter;
+        self.popularFilterButton.backgroundColor=kColorSelectedFilter;
+
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+
+
+//        [sharedObject getNewsListSortedBy:self.newsId sortedBy:@"popular"];
 
     }
 }
@@ -138,7 +117,6 @@
     
     
     NDCustomMenu* backGroundView = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomMenu" owner:self options:nil] objectAtIndex:0];
-
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if(sender.tag == 0)
@@ -157,19 +135,10 @@
             gesture =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
             gesture.direction=UISwipeGestureRecognizerDirectionLeft;
             [backGroundView.sideView addGestureRecognizer:gesture];
-//            [backGroundView.tableNewsCategories addGestureRecognizer:gesture];
-
-            
-            
-            
-            
-            
             sender.tag=1;
         }
         else
         {
-
-            
             for(UIView* subview in self.view.subviews)
             {
                 if([subview isKindOfClass:[NDCustomMenu class]])
@@ -177,9 +146,8 @@
                     [subview removeFromSuperview];
                 }
             }
-          
+            
             self.doneButton.hidden = NO;
-
             sender.tag=0;
 
         }
@@ -209,7 +177,14 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    if(tableView.tag==0)
+    {
+    return [newsListTitle count];
+    }
+    else
+    {
+        return [_newsCategories count];
+    }
     
 }
 
@@ -253,6 +228,7 @@
     [cell.newsTitle adjustsFontSizeToFitWidth];
     
     cell.newsDescription.numberOfLines=0;
+        
 
     return cell;
     }
@@ -266,7 +242,7 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             
         }
-        cell.textLabel.text = [self.newsCategories objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[self.newsCategories objectAtIndex:indexPath.row] capitalizedString];
        cell.backgroundColor = [UIColor whiteColor];
         return cell;
     }
@@ -274,6 +250,51 @@
 
 
     
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView.tag==0)
+    {
+        
+    }
+    else
+    {
+        
+        
+       
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for(UIView* subview in self.view.subviews)
+            {
+                if([subview isKindOfClass:[NDCustomMenu class]])
+                {
+                    [subview removeFromSuperview];
+                }
+            }
+            backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
+            backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+            backgroundView.center= self.view.center;
+            activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            activityIndicator.center=self.view.center;
+            
+            activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
+            activityIndicator.color = [UIColor blueColor];
+            [backgroundView addSubview:activityIndicator];
+            [self.view addSubview:backgroundView];
+            [activityIndicator startAnimating];
+            _menuButton.tag=0;
+            [_doneButton setHidden:NO];
+
+            
+        });
+        
+       
+         NDWebServices* sharedObject = [NDWebServices sharedInstance];
+        [sharedObject getNewsListFromSources:self.selectedNewsSources atIndex:0 withMatchingCategory:[[self.newsCategories objectAtIndex:indexPath.row] lowercaseString] filteredBy:newsFilterValue];
+    }
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -298,15 +319,13 @@
 
 -( void)reloadSources:(NSDictionary*)response
 {
-    newsListImage= [[ NSMutableArray alloc]init];
-    newsListTitle = [[NSMutableArray alloc]init];
-    newsListDescription = [[NSMutableArray alloc]init];
+    
     NSUInteger articlesCount = [[response objectForKey:@"articles"] count];
     if(articlesCount == 0)
     {
         NSLog(@"No News Available");
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Oops...!" message:@"No news Available" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:kAlertOops message:KAlertNoNews preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -314,6 +333,7 @@
                            {
             [activityIndicator startAnimating];
             [activityIndicator removeFromSuperview];
+            [backgroundView removeFromSuperview];
           
     
         }
@@ -326,7 +346,10 @@
     }
     else
     {
-    
+        newsListImage= [[ NSMutableArray alloc]init];
+        newsListTitle = [[NSMutableArray alloc]init];
+        newsListDescription = [[NSMutableArray alloc]init];
+
     for( int j=0; j<articlesCount; j++)
     {
         
@@ -343,10 +366,12 @@
                    {
                        [activityIndicator startAnimating];
                        [activityIndicator removeFromSuperview];
-                       self.tableViewNewsList.delegate=self;
+                       [backgroundView removeFromSuperview];
+                        self.tableViewNewsList.delegate=self;
                        self.tableViewNewsList.dataSource=self;
                        self.tableViewNewsList.rowHeight=UITableViewAutomaticDimension;
                        [self.tableViewNewsList reloadData];
+                       
 
                    }
                    );

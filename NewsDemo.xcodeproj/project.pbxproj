@@ -152,6 +152,7 @@
 		6DCE71281E47A848000B30BC /* NDCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomCell.h; sourceTree = "<group>"; };
 		6DCE71291E47A848000B30BC /* NDCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomCell.m; sourceTree = "<group>"; };
 		6DCE712A1E47A848000B30BC /* NDCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomCell.xib; sourceTree = "<group>"; };
+		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		E75C64951E44A90C003C6245 /* NewsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75C64991E44A90C003C6245 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E75C649B1E44A90C003C6245 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -287,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				E75C64991E44A90C003C6245 /* main.m */,
+				E72CC7941E49D8330084F901 /* Define.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -315,7 +317,7 @@
 				E7714EDD1E484D400065002A /* NDWebServices.h */,
 				E7714EDE1E484D400065002A /* NDWebServices.m */,
 				E7714ED91E484B400065002A /* Appdelegate */,
-				E7714EDA1E484B580065002A /* CustomCell */,
+				E7714EDA1E484B580065002A /* CustomViews */,
 				E7714EDB1E484B7D0065002A /* Resources */,
 			);
 			name = Classes;
@@ -330,7 +332,7 @@
 			name = Appdelegate;
 			sourceTree = "<group>";
 		};
-		E7714EDA1E484B580065002A /* CustomCell */ = {
+		E7714EDA1E484B580065002A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				6DCE71281E47A848000B30BC /* NDCustomCell.h */,
@@ -340,7 +342,7 @@
 				E7714EF41E488F950065002A /* NDCustomMenu.m */,
 				E7714EEF1E488E310065002A /* NDCustomMenu.xib */,
 			);
-			name = CustomCell;
+			name = CustomViews;
 			sourceTree = "<group>";
 		};
 		E7714EDB1E484B7D0065002A /* Resources */ = {
