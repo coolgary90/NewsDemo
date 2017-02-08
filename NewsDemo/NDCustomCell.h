@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface NDCustomCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *newsTitle;
-@property (weak, nonatomic) IBOutlet UILabel *newsDescription;
-@property (weak, nonatomic) IBOutlet UIButton *newsImage;
+@property (weak, nonatomic) IBOutlet UILabel* newsTitle;
+@property (weak, nonatomic) IBOutlet UILabel* newsDescription;
+@property (weak, nonatomic) IBOutlet UIImageView* newsImage;
 
 @end

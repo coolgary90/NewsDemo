@@ -17,6 +17,22 @@
 #define kMain @"Main"
 #define kNewsListLoadedNotification @"NewsListLoaded"
 #define kNewsSourcesLoadedNotification @"SourceListLoaded"
+#define kCategorizeSourcesLoadedNotification @"CatagorizeSourceListLoaded"
+
+#define kPlaceHolderImage @"No-image.png"
+#define kSources @"sources";
+#define kName @"name"
+#define kUniqueObjects @"@distinctUnionOfObjects.self"
+#define kNewsList @"newsList"
+#define kTopNews @"top";
+#define kPopularNews @"popular";
+#define kNewsArticles @"articles"
+#define kLatestNews @"latest";
+#define KNewsSourcesUrl @"https://newsapi.org/v1/sources?language=en"
+#define kNewsFromSourceUrl @"https://newsapi.org/v1/articles?"
+#define kNewsApiKey @"589e9375eca54120bc116e72ae1d9eeb"
+#define KNewsStatus @"status"
+#define kNewsError @"error"
 
 #define kColorSelectedFilter  [UIColor colorWithRed:0.0/255.0 green:77.0/255.0 blue:159.0/255.0 alpha:1.0]
 #define kColorUnSelectedFilter  [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]

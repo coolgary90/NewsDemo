@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NDNewsSources : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout>
+@interface NDNewsSources : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource>
 
 @property( weak , nonatomic) IBOutlet UICollectionView* collectionView;
+
+
+
+//tableNewsCategories
 
 @end

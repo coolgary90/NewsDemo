@@ -33,7 +33,7 @@
                                 <rect key="frame" x="75" y="276" width="228" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLO-Hb-Mvc">
@@ -118,19 +118,19 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pfb-s2-OBG">
+                                                <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gk3-UY-WQH">
                                                     <rect key="frame" x="0.0" y="0.0" width="169" height="98"/>
-                                                </button>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Pfb-s2-OBG" secondAttribute="trailing" id="08F-cy-tc8"/>
-                                            <constraint firstItem="Yfa-GT-EMn" firstAttribute="top" secondItem="Pfb-s2-OBG" secondAttribute="bottom" id="4x2-Iw-NpY"/>
-                                            <constraint firstItem="Pfb-s2-OBG" firstAttribute="top" secondItem="2cc-rp-Mn0" secondAttribute="top" id="Ddr-VM-VxT"/>
                                             <constraint firstAttribute="bottom" secondItem="Yfa-GT-EMn" secondAttribute="bottom" id="VR6-Qy-lRh"/>
+                                            <constraint firstItem="gk3-UY-WQH" firstAttribute="leading" secondItem="2cc-rp-Mn0" secondAttribute="leading" id="bNZ-rH-MUJ"/>
                                             <constraint firstItem="Yfa-GT-EMn" firstAttribute="leading" secondItem="2cc-rp-Mn0" secondAttribute="leading" id="dxb-Zs-Uoc"/>
-                                            <constraint firstItem="Pfb-s2-OBG" firstAttribute="leading" secondItem="2cc-rp-Mn0" secondAttribute="leading" id="kTG-H4-4cN"/>
+                                            <constraint firstItem="gk3-UY-WQH" firstAttribute="top" secondItem="2cc-rp-Mn0" secondAttribute="top" id="lUA-o5-Lgb"/>
+                                            <constraint firstItem="Yfa-GT-EMn" firstAttribute="top" secondItem="gk3-UY-WQH" secondAttribute="bottom" id="rGQ-O2-6VK"/>
                                             <constraint firstAttribute="trailing" secondItem="Yfa-GT-EMn" secondAttribute="trailing" id="sUe-lJ-JUi"/>
+                                            <constraint firstAttribute="trailing" secondItem="gk3-UY-WQH" secondAttribute="trailing" id="tBw-or-E34"/>
                                         </constraints>
                                     </collectionViewCell>
                                 </cells>

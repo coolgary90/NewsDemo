@@ -12,5 +12,4 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableNewsCategories;
 @property (weak, nonatomic) IBOutlet UIView *sideView;
 
-
 @end

@@ -33,11 +33,11 @@
     NSDictionary* __block jsonResponse;
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:@"https://newsapi.org/v1/sources?language=en"] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
+    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:KNewsSourcesUrl] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
     if(error == nil)
     {
     jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"SourceListLoaded" object:self userInfo:jsonResponse];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNewsSourcesLoadedNotification object:self userInfo:jsonResponse];
         
     }
     }];
@@ -45,99 +45,70 @@
     
 }
 
-- (void)getNewsList:(NSString*)newsSource
+
+
+- (void)getNewsSourcesWithCategory:(NSString*)category
+
 {
     NSDictionary* __block jsonResponse;
-    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",newsSource];
-    
+    NSString* Urlstring=[NSString stringWithFormat:@"https://newsapi.org/v1/sources?language=en&category=%@",category];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
-        
+    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:Urlstring] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
         if(error == nil)
         {
             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:jsonResponse];
-            
-        }
-    }];
-    [dataTask resume];
-
-    
-}
-
-- (void)getNewsListSortedBy:(NSString *)newsSource sortedBy:(NSString*)sort
-{
-    
-    NSDictionary* __block jsonResponse;
-    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",newsSource,sort];
-    
-    NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
-        
-        if(error == nil)
-        {
-            jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:jsonResponse];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCategorizeSourcesLoadedNotification object:self userInfo:jsonResponse];
             
         }
     }];
     [dataTask resume];
 }
-
-
 
 -(void)getNewsListFromSources:(NSMutableArray*)sources;
 
 {
     newsSourceSelected = [[NSMutableArray alloc]init];
     fetchedArticles = [[NSMutableArray alloc]init];
-    
     [newsSourceSelected addObjectsFromArray:sources];
-    [self fetchNewsListFromSources:newsSourceSelected Atindex:0];
+    [self startFetchNewsListFromSources:newsSourceSelected Atindex:0];
     
 }
 
 
-- (void)fetchNewsListFromSources:(NSMutableArray*)sources Atindex:(int)index;
+- (void)startFetchNewsListFromSources:(NSMutableArray*)sources Atindex:(int)index;
 {
     
     
     NSDictionary* __block jsonResponse;
-    
-    int __block indexValue =index;
-    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue]];
-    
+    int __block indexValue = index;
+//    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue]];
+   NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",[sources objectAtIndex:indexValue],kNewsApiKey]];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
         
         if(error == nil)
         {
-            NSMutableDictionary* dicttemp = [[NSMutableDictionary alloc]init];
+
             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            [dicttemp setObject:[jsonResponse objectForKey:@"articles"] forKey:@"am"];
-            
-            for( int i=0; i<[[dicttemp objectForKey:@"am" ] count]; i++)
+            for (int i = 0; i<[[jsonResponse objectForKey:kNewsArticles]count]; i++)
             {
-                [fetchedArticles addObject:[dicttemp objectForKey:@"am"][i]];
-
+                [fetchedArticles addObject:[jsonResponse objectForKey:kNewsArticles][i]];
             }
-            
+
             indexValue++;
             if(indexValue<[newsSourceSelected count])
             {
-                [self fetchNewsListFromSources:newsSourceSelected Atindex:indexValue];
+                [self startFetchNewsListFromSources:newsSourceSelected Atindex:indexValue];
                 
             }
             else
             {
-                NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
-                [dict setObject:fetchedArticles forKey:@"articles"];
-                
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewsListLoaded" object:self userInfo:dict];
+                NSMutableDictionary* receivedArticles = [[NSMutableDictionary alloc]init];
+                [receivedArticles setObject:fetchedArticles forKey:kNewsArticles];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NewsListLoaded" object:self userInfo:receivedArticles];
 
             }
             
@@ -154,66 +125,56 @@
     
     newsSourceSelected = [[NSMutableArray alloc]init];
     fetchedArticles = [[NSMutableArray alloc]init];
-    
     [newsSourceSelected addObjectsFromArray:sources];
     [self fetchNewsListFromSources:sources filteredBy:sort AtIndex:0];
 
 }
 
 
--(void)fetchNewsListFromSources:(NSMutableArray*)sources filteredBy:(NSString*)sort AtIndex:(int)index{
-    
+-(void)fetchNewsListFromSources:(NSMutableArray*)sources filteredBy:(NSString*)sort AtIndex:(int)index
+{
     
     NSDictionary* __block jsonResponse;
-    
-    int __block indexValue =index;
-    NSString* __block sortBy =sort;
-    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue],sort];
-    
+    int __block indexValue = index;
+    NSString* __block sortBy = sort;
+    //    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue],sort];
+
+    NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&sortBy=%@&apiKey=%@",[sources objectAtIndex:indexValue],sort,kNewsApiKey] ];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
         
         if(error == nil)
         {
-            NSMutableDictionary* receivedArticles = [[NSMutableDictionary alloc]init];
+
             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-            
-            if(![[jsonResponse objectForKey:@"status"] isEqualToString:@"error"])
+            if(![[jsonResponse objectForKey:KNewsStatus] isEqualToString:kNewsError])
             {
-            [receivedArticles setObject:[jsonResponse objectForKey:@"articles"] forKey:@"articles"];
-            
-            for( int i=0; i<[[receivedArticles objectForKey:@"articles" ] count]; i++)
-            {
-                [fetchedArticles addObject:[receivedArticles objectForKey:@"articles"][i]];
-                
-            }
+                for( int i = 0; i<[[jsonResponse objectForKey:kNewsArticles] count]; i++)
+                {
+                    [fetchedArticles addObject:[jsonResponse objectForKey:kNewsArticles][i]];
+                    
+                }
             }
             indexValue++;
             if(indexValue<[newsSourceSelected count])
             {
                 [self fetchNewsListFromSources:newsSourceSelected filteredBy:sortBy AtIndex:indexValue];
-                
             }
             else
             {
-                NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
+                NSMutableDictionary* receivedArticles = [[NSMutableDictionary alloc]init];
                 if(fetchedArticles)
                 {
-                [dict setObject:fetchedArticles forKey:@"articles"];
+                [receivedArticles setObject:fetchedArticles forKey:kNewsArticles];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:receivedArticles];
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:dict];
-                
             }
             
         }
     }];
     [dataTask resume];
 
-    
-    
-    
 }
 
 
@@ -225,11 +186,7 @@
 {
     
     NSDictionary* __block jsonResponse;
-    
     int __block indexValue =index;
-//    NSString* __block categoryValue = category;
-//    NSString* __block sortValue = sort;
-    
     NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&category=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue],category,sort];
     
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -242,13 +199,13 @@
             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             
-            if(![[jsonResponse objectForKey:@"status"] isEqualToString:@"error"])
+            if(![[jsonResponse objectForKey:KNewsStatus] isEqualToString:kNewsError])
             {
-                [receivedArticles setObject:[jsonResponse objectForKey:@"articles"] forKey:@"articles"];
+                [receivedArticles setObject:[jsonResponse objectForKey:kNewsArticles] forKey:kNewsArticles];
                 
-                for( int i=0; i<[[receivedArticles objectForKey:@"articles" ] count]; i++)
+                for( int i=0; i<[[receivedArticles objectForKey:kNewsArticles] count]; i++)
                 {
-                    [fetchedArticles addObject:[receivedArticles objectForKey:@"articles"][i]];
+                    [fetchedArticles addObject:[receivedArticles objectForKey:kNewsArticles][i]];
                     
                 }
             }
@@ -264,7 +221,7 @@
                 NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
                 if(fetchedArticles)
                 {
-                    [dict setObject:fetchedArticles forKey:@"articles"];
+                    [dict setObject:fetchedArticles forKey:kNewsArticles];
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:dict];
                 
@@ -276,6 +233,10 @@
 
     
 }
+
+
+
+
 
 
 

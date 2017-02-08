@@ -6,9 +6,9 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "UIImageView+WebCache.h"
+#import "NDCustomMenu.h"
 #import "Define.h"
 #import "NDWebServices.h"
-#import "UIButton+WebCache.h"
 #import "NDNewsList.h"
 #import "NDNewsSources.h"
 
@@ -22,6 +22,9 @@
     NSMutableArray* newSourcesUniqueCategories;
     NSMutableArray* newsOptions;
     UIActivityIndicatorView* activityIndicator;
+    UISwipeGestureRecognizer* gesture;
+    UIView* backgroundView;
+    UIBarButtonItem* menu;
     
 
     
@@ -35,8 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    newsSourcesImage=[[NSMutableArray alloc]init];
-    newsSourcesNames=[[NSMutableArray alloc]init];
+    newsSourcesImage = [[NSMutableArray alloc]init];
+    newsSourcesNames = [[NSMutableArray alloc]init];
     newSourcesid = [[NSMutableArray alloc]init];
     newSourcesCategories =[[NSMutableArray alloc]init];
     newsOptions = [[NSMutableArray alloc]init];
@@ -44,12 +47,17 @@
     jsonResponse = [[NSDictionary alloc]init];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;
-    activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
+    activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
     activityIndicator.color = [UIColor blueColor];
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
-     [sharedObject getNewsSources];                                 // fetching list of news sources
+     [sharedObject getNewsSources];
+    // fetching list of news sources
+    
+    menu = [[UIBarButtonItem alloc]initWithTitle:@"Menu" style:UIBarButtonItemStyleDone target:self action:@selector(menuClicked:)];
+    self.navigationItem.leftBarButtonItem=menu;
+    
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(NewsSourcesReceived:) name:kNewsSourcesLoadedNotification object:nil];
     
@@ -59,14 +67,13 @@
 -(void)NewsSourcesReceived:(NSNotification*)info
 {
 
-    NSLog(@"received value is %@",[info.userInfo objectForKey:@"sources"]);
     [self reloadSources:info.userInfo];
 }
 
 -( void)reloadSources:(NSDictionary*)response
 {
     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
-    for( int j=0; j<totalSources; j++)
+    for( int j = 0; j<totalSources; j++)
     {
         [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
         [newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
@@ -74,13 +81,13 @@
         [newSourcesCategories addObject:[[response objectForKey:@"sources"][j]objectForKey:@"category"]];
     }
     
-    newSourcesUniqueCategories = [newSourcesCategories valueForKeyPath:@"@distinctUnionOfObjects.self"];
+    newSourcesUniqueCategories = [newSourcesCategories valueForKeyPath:kUniqueObjects];
     dispatch_async(dispatch_get_main_queue(), ^
     {
     [activityIndicator startAnimating];
     [activityIndicator removeFromSuperview];
-    self.collectionView.delegate=self;
-    self.collectionView.dataSource=self;
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
     self.collectionView.allowsMultipleSelection=YES;
     [self.collectionView reloadData];
     }
@@ -88,6 +95,39 @@
    
 }
 
+
+-(void)reloadNewSources:(NSNotification*)info
+{
+    
+    NSDictionary* response =info.userInfo;
+    newsSourcesNames = [[ NSMutableArray alloc]init];
+    newsSourcesImage = [[ NSMutableArray alloc]init];
+    newSourcesid = [[ NSMutableArray alloc]init];
+    newSourcesCategories = [[ NSMutableArray alloc]init];
+     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
+    for( int j = 0; j<totalSources; j++)
+    {
+        [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
+        [newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
+        [newSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
+
+    }
+    
+
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       [activityIndicator startAnimating];
+                       [activityIndicator removeFromSuperview];
+                       [backgroundView removeFromSuperview];
+                       self.collectionView.delegate = self;
+                       self.collectionView.dataSource = self;
+                       self.collectionView.allowsMultipleSelection=YES;
+                       [self.collectionView reloadData];
+                   }
+                   );
+
+    
+}
 
 
 # pragma mark CollectionView Delegates
@@ -108,32 +148,14 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    UICollectionViewCell* cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionViewCell" forIndexPath:indexPath];
-    
-    
-    UIButton* sourcebackgroundImage=(UIButton*)[cell viewWithTag:100];
+    static NSString* cellIdentifier = @"collectionViewCell";
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    UIImageView* sourcebackgroundImage = (UIImageView*)[cell viewWithTag:100];
     UILabel* sourceName=(UILabel*)[cell viewWithTag:101];
     sourceName.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     sourceName.text=[newsSourcesNames objectAtIndex:indexPath.row];
-    [sourcebackgroundImage sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"No-image.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
-     {
-         if(image)
-         {
-             NSLog(@"passed");
-             [sourcebackgroundImage setUserInteractionEnabled:YES];
-
-             
-         }
-         else
-         {
-             NSLog(@"failed");
-
-         }
-     }];
-    
-    [sourcebackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
-    
-    
+    [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
+    [sourcebackgroundImage setContentMode:UIViewContentModeScaleToFill];
     return cell;
     
     
@@ -145,23 +167,26 @@
 {
     
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderColor=[UIColor blueColor].CGColor;
-    cell.layer.borderWidth=2.0;
+    cell.layer.borderColor = [UIColor blueColor].CGColor;
+    cell.layer.borderWidth = 2.0;
     [newsOptions addObject:[newSourcesid objectAtIndex:indexPath.row]];
+    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderColor=[UIColor clearColor].CGColor;
-    cell.layer.borderWidth=0.0;
+    cell.layer.borderColor = [UIColor clearColor].CGColor;
+    cell.layer.borderWidth = 0.0;
     [newsOptions removeObject:[newSourcesid objectAtIndex:indexPath.row]];
 
 }
 
 #pragma mark IBActions
-//This method is responsible for navigating to next View Controller which loads selected News Sources
+
+//This method is responsible for navigating to next View Controller which loads News from selected  Sources
+
  - (IBAction)continueClicked:(id)sender
 {
     if([newsOptions count]<3)
@@ -176,7 +201,7 @@
     else
     {
         UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
-        NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:@"newsList"];
+        NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
         newsListObj.selectedNewsSources = newsOptions ;
         newsListObj.newsCategories = newSourcesUniqueCategories;
         [self.navigationController presentViewController:newsListObj animated:YES completion:nil];
@@ -186,6 +211,152 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)menuClicked:(UIButton*)sender
+{
+    
+    
+    NDCustomMenu* backGroundView = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomMenu" owner:self options:nil] objectAtIndex:0];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if(sender.tag == 0)
+        {
+            
+            backGroundView.translatesAutoresizingMaskIntoConstraints=YES;
+            backGroundView.frame=CGRectMake(0, self.navigationController.navigationBar.frame.size.height+30, self.view.frame.size.width, self.view.frame.size.height);
+            [self.view addSubview:backGroundView];
+            backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+            backGroundView.tableNewsCategories.backgroundColor=[UIColor whiteColor];
+            backGroundView.tableNewsCategories.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+            backGroundView.tableNewsCategories.delegate=self;
+            backGroundView.tableNewsCategories.dataSource=self;
+            [backGroundView.tableNewsCategories reloadData];
+            gesture =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
+            gesture.direction=UISwipeGestureRecognizerDirectionLeft;
+            [backGroundView.sideView addGestureRecognizer:gesture];
+            sender.tag=1;
+        }
+        else
+        {
+            for(UIView* subview in self.view.subviews)
+            {
+                if([subview isKindOfClass:[NDCustomMenu class]])
+                {
+                    [subview removeFromSuperview];
+                }
+            }
+            
+            sender.tag=0;
+            
+        }
+    }
+                   );
+    
+}
+
+
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+    
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+           return [newSourcesUniqueCategories count];
+   
+    
+}
+
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    
+    
+        static NSString* cellIdentifier2 = @"newsCategories";
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+        if(cell == nil)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
+            
+        }
+        cell.textLabel.text = [[newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
+        cell.backgroundColor = [UIColor whiteColor];
+        return cell;
+    
+    
+    
+    
+    
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+        [self loadBackgroundView];
+        
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:kCategorizeSourcesLoadedNotification object:nil];
+        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadNewSources:) name:kCategorizeSourcesLoadedNotification object:nil];
+        NDWebServices* sharedObject = [NDWebServices sharedInstance];
+        [sharedObject getNewsSourcesWithCategory:[newSourcesUniqueCategories objectAtIndex:indexPath.row]];
+        
+
+    
+    
+}
+- (void)loadBackgroundView
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(UIView* subview in self.view.subviews)
+        {
+            if([subview isKindOfClass:[NDCustomMenu class]])
+            {
+                [subview removeFromSuperview];
+            }
+        }
+        backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
+        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        backgroundView.center= self.view.center;
+        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityIndicator.center=self.view.center;
+        
+        activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
+        activityIndicator.color = [UIColor blueColor];
+        [backgroundView addSubview:activityIndicator];
+        [self.view addSubview:backgroundView];
+        [activityIndicator startAnimating];
+        menu.tag=0;
+        
+//        _menuButton.tag=0;
+//        [_doneButton setHidden:NO];
+        
+        
+    });
+    
+}
+
+-(void)removeCustomMenu
+{
+    
+    for(UIView* subview in self.view.subviews)
+    {
+        if([subview isKindOfClass:[NDCustomMenu class]])
+        {
+            [subview removeFromSuperview];
+        }
+    }
+//    self.doneButton.hidden = NO;
+//    self.menuButton.tag=0;
+    
 }
 
 
