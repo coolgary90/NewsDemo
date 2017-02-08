@@ -6,6 +6,7 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "UIImageView+WebCache.h"
+#import "NDCustomCollectionViewCell.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
 #import "NDWebServices.h"
@@ -41,7 +42,7 @@
     newsSourcesImage = [[NSMutableArray alloc]init];
     newsSourcesNames = [[NSMutableArray alloc]init];
     newSourcesid = [[NSMutableArray alloc]init];
-    newSourcesCategories =[[NSMutableArray alloc]init];
+    newSourcesCategories = [[NSMutableArray alloc]init];
     newsOptions = [[NSMutableArray alloc]init];
     newSourcesUniqueCategories = [[NSMutableArray alloc]init];
     jsonResponse = [[NSDictionary alloc]init];
@@ -51,27 +52,24 @@
     activityIndicator.color = [UIColor blueColor];
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
+    
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
-     [sharedObject getNewsSources];
-    // fetching list of news sources
+     [sharedObject getNewsSources];                                  // Fetching list of News Sources
     
-    menu = [[UIBarButtonItem alloc]initWithTitle:@"Menu" style:UIBarButtonItemStyleDone target:self action:@selector(menuClicked:)];
+    UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
-    
+//    [menu setEnabled:NO];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(NewsSourcesReceived:) name:kNewsSourcesLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadSources:) name:kNewsSourcesLoadedNotification object:nil];
     
 }
 
 
--(void)NewsSourcesReceived:(NSNotification*)info
+-( void)reloadSources:(NSNotification*)info
 {
-
-    [self reloadSources:info.userInfo];
-}
-
--( void)reloadSources:(NSDictionary*)response
-{
+    
+    NSDictionary* response = info.userInfo;
     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
     for( int j = 0; j<totalSources; j++)
     {
@@ -82,16 +80,7 @@
     }
     
     newSourcesUniqueCategories = [newSourcesCategories valueForKeyPath:kUniqueObjects];
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-    [activityIndicator startAnimating];
-    [activityIndicator removeFromSuperview];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.allowsMultipleSelection=YES;
-    [self.collectionView reloadData];
-    }
-    );
+       [self reloadCollectionView];
    
 }
 
@@ -99,7 +88,7 @@
 -(void)reloadNewSources:(NSNotification*)info
 {
     
-    NSDictionary* response =info.userInfo;
+    NSDictionary* response = info.userInfo;
     newsSourcesNames = [[ NSMutableArray alloc]init];
     newsSourcesImage = [[ NSMutableArray alloc]init];
     newSourcesid = [[ NSMutableArray alloc]init];
@@ -113,19 +102,8 @@
 
     }
     
-
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [activityIndicator startAnimating];
-                       [activityIndicator removeFromSuperview];
-                       [backgroundView removeFromSuperview];
-                       self.collectionView.delegate = self;
-                       self.collectionView.dataSource = self;
-                       self.collectionView.allowsMultipleSelection=YES;
-                       [self.collectionView reloadData];
-                   }
-                   );
-
+    
+    [self reloadCollectionView];
     
 }
 
@@ -160,6 +138,7 @@
     
     
     
+    
 }
 
 
@@ -185,11 +164,11 @@
 
 #pragma mark IBActions
 
-//This method is responsible for navigating to next View Controller which loads News from selected  Sources
+//This method is responsible for navigating to next View Controller which loads News from Selected  Sources
 
  - (IBAction)continueClicked:(id)sender
 {
-    if([newsOptions count]<3)
+    if([newsOptions count]<2)
     {
         
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:KAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
@@ -204,7 +183,8 @@
         NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
         newsListObj.selectedNewsSources = newsOptions ;
         newsListObj.newsCategories = newSourcesUniqueCategories;
-        [self.navigationController presentViewController:newsListObj animated:YES completion:nil];
+        [self.navigationController pushViewController:newsListObj animated:YES];
+        
     }
     
 }
@@ -213,6 +193,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// This method called when UIBarButton Item Clicked
 
 - (void)menuClicked:(UIButton*)sender
 {
@@ -225,7 +206,7 @@
         {
             
             backGroundView.translatesAutoresizingMaskIntoConstraints=YES;
-            backGroundView.frame=CGRectMake(0, self.navigationController.navigationBar.frame.size.height+30, self.view.frame.size.width, self.view.frame.size.height);
+            backGroundView.frame=CGRectMake(0, self.navigationController.navigationBar.frame.size.height+20, self.view.frame.size.width, self.view.frame.size.height);
             [self.view addSubview:backGroundView];
             backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
             backGroundView.tableNewsCategories.backgroundColor=[UIColor whiteColor];
@@ -258,6 +239,7 @@
 
 
 
+# pragma mark TableView Delegates
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -267,51 +249,42 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-           return [newSourcesUniqueCategories count];
+return [newSourcesUniqueCategories count];
    
     
 }
 
-
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
-    
-    
-    
-        static NSString* cellIdentifier2 = @"newsCategories";
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
+       static NSString* cellIdentifier = @"newsCategories";
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if(cell == nil)
         {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             
         }
         cell.textLabel.text = [[newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
         cell.backgroundColor = [UIColor whiteColor];
         return cell;
     
-    
-    
-    
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
         [self loadBackgroundView];
-        
         [[NSNotificationCenter defaultCenter]removeObserver:self name:kCategorizeSourcesLoadedNotification object:nil];
         [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadNewSources:) name:kCategorizeSourcesLoadedNotification object:nil];
         NDWebServices* sharedObject = [NDWebServices sharedInstance];
         [sharedObject getNewsSourcesWithCategory:[newSourcesUniqueCategories objectAtIndex:indexPath.row]];
-        
-
-    
     
 }
+
+
+#pragma mark Custom Methods
+
+// This methods loads the background screen with Activity Indicator until response received
+
 - (void)loadBackgroundView
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -335,14 +308,32 @@
         [self.view addSubview:backgroundView];
         [activityIndicator startAnimating];
         menu.tag=0;
-        
-//        _menuButton.tag=0;
-//        [_doneButton setHidden:NO];
-        
-        
+
     });
     
 }
+
+
+// This method removes Activity Indicator from Super View
+
+-(void)reloadCollectionView
+{
+    
+dispatch_async(dispatch_get_main_queue(), ^
+{
+    [activityIndicator stopAnimating];
+    [activityIndicator removeFromSuperview];
+    [backgroundView removeFromSuperview];
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.allowsMultipleSelection=YES;
+    [self.collectionView reloadData];
+                       
+});
+    
+}
+
+// This method removes the Custom Menu View from Current View
 
 -(void)removeCustomMenu
 {
@@ -354,10 +345,11 @@
             [subview removeFromSuperview];
         }
     }
-//    self.doneButton.hidden = NO;
-//    self.menuButton.tag=0;
+
     
 }
+
+
 
 
     

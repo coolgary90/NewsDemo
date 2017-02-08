@@ -27,6 +27,7 @@
     return sharedObject;
 }
 
+// This method fetched News from all the available resources
 
 - (void)getNewsSources
 {
@@ -46,12 +47,13 @@
 }
 
 
+// This method fetched News Sources from particular category
 
 - (void)getNewsSourcesWithCategory:(NSString*)category
 
 {
     NSDictionary* __block jsonResponse;
-    NSString* Urlstring=[NSString stringWithFormat:@"https://newsapi.org/v1/sources?language=en&category=%@",category];
+    NSString* Urlstring = [KNewsSourcesUrl stringByAppendingString:[NSString stringWithFormat:@"&category=%@",category]];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:Urlstring] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
@@ -75,6 +77,7 @@
     
 }
 
+//This method fetched list of News from selected Sources
 
 - (void)startFetchNewsListFromSources:(NSMutableArray*)sources Atindex:(int)index;
 {
@@ -82,8 +85,7 @@
     
     NSDictionary* __block jsonResponse;
     int __block indexValue = index;
-//    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue]];
-   NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",[sources objectAtIndex:indexValue],kNewsApiKey]];
+    NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",[sources objectAtIndex:indexValue],kNewsApiKey]];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
@@ -130,6 +132,7 @@
 
 }
 
+//This method fetched News from selected sources which are sorted by the selected Filter
 
 -(void)fetchNewsListFromSources:(NSMutableArray*)sources filteredBy:(NSString*)sort AtIndex:(int)index
 {
@@ -137,9 +140,7 @@
     NSDictionary* __block jsonResponse;
     int __block indexValue = index;
     NSString* __block sortBy = sort;
-    //    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue],sort];
-
-    NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&sortBy=%@&apiKey=%@",[sources objectAtIndex:indexValue],sort,kNewsApiKey] ];
+     NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&sortBy=%@&apiKey=%@",[sources objectAtIndex:indexValue],sort,kNewsApiKey] ];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){

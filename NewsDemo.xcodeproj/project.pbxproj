@@ -70,6 +70,15 @@
 		6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
+		E719BE791E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E719BE771E4B3E8B0094F221 /* NDCustomCollectionViewCell.m */; };
+		E719BE7A1E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E719BE771E4B3E8B0094F221 /* NDCustomCollectionViewCell.m */; };
+		E719BE7B1E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E719BE771E4B3E8B0094F221 /* NDCustomCollectionViewCell.m */; };
+		E719BE7C1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E719BE781E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib */; };
+		E719BE7D1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E719BE781E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib */; };
+		E719BE7E1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E719BE781E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib */; };
+		E71E29181E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
+		E71E29191E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
+		E71E291A1E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
 		E75C649A1E44A90C003C6245 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64991E44A90C003C6245 /* main.m */; };
 		E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C649C1E44A90C003C6245 /* AppDelegate.m */; };
 		E75C64A01E44A90C003C6245 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C649F1E44A90C003C6245 /* ViewController.m */; };
@@ -152,6 +161,11 @@
 		6DCE71281E47A848000B30BC /* NDCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomCell.h; sourceTree = "<group>"; };
 		6DCE71291E47A848000B30BC /* NDCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomCell.m; sourceTree = "<group>"; };
 		6DCE712A1E47A848000B30BC /* NDCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomCell.xib; sourceTree = "<group>"; };
+		E719BE761E4B3E8B0094F221 /* NDCustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomCollectionViewCell.h; sourceTree = "<group>"; };
+		E719BE771E4B3E8B0094F221 /* NDCustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomCollectionViewCell.m; sourceTree = "<group>"; };
+		E719BE781E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomCollectionViewCell.xib; sourceTree = "<group>"; };
+		E71E29161E4B3692002BE33A /* NDNewsDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsDetail.h; sourceTree = "<group>"; };
+		E71E29171E4B3692002BE33A /* NDNewsDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsDetail.m; sourceTree = "<group>"; };
 		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		E75C64951E44A90C003C6245 /* NewsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75C64991E44A90C003C6245 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -274,6 +288,8 @@
 				6D8C6C061E46F8E20006D4FF /* NDNewsSources.m */,
 				6DCE71231E47A6C4000B30BC /* NDNewsList.h */,
 				6DCE71241E47A6C4000B30BC /* NDNewsList.m */,
+				E71E29161E4B3692002BE33A /* NDNewsDetail.h */,
+				E71E29171E4B3692002BE33A /* NDNewsDetail.m */,
 				E75C64A11E44A90C003C6245 /* Main.storyboard */,
 				E75C64A71E44A90C003C6245 /* Assets.xcassets */,
 				E75C64A91E44A90C003C6245 /* LaunchScreen.storyboard */,
@@ -341,6 +357,9 @@
 				E7714EF31E488F950065002A /* NDCustomMenu.h */,
 				E7714EF41E488F950065002A /* NDCustomMenu.m */,
 				E7714EEF1E488E310065002A /* NDCustomMenu.xib */,
+				E719BE761E4B3E8B0094F221 /* NDCustomCollectionViewCell.h */,
+				E719BE771E4B3E8B0094F221 /* NDCustomCollectionViewCell.m */,
+				E719BE781E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -471,6 +490,7 @@
 				6D8C6C621E470A1E0006D4FF /* No-image.png in Resources */,
 				E75C64AB1E44A90C003C6245 /* LaunchScreen.storyboard in Resources */,
 				E7714EF01E488E310065002A /* NDCustomMenu.xib in Resources */,
+				E719BE7C1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */,
 				E7714EE31E4865480065002A /* menu.png in Resources */,
 				E75C64A81E44A90C003C6245 /* Assets.xcassets in Resources */,
 				6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */,
@@ -483,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */,
+				E719BE7D1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */,
 				E7714EF11E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C631E470A1E0006D4FF /* No-image.png in Resources */,
 				E7714EE41E4865480065002A /* menu.png in Resources */,
@@ -494,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */,
+				E719BE7E1E4B3E8B0094F221 /* NDCustomCollectionViewCell.xib in Resources */,
 				E7714EF21E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C641E470A1E0006D4FF /* No-image.png in Resources */,
 				E7714EE51E4865480065002A /* menu.png in Resources */,
@@ -516,11 +538,13 @@
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
 				6D8C6C3D1E47043E0006D4FF /* SDWebImageDecoder.m in Sources */,
 				6D8C6C401E47043E0006D4FF /* SDWebImageDownloader.m in Sources */,
+				E71E29181E4B3692002BE33A /* NDNewsDetail.m in Sources */,
 				6D8C6C071E46F8E20006D4FF /* NDNewsSources.m in Sources */,
 				6D8C6C461E47043E0006D4FF /* SDWebImageManager.m in Sources */,
 				6D8C6C5E1E47043E0006D4FF /* UIView+WebCacheOperation.m in Sources */,
 				6D8C6C4C1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C521E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
+				E719BE791E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */,
 				E7714EDF1E484D400065002A /* NDWebServices.m in Sources */,
 				E75C649A1E44A90C003C6245 /* main.m in Sources */,
 				6D8C6C431E47043E0006D4FF /* SDWebImageDownloaderOperation.m in Sources */,
@@ -542,6 +566,7 @@
 				6D8C6C501E47043E0006D4FF /* UIImage+GIF.m in Sources */,
 				6D8C6C411E47043E0006D4FF /* SDWebImageDownloader.m in Sources */,
 				6D8C6C591E47043E0006D4FF /* UIImageView+HighlightedWebCache.m in Sources */,
+				E719BE7A1E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */,
 				6D8C6C4D1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C5C1E47043E0006D4FF /* UIImageView+WebCache.m in Sources */,
 				6D8C6C3E1E47043E0006D4FF /* SDWebImageDecoder.m in Sources */,
@@ -555,6 +580,7 @@
 				6D8C6C441E47043E0006D4FF /* SDWebImageDownloaderOperation.m in Sources */,
 				6DCE71261E47A6C4000B30BC /* NDNewsList.m in Sources */,
 				6D8C6C471E47043E0006D4FF /* SDWebImageManager.m in Sources */,
+				E71E29191E4B3692002BE33A /* NDNewsDetail.m in Sources */,
 				6D8C6C531E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
 				6D8C6C4A1E47043E0006D4FF /* SDWebImagePrefetcher.m in Sources */,
 				E7714EE01E484D400065002A /* NDWebServices.m in Sources */,
@@ -571,6 +597,7 @@
 				6D8C6C511E47043E0006D4FF /* UIImage+GIF.m in Sources */,
 				6D8C6C421E47043E0006D4FF /* SDWebImageDownloader.m in Sources */,
 				6D8C6C5A1E47043E0006D4FF /* UIImageView+HighlightedWebCache.m in Sources */,
+				E719BE7B1E4B3E8B0094F221 /* NDCustomCollectionViewCell.m in Sources */,
 				6D8C6C4E1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C5D1E47043E0006D4FF /* UIImageView+WebCache.m in Sources */,
 				6D8C6C3F1E47043E0006D4FF /* SDWebImageDecoder.m in Sources */,
@@ -584,6 +611,7 @@
 				6D8C6C451E47043E0006D4FF /* SDWebImageDownloaderOperation.m in Sources */,
 				6DCE71271E47A6C4000B30BC /* NDNewsList.m in Sources */,
 				6D8C6C481E47043E0006D4FF /* SDWebImageManager.m in Sources */,
+				E71E291A1E4B3692002BE33A /* NDNewsDetail.m in Sources */,
 				6D8C6C541E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
 				6D8C6C4B1E47043E0006D4FF /* SDWebImagePrefetcher.m in Sources */,
 				E7714EE11E484D400065002A /* NDWebServices.m in Sources */,

@@ -7,6 +7,7 @@
 //
 #import "NDCustomCell.h"
 #import "Define.h"
+#import "NDNewsDetail.h"
 #import "NDCustomMenu.h"
 #import "NDWebServices.h"
 #import "UIImageView+WebCache.h"
@@ -18,6 +19,7 @@
     NSMutableArray* newsListImage;
     NSMutableArray* newsListTitle;
     NSMutableArray* newsListDescription;
+    NSMutableArray* newsListUrl;
     NSString* newsFilterValue;
     UIActivityIndicatorView* activityIndicator;
     UIView* backgroundView;
@@ -47,6 +49,8 @@
 }
 
 #pragma mark IBAction methods
+
+// This method called when any of top 3 buttons gets clicked
 
 - (IBAction)SortNewsClicked:(UIButton*)sender
 {
@@ -99,68 +103,6 @@
 }
 
 
-// This method closes the current View Controller
-
-- (IBAction)doneClicked:(UIButton*)sender
-{
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
-
-// This method open and close the category Options
-
-- (IBAction)menuClicked:(UIButton*)sender
-{
-    
-    
-    NDCustomMenu* backGroundView = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomMenu" owner:self options:nil] objectAtIndex:0];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if(sender.tag == 0)
-        {
-            
-            backGroundView.translatesAutoresizingMaskIntoConstraints=YES;
-            backGroundView.frame=CGRectMake(0, self.menuButton.frame.origin.y+self.menuButton.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
-            [self.view addSubview:backGroundView];
-            self.doneButton.hidden = YES;
-            backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-            backGroundView.tableNewsCategories.backgroundColor=[UIColor whiteColor];
-            backGroundView.tableNewsCategories.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-            backGroundView.tableNewsCategories.delegate=self;
-            backGroundView.tableNewsCategories.dataSource=self;
-            [backGroundView.tableNewsCategories reloadData];
-            gesture =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
-            gesture.direction=UISwipeGestureRecognizerDirectionLeft;
-            [backGroundView.sideView addGestureRecognizer:gesture];
-            sender.tag=1;
-        }
-        else
-        {
-            for(UIView* subview in self.view.subviews)
-            {
-                if([subview isKindOfClass:[NDCustomMenu class]])
-                {
-                    [subview removeFromSuperview];
-                }
-            }
-            
-            self.doneButton.hidden = NO;
-            sender.tag=0;
-
-        }
-}
-                   );
-    
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 # pragma mark Table View Delegates
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -171,26 +113,16 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(tableView.tag==0)
-    {
+    
     return [newsListTitle count];
-    }
-    else
-    {
-        return [_newsCategories count];
-    }
+   
     
 }
 
-
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    
-    if(tableView.tag == 0)
-    {
-       static NSString* cellIdentifier = @"tableViewListCell";
+
+    static NSString* cellIdentifier = @"tableViewListCell";
     NDCustomCell* cell = (NDCustomCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(cell == nil)
@@ -206,52 +138,25 @@
     cell.newsImage.contentMode=UIViewContentModeScaleAspectFit;
     cell.newsDescription.numberOfLines=0;
     return cell;
-    }
-    else
-            {
-        
-        static NSString* cellIdentifier2 = @"newsCategories";
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
-        if(cell == nil)
-        {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
-            
-        }
-        cell.textLabel.text = [[self.newsCategories objectAtIndex:indexPath.row] capitalizedString];
-       cell.backgroundColor = [UIColor whiteColor];
-        return cell;
-    }
     
 
-
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(tableView.tag==0)
-    {
-    }
-    else
-    {
-      [self loadBackgroundView];
-      NDWebServices* sharedObject = [NDWebServices sharedInstance];
-      [sharedObject getNewsListFromSources:self.selectedNewsSources atIndex:0 withMatchingCategory:[[self.newsCategories objectAtIndex:indexPath.row] lowercaseString] filteredBy:newsFilterValue];
-    }
+    
+    UIStoryboard* storyboard= [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NDNewsDetail *newsDetailObj = [storyboard instantiateViewControllerWithIdentifier:@"NewsDetail"];
+    newsDetailObj.newsUrl = [newsListUrl objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:newsDetailObj animated:YES];
+
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(tableView.tag==1)
-    {
-        return 30;
-    }
-    else
-    {
     return 140;
-    }
+    
 }
 
 -(void)newsListReceived:(NSNotification*)info
@@ -274,6 +179,7 @@
         newsListImage= [[ NSMutableArray alloc]init];
         newsListTitle = [[NSMutableArray alloc]init];
         newsListDescription = [[NSMutableArray alloc]init];
+      newsListUrl = [[NSMutableArray alloc]init];
 
     for( int j=0; j<articlesCount; j++)
     {
@@ -281,6 +187,7 @@
       [newsListTitle addObject:[[response objectForKey:@"articles"][j]objectForKey:@"title"] ];
       [newsListImage addObject:[[response objectForKey:@"articles"][j]objectForKey:@"urlToImage"] ];
       [newsListDescription addObject:[[response objectForKey:@"articles"][j]objectForKey:@"description"]];
+        [newsListUrl addObject:[[response objectForKey:@"articles"][j]objectForKey:@"url"]];
     
     }
     
@@ -314,6 +221,9 @@
     [backgroundView removeFromSuperview];
     });
 }
+
+// This methods loads the background screen with Activity Indicator until response received
+
 
 - (void)loadBackgroundView
 {
@@ -358,6 +268,11 @@
     self.doneButton.hidden = NO;
     self.menuButton.tag=0;
 
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 /*
 #pragma mark - Navigation
