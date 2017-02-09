@@ -281,9 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				E7714ED81E484B340065002A /* Classes */,
-				E75C64A11E44A90C003C6245 /* Main.storyboard */,
 				E75C64A71E44A90C003C6245 /* Assets.xcassets */,
-				E75C64A91E44A90C003C6245 /* LaunchScreen.storyboard */,
 				E75C64AC1E44A90C003C6245 /* Info.plist */,
 				E75C64A41E44A90C003C6245 /* NewsDemo.xcdatamodeld */,
 				E75C64981E44A90C003C6245 /* Supporting Files */,
@@ -323,17 +321,12 @@
 			children = (
 				E7714ED91E484B400065002A /* Appdelegate */,
 				E73199D61E4C3AA9003D946D /* Model */,
+				E7C434981E4C662300AAB187 /* View Controllers */,
 				E7714EDA1E484B580065002A /* CustomViews */,
+				E7C4349A1E4C66D600AAB187 /* TableView Cell */,
+				E7C434991E4C668000AAB187 /* Storyboard */,
 				E7714EDB1E484B7D0065002A /* Resources */,
 				6D8C6C0F1E47043E0006D4FF /* SDWebImage */,
-				E75C649E1E44A90C003C6245 /* ViewController.h */,
-				E75C649F1E44A90C003C6245 /* ViewController.m */,
-				6D8C6C051E46F8E20006D4FF /* NDNewsSources.h */,
-				6D8C6C061E46F8E20006D4FF /* NDNewsSources.m */,
-				6DCE71231E47A6C4000B30BC /* NDNewsList.h */,
-				6DCE71241E47A6C4000B30BC /* NDNewsList.m */,
-				E71E29161E4B3692002BE33A /* NDNewsDetail.h */,
-				E71E29171E4B3692002BE33A /* NDNewsDetail.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -350,9 +343,6 @@
 		E7714EDA1E484B580065002A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				6DCE71281E47A848000B30BC /* NDCustomCell.h */,
-				6DCE71291E47A848000B30BC /* NDCustomCell.m */,
-				6DCE712A1E47A848000B30BC /* NDCustomCell.xib */,
 				E7714EF31E488F950065002A /* NDCustomMenu.h */,
 				E7714EF41E488F950065002A /* NDCustomMenu.m */,
 				E7714EEF1E488E310065002A /* NDCustomMenu.xib */,
@@ -375,6 +365,40 @@
 				6D8C6C611E470A1E0006D4FF /* No-image.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		E7C434981E4C662300AAB187 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E75C649E1E44A90C003C6245 /* ViewController.h */,
+				E75C649F1E44A90C003C6245 /* ViewController.m */,
+				6D8C6C051E46F8E20006D4FF /* NDNewsSources.h */,
+				6D8C6C061E46F8E20006D4FF /* NDNewsSources.m */,
+				6DCE71231E47A6C4000B30BC /* NDNewsList.h */,
+				6DCE71241E47A6C4000B30BC /* NDNewsList.m */,
+				E71E29161E4B3692002BE33A /* NDNewsDetail.h */,
+				E71E29171E4B3692002BE33A /* NDNewsDetail.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E7C434991E4C668000AAB187 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				E75C64A11E44A90C003C6245 /* Main.storyboard */,
+				E75C64A91E44A90C003C6245 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		E7C4349A1E4C66D600AAB187 /* TableView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6DCE71281E47A848000B30BC /* NDCustomCell.h */,
+				6DCE71291E47A848000B30BC /* NDCustomCell.m */,
+				6DCE712A1E47A848000B30BC /* NDCustomCell.xib */,
+			);
+			name = "TableView Cell";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

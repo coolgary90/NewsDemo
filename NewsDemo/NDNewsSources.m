@@ -14,20 +14,17 @@
 
 @interface NDNewsSources ()
 {
-    NSDictionary* jsonResponse;
-    NSMutableArray* newsSourcesNames;
-    NSMutableArray* newsSourcesImage;
-    NSMutableArray* newSourcesid;
-    NSMutableArray* newSourcesCategories;
-    NSMutableArray* newSourcesUniqueCategories;
-    NSMutableArray* newsOptions;
+    NSDictionary* _jsonResponse;
+    NSMutableArray* _newsSourcesNames;
+    NSMutableArray* _newsSourcesImage;
+    NSMutableArray* _newsSourcesid;
+    NSMutableArray* _newSourcesCategories;
+    NSMutableArray* _newSourcesUniqueCategories;
+    NSMutableArray* _newsOptions;
     UIActivityIndicatorView* activityIndicator;
     UITapGestureRecognizer* gesture;
     UIView* backgroundView;
     UIBarButtonItem* menu;
-    
-
-    
     
 }
 
@@ -38,13 +35,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    newsSourcesImage = [[NSMutableArray alloc]init];
-    newsSourcesNames = [[NSMutableArray alloc]init];
-    newSourcesid = [[NSMutableArray alloc]init];
-    newSourcesCategories = [[NSMutableArray alloc]init];
-    newsOptions = [[NSMutableArray alloc]init];
-    newSourcesUniqueCategories = [[NSMutableArray alloc]init];
-    jsonResponse = [[NSDictionary alloc]init];
+    _newsSourcesImage = [[NSMutableArray alloc]init];
+    _newsSourcesNames = [[NSMutableArray alloc]init];
+    _newsSourcesid = [[NSMutableArray alloc]init];
+    _newSourcesCategories = [[NSMutableArray alloc]init];
+    _newsOptions = [[NSMutableArray alloc]init];
+    _newSourcesUniqueCategories = [[NSMutableArray alloc]init];
+    _jsonResponse = [[NSDictionary alloc]init];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;
     activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
@@ -58,7 +55,6 @@
     UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
-
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadSources:) name:kNewsSourcesLoadedNotification object:nil];
     
@@ -72,13 +68,13 @@
     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
     for( int j = 0; j<totalSources; j++)
     {
-        [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
-        [newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
-        [newSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
-        [newSourcesCategories addObject:[[response objectForKey:@"sources"][j]objectForKey:@"category"]];
+        [_newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
+        [_newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
+        [_newsSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
+        [_newSourcesCategories addObject:[[response objectForKey:@"sources"][j]objectForKey:@"category"]];
     }
     
-    newSourcesUniqueCategories = [newSourcesCategories valueForKeyPath:kUniqueObjects];
+    _newSourcesUniqueCategories = [_newSourcesCategories valueForKeyPath:kUniqueObjects];
        [self reloadCollectionView];
    
 }
@@ -88,21 +84,20 @@
 {
     
     NSDictionary* response = info.userInfo;
-    newsSourcesNames = [[NSMutableArray alloc]init];
-    newsSourcesImage = [[NSMutableArray alloc]init];
-    newSourcesid = [[NSMutableArray alloc]init];
-    newsOptions = [[NSMutableArray alloc]init];
+    _newsSourcesNames = [[NSMutableArray alloc]init];
+    _newsSourcesImage = [[NSMutableArray alloc]init];
+    _newsSourcesid = [[NSMutableArray alloc]init];
+    _newsOptions = [[NSMutableArray alloc]init];
     
     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
     for( int j = 0; j<totalSources; j++)
     {
-        [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
-        [newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
-        [newSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
+        
+        [_newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
+        [_newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
+        [_newsSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
 
     }
-    
-    
     [self reloadCollectionView];
     
 }
@@ -118,7 +113,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [newsSourcesNames count];
+    return [_newsSourcesNames count];
     
 }
 
@@ -131,11 +126,12 @@
     UIImageView* sourcebackgroundImage = (UIImageView*)[cell viewWithTag:100];
     UILabel* sourceName=(UILabel*)[cell viewWithTag:101];
     sourceName.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    sourceName.text=[newsSourcesNames objectAtIndex:indexPath.row];
-    [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
+    sourceName.text = [_newsSourcesNames objectAtIndex:indexPath.row];
+    [sourceName setFont:[UIFont systemFontOfSize:15]];
+    [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
     [sourcebackgroundImage setContentMode:UIViewContentModeScaleToFill];
     
-    if([newsOptions containsObject:[newSourcesid objectAtIndex:indexPath.row]])
+    if([_newsOptions containsObject:[_newsSourcesid objectAtIndex:indexPath.row]])
     {
         cell.layer.borderColor = [UIColor blueColor].CGColor;
         cell.layer.borderWidth = 3.0;
@@ -159,7 +155,7 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blueColor].CGColor;
     cell.layer.borderWidth = 3.0;
-    [newsOptions addObject:[newSourcesid objectAtIndex:indexPath.row]];
+    [_newsOptions addObject:[_newsSourcesid objectAtIndex:indexPath.row]];
     
 }
 
@@ -169,31 +165,78 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor clearColor].CGColor;
     cell.layer.borderWidth = 0.0;
-    [newsOptions removeObject:[newSourcesid objectAtIndex:indexPath.row]];
+    [_newsOptions removeObject:[_newsSourcesid objectAtIndex:indexPath.row]];
 
 }
+
+
+
+
+# pragma mark TableView Delegates
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+    
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+return [_newSourcesUniqueCategories count];
+       
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+       static NSString* cellIdentifier = @"newsCategories";
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if(cell == nil)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            
+        }
+        cell.textLabel.text = [[_newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
+        cell.textLabel.numberOfLines=0;
+        [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
+        cell.backgroundColor = [UIColor whiteColor];
+        return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        [self loadBackgroundView];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:kCategorizeSourcesLoadedNotification object:nil];
+        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadNewSources:) name:kCategorizeSourcesLoadedNotification object:nil];
+        NDWebServices* sharedObject = [NDWebServices sharedInstance];
+        [sharedObject getNewsSourcesWithCategory:[_newSourcesUniqueCategories objectAtIndex:indexPath.row]];
+    
+}
+
+
 
 #pragma mark IBActions
 
 //This method is responsible for navigating to next View Controller which loads News from Selected  Sources
 
- - (IBAction)continueClicked:(id)sender
+- (IBAction)continueClicked:(id)sender
 {
-    if([newsOptions count]<2)
+    if([_newsOptions count]<2)
     {
         
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:KAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     }
     else
     {
         UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
         NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
-        newsListObj.selectedNewsSources = newsOptions ;
-        newsListObj.newsCategories = newSourcesUniqueCategories;
+        newsListObj.selectedNewsSources = _newsOptions ;
+        newsListObj.newsCategories = _newSourcesUniqueCategories;
         [self.navigationController pushViewController:newsListObj animated:YES];
         
     }
@@ -228,13 +271,12 @@
             gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
             [backGroundView.sideView addGestureRecognizer:gesture];
             sender.tag=1;
-            
             NSString * _versionNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
             NSString* _buildNumber = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-            NSString* sBuildInfo = [NSString stringWithFormat:@"V%@ (%@)", _versionNumber, _buildNumber];
+            NSString* _BuildInfo = [NSString stringWithFormat:@"V%@ (%@)", _versionNumber, _buildNumber];
             
-            backGroundView.appVersion.text = sBuildInfo;
-
+            backGroundView.appVersion.text = _BuildInfo;
+            
         }
         else
         {
@@ -254,48 +296,6 @@
     
 }
 
-
-
-# pragma mark TableView Delegates
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-    
-}
-
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-return [newSourcesUniqueCategories count];
-   
-    
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-       static NSString* cellIdentifier = @"newsCategories";
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if(cell == nil)
-        {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            
-        }
-        cell.textLabel.text = [[newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
-        cell.backgroundColor = [UIColor whiteColor];
-        return cell;
-    
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-        [self loadBackgroundView];
-        [[NSNotificationCenter defaultCenter]removeObserver:self name:kCategorizeSourcesLoadedNotification object:nil];
-        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadNewSources:) name:kCategorizeSourcesLoadedNotification object:nil];
-        NDWebServices* sharedObject = [NDWebServices sharedInstance];
-        [sharedObject getNewsSourcesWithCategory:[newSourcesUniqueCategories objectAtIndex:indexPath.row]];
-    
-}
 
 
 #pragma mark Custom Methods

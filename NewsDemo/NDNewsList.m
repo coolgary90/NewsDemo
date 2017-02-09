@@ -15,12 +15,12 @@
 
 @interface NDNewsList ()
 {
-    NSDictionary* jsonResponse;
-    NSMutableArray* newsListImage;
-    NSMutableArray* newsListTitle;
-    NSMutableArray* newsListDescription;
-    NSMutableArray* newsListUrl;
-    NSString* newsFilterValue;
+    NSDictionary* _jsonResponse;
+    NSMutableArray* _newsListImage;
+    NSMutableArray* _newsListTitle;
+    NSMutableArray* _newsListDescription;
+    NSMutableArray* _newsListUrl;
+    NSString* _newsFilterValue;
     UIActivityIndicatorView* activityIndicator;
     UIView* backgroundView;
     UISwipeGestureRecognizer* gesture;
@@ -36,7 +36,7 @@
     
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
     [sharedObject getNewsListFromSources:self.selectedNewsSources];
-    newsFilterValue = kTopNews;
+    _newsFilterValue = kTopNews;
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center = self.view.center;
     activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
@@ -65,31 +65,31 @@
     NSUInteger tagValue = sender.tag;
     if(tagValue == 0)
     {
-        newsFilterValue = kTopNews;
+        _newsFilterValue = kTopNews;
         self.topFilterButton.backgroundColor = kColorSelectedFilter;
         self.latestFilterButton.backgroundColor = kColorUnSelectedFilter;
         self.popularFilterButton.backgroundColor = kColorUnSelectedFilter;
-        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:_newsFilterValue];
         
         
     }
     else if (tagValue == 1)
     {
-        newsFilterValue = kLatestNews;
+        _newsFilterValue = kLatestNews;
         self.topFilterButton.backgroundColor = kColorUnSelectedFilter;
         self.latestFilterButton.backgroundColor = kColorSelectedFilter;
         self.popularFilterButton.backgroundColor = kColorUnSelectedFilter;
-        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:_newsFilterValue];
 
 
     }
     else if (tagValue == 2)
     {
-        newsFilterValue = kPopularNews;
+        _newsFilterValue = kPopularNews;
         self.topFilterButton.backgroundColor = kColorUnSelectedFilter;
         self.latestFilterButton.backgroundColor = kColorUnSelectedFilter;
         self.popularFilterButton.backgroundColor = kColorSelectedFilter;
-        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:newsFilterValue];
+        [sharedObject getNewsListFromSources:self.selectedNewsSources filterBy:_newsFilterValue];
 
 
 
@@ -108,7 +108,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [newsListTitle count];
+    return [_newsListTitle count];
    
     
 }
@@ -124,9 +124,9 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomCell" owner:self options:nil] objectAtIndex:0];
         
     }
-    cell.newsTitle.text = [newsListTitle objectAtIndex:indexPath.row];
-    cell.newsDescription.text = [newsListDescription objectAtIndex:indexPath.row];
-    [cell.newsImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsListImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
+    cell.newsTitle.text = [_newsListTitle objectAtIndex:indexPath.row];
+    cell.newsDescription.text = [_newsListDescription objectAtIndex:indexPath.row];
+    [cell.newsImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsListImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
     cell.newsTitle.numberOfLines = 0;
     [cell.newsTitle adjustsFontSizeToFitWidth];
     cell.newsImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -141,7 +141,7 @@
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:kMain bundle:nil];
     NDNewsDetail *newsDetailObj = [storyboard instantiateViewControllerWithIdentifier:@"NewsDetail"];
-    newsDetailObj.newsUrl = [newsListUrl objectAtIndex:indexPath.row];
+    newsDetailObj.newsUrl = [_newsListUrl objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:newsDetailObj animated:YES];
 
     
@@ -152,6 +152,13 @@
     return 150;
     
 }
+
+
+
+#pragma mark Custom Methods
+
+
+// This method called when NSNotification with name kNewsListLoadedNotification fired after fetching data from service
 
 -( void)newsListReceived:(NSNotification*)info
 {
@@ -164,39 +171,28 @@
    }
   else
   {
-        newsListImage= [[ NSMutableArray alloc]init];
-        newsListTitle = [[NSMutableArray alloc]init];
-        newsListDescription = [[NSMutableArray alloc]init];
-        newsListUrl = [[NSMutableArray alloc]init];
+        _newsListImage= [[ NSMutableArray alloc]init];
+        _newsListTitle = [[NSMutableArray alloc]init];
+        _newsListDescription = [[NSMutableArray alloc]init];
+        _newsListUrl = [[NSMutableArray alloc]init];
 
     for( int j = 0; j<articlesCount; j++)
     {
         
-      [newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
-      [newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
-      [newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
-      [newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
+      [_newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
+      [_newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
+      [_newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
+      [_newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
     
     }
     
-     dispatch_async(dispatch_get_main_queue(), ^
-    {
-     [activityIndicator startAnimating];
-     [activityIndicator removeFromSuperview];
-     [backgroundView removeFromSuperview];
-     self.topFilterButton.enabled = YES;
-     self.popularFilterButton.enabled = YES;
-     self.latestFilterButton.enabled = YES;
-     self.tableViewNewsList.delegate = self;
-     self.tableViewNewsList.dataSource = self;
-     self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
-     [self.tableViewNewsList reloadData];
-    });
-                   
+      [self loadingFetchedNews];
 
    }
    
 }
+
+
 
 //This method display Alert to user that No news Available with selected filter
 
@@ -216,6 +212,8 @@
     [backgroundView removeFromSuperview];
     });
 }
+
+
 
 // This method loads the background view until News get fetched
 
@@ -241,10 +239,35 @@
 }
 
 
+//This method loads the fetched News in TableView
+
+- (void)loadingFetchedNews
+{
+    
+dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [activityIndicator startAnimating];
+        [activityIndicator removeFromSuperview];
+        [backgroundView removeFromSuperview];
+        self.topFilterButton.enabled = YES;
+        self.popularFilterButton.enabled = YES;
+        self.latestFilterButton.enabled = YES;
+        self.tableViewNewsList.delegate = self;
+        self.tableViewNewsList.dataSource = self;
+        self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
+        [self.tableViewNewsList reloadData];
+    });
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
 
 //-(void)newsListReceived:(NSNotification*)info
 //{
