@@ -34,7 +34,7 @@
     NSDictionary* __block jsonResponse;
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:KNewsSourcesUrl] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
+    NSURLSessionDataTask* dataTask = [session dataTaskWithURL:[NSURL URLWithString:KNewsSourcesUrl] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
     if(error == nil)
     {
     jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -49,7 +49,7 @@
 
 // This method fetched News Sources from particular category
 
-- (void)getNewsSourcesWithCategory:(NSString*)category
+- (void) getNewsSourcesWithCategory:(NSString*)category
 
 {
     NSDictionary* __block jsonResponse;
@@ -67,7 +67,7 @@
     [dataTask resume];
 }
 
--(void)getNewsListFromSources:(NSMutableArray*)sources;
+- (void) getNewsListFromSources:(NSMutableArray*)sources;
 
 {
     newsSourceSelected = [[NSMutableArray alloc]init];
@@ -77,9 +77,9 @@
     
 }
 
-//This method fetched list of News from selected Sources
+//This method fetched list of News from selected Sources and fire NSNotification when News from all sources get fetched
 
-- (void)startFetchNewsListFromSources:(NSMutableArray*)sources Atindex:(int)index;
+- (void) startFetchNewsListFromSources:(NSMutableArray*)sources Atindex:(int)index;
 {
     
     
@@ -128,13 +128,13 @@
     newsSourceSelected = [[NSMutableArray alloc]init];
     fetchedArticles = [[NSMutableArray alloc]init];
     [newsSourceSelected addObjectsFromArray:sources];
-    [self fetchNewsListFromSources:sources filteredBy:sort AtIndex:0];
+    [self fetchNewsListFromSources:sources sortedBy:sort AtIndex:0];
 
 }
 
-//This method fetched News from selected sources which are sorted by the selected Filter
+//This method fetched News from selected sources which are sorted by the selected Filter and then fire NSNotification
 
--(void)fetchNewsListFromSources:(NSMutableArray*)sources filteredBy:(NSString*)sort AtIndex:(int)index
+-(void)fetchNewsListFromSources:(NSMutableArray*)sources sortedBy:(NSString*)sort AtIndex:(int)index
 {
     
     NSDictionary* __block jsonResponse;
@@ -160,7 +160,7 @@
             indexValue++;
             if(indexValue<[newsSourceSelected count])
             {
-                [self fetchNewsListFromSources:newsSourceSelected filteredBy:sortBy AtIndex:indexValue];
+                [self fetchNewsListFromSources:newsSourceSelected sortedBy:sortBy AtIndex:indexValue];
             }
             else
             {
@@ -177,67 +177,6 @@
     [dataTask resume];
 
 }
-
-
-
-
-- (void)getNewsListFromSources:(NSMutableArray*)sources atIndex:(int)index withMatchingCategory:(NSString*)category filteredBy:(NSString*)sort
-
-
-{
-    
-    NSDictionary* __block jsonResponse;
-    int __block indexValue =index;
-    NSString* urlString = [NSString stringWithFormat:@"https://newsapi.org/v1/articles?source=%@&category=%@&sortBy=%@&apiKey=589e9375eca54120bc116e72ae1d9eeb",[sources objectAtIndex:indexValue],category,sort];
-    
-    NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
-        
-        if(error == nil)
-        {
-            NSMutableDictionary* receivedArticles = [[NSMutableDictionary alloc]init];
-            jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-            
-            if(![[jsonResponse objectForKey:KNewsStatus] isEqualToString:kNewsError])
-            {
-                [receivedArticles setObject:[jsonResponse objectForKey:kNewsArticles] forKey:kNewsArticles];
-                
-                for( int i=0; i<[[receivedArticles objectForKey:kNewsArticles] count]; i++)
-                {
-                    [fetchedArticles addObject:[receivedArticles objectForKey:kNewsArticles][i]];
-                    
-                }
-            }
-            indexValue++;
-            if(indexValue<[newsSourceSelected count])
-                
-            {
-                [self getNewsListFromSources:sources atIndex:indexValue withMatchingCategory:category filteredBy:sort];
-                
-            }
-            else
-            {
-                NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
-                if(fetchedArticles)
-                {
-                    [dict setObject:fetchedArticles forKey:kNewsArticles];
-                }
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:dict];
-                
-            }
-            
-        }
-    }];
-    [dataTask resume];
-
-    
-}
-
-
-
-
 
 
 

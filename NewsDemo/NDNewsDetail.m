@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     
-    self.webView.delegate=self;
+    self.webView.delegate = self;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.newsUrl]]];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center=self.view.center;

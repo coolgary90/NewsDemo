@@ -24,6 +24,7 @@
     UIActivityIndicatorView* activityIndicator;
     UIView* backgroundView;
     UISwipeGestureRecognizer* gesture;
+   
 }
 
 @end
@@ -35,9 +36,9 @@
     
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
     [sharedObject getNewsListFromSources:self.selectedNewsSources];
-    newsFilterValue=kTopNews;
+    newsFilterValue = kTopNews;
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.center=self.view.center;
+    activityIndicator.center = self.view.center;
     activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
     activityIndicator.color = [UIColor blueColor];
     [self.view addSubview:activityIndicator];
@@ -45,6 +46,9 @@
     self.tableViewNewsList.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
+    self.topFilterButton.enabled=NO;
+    self.popularFilterButton.enabled=NO;
+    self.latestFilterButton.enabled=NO;
 
 }
 
@@ -54,17 +58,7 @@
 
 - (IBAction)SortNewsClicked:(UIButton*)sender
 {
-    backgroundView.translatesAutoresizingMaskIntoConstraints = YES;
-    backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    backgroundView.center= self.view.center;
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.center=self.view.center;
-    activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
-    activityIndicator.color = [UIColor blueColor];
-    [backgroundView addSubview:activityIndicator];
-    [self.view addSubview:backgroundView];
-    [activityIndicator startAnimating];
+    [self loadBackGroundView];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
@@ -130,13 +124,13 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomCell" owner:self options:nil] objectAtIndex:0];
         
     }
-    cell.newsTitle.text=[newsListTitle objectAtIndex:indexPath.row];
-    cell.newsDescription.text=[newsListDescription objectAtIndex:indexPath.row];
+    cell.newsTitle.text = [newsListTitle objectAtIndex:indexPath.row];
+    cell.newsDescription.text = [newsListDescription objectAtIndex:indexPath.row];
     [cell.newsImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsListImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
-    cell.newsTitle.numberOfLines=0;
+    cell.newsTitle.numberOfLines = 0;
     [cell.newsTitle adjustsFontSizeToFitWidth];
-    cell.newsImage.contentMode=UIViewContentModeScaleAspectFit;
-    cell.newsDescription.numberOfLines=0;
+    cell.newsImage.contentMode = UIViewContentModeScaleAspectFit;
+    cell.newsDescription.numberOfLines = 0;
     return cell;
     
 
@@ -145,7 +139,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UIStoryboard* storyboard= [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:kMain bundle:nil];
     NDNewsDetail *newsDetailObj = [storyboard instantiateViewControllerWithIdentifier:@"NewsDetail"];
     newsDetailObj.newsUrl = [newsListUrl objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:newsDetailObj animated:YES];
@@ -155,20 +149,14 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 140;
+    return 150;
     
 }
 
--(void)newsListReceived:(NSNotification*)info
+-( void)newsListReceived:(NSNotification*)info
 {
-    
-    [self reloadSources:info.userInfo];
-}
-
--( void)reloadSources:(NSDictionary*)response
-{
-    
-   NSUInteger articlesCount = [[response objectForKey:@"articles"] count];
+   NSDictionary* response = info.userInfo;
+   NSUInteger articlesCount = [[response objectForKey:kNewsArticles] count];
    if(articlesCount == 0)
    {
         
@@ -179,27 +167,30 @@
         newsListImage= [[ NSMutableArray alloc]init];
         newsListTitle = [[NSMutableArray alloc]init];
         newsListDescription = [[NSMutableArray alloc]init];
-      newsListUrl = [[NSMutableArray alloc]init];
+        newsListUrl = [[NSMutableArray alloc]init];
 
-    for( int j=0; j<articlesCount; j++)
+    for( int j = 0; j<articlesCount; j++)
     {
         
-      [newsListTitle addObject:[[response objectForKey:@"articles"][j]objectForKey:@"title"] ];
-      [newsListImage addObject:[[response objectForKey:@"articles"][j]objectForKey:@"urlToImage"] ];
-      [newsListDescription addObject:[[response objectForKey:@"articles"][j]objectForKey:@"description"]];
-        [newsListUrl addObject:[[response objectForKey:@"articles"][j]objectForKey:@"url"]];
+      [newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
+      [newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
+      [newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
+      [newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
     
     }
     
      dispatch_async(dispatch_get_main_queue(), ^
     {
-    [activityIndicator startAnimating];
-    [activityIndicator removeFromSuperview];
-    [backgroundView removeFromSuperview];
-    self.tableViewNewsList.delegate=self;
-    self.tableViewNewsList.dataSource=self;
-    self.tableViewNewsList.rowHeight=UITableViewAutomaticDimension;
-    [self.tableViewNewsList reloadData];
+     [activityIndicator startAnimating];
+     [activityIndicator removeFromSuperview];
+     [backgroundView removeFromSuperview];
+     self.topFilterButton.enabled = YES;
+     self.popularFilterButton.enabled = YES;
+     self.latestFilterButton.enabled = YES;
+     self.tableViewNewsList.delegate = self;
+     self.tableViewNewsList.dataSource = self;
+     self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
+     [self.tableViewNewsList reloadData];
     });
                    
 
@@ -207,9 +198,13 @@
    
 }
 
+//This method display Alert to user that No news Available with selected filter
+
 - (void)displayAlert
 {
-    
+    self.topFilterButton.enabled = YES;
+    self.popularFilterButton.enabled = YES;
+    self.latestFilterButton.enabled = YES;
    UIAlertController* alert = [UIAlertController alertControllerWithTitle:kAlertOops message:KAlertNoNews preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
@@ -222,58 +217,41 @@
     });
 }
 
-// This methods loads the background screen with Activity Indicator until response received
+// This method loads the background view until News get fetched
 
-
-- (void)loadBackgroundView
+ - (void)loadBackGroundView
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        for(UIView* subview in self.view.subviews)
-        {
-            if([subview isKindOfClass:[NDCustomMenu class]])
-            {
-                [subview removeFromSuperview];
-            }
-        }
-        backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
-        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        self.topFilterButton.enabled = NO;
+        self.popularFilterButton.enabled = NO;
+        self.latestFilterButton.enabled = NO;
+        
+        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height)];
         backgroundView.center= self.view.center;
+        backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.center=self.view.center;
-        
-        activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
+        activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
         activityIndicator.color = [UIColor blueColor];
         [backgroundView addSubview:activityIndicator];
         [self.view addSubview:backgroundView];
         [activityIndicator startAnimating];
-        _menuButton.tag=0;
-        [_doneButton setHidden:NO];
-        
-        
     });
 
 }
 
--(void)removeCustomMenu
-{
-    
-    for(UIView* subview in self.view.subviews)
-    {
-        if([subview isKindOfClass:[NDCustomMenu class]])
-        {
-            [subview removeFromSuperview];
-        }
-    }
-    self.doneButton.hidden = NO;
-    self.menuButton.tag=0;
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//-(void)newsListReceived:(NSNotification*)info
+//{
+//
+//    [self reloadSources:info.userInfo];
+//}
+
 /*
 #pragma mark - Navigation
 

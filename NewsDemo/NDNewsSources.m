@@ -6,7 +6,6 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "UIImageView+WebCache.h"
-#import "NDCustomCollectionViewCell.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
 #import "NDWebServices.h"
@@ -23,7 +22,7 @@
     NSMutableArray* newSourcesUniqueCategories;
     NSMutableArray* newsOptions;
     UIActivityIndicatorView* activityIndicator;
-    UISwipeGestureRecognizer* gesture;
+    UITapGestureRecognizer* gesture;
     UIView* backgroundView;
     UIBarButtonItem* menu;
     
@@ -54,12 +53,12 @@
     [activityIndicator startAnimating];
     
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
-     [sharedObject getNewsSources];                                  // Fetching list of News Sources
+     [sharedObject getNewsSources];                            // Fetching list of News Sources
     
     UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
-//    [menu setEnabled:NO];
+
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadSources:) name:kNewsSourcesLoadedNotification object:nil];
     
@@ -89,11 +88,12 @@
 {
     
     NSDictionary* response = info.userInfo;
-    newsSourcesNames = [[ NSMutableArray alloc]init];
-    newsSourcesImage = [[ NSMutableArray alloc]init];
-    newSourcesid = [[ NSMutableArray alloc]init];
-    newSourcesCategories = [[ NSMutableArray alloc]init];
-     NSUInteger totalSources = [[response objectForKey:@"sources"] count];
+    newsSourcesNames = [[NSMutableArray alloc]init];
+    newsSourcesImage = [[NSMutableArray alloc]init];
+    newSourcesid = [[NSMutableArray alloc]init];
+    newsOptions = [[NSMutableArray alloc]init];
+    
+    NSUInteger totalSources = [[response objectForKey:@"sources"] count];
     for( int j = 0; j<totalSources; j++)
     {
         [newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
@@ -134,6 +134,17 @@
     sourceName.text=[newsSourcesNames objectAtIndex:indexPath.row];
     [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
     [sourcebackgroundImage setContentMode:UIViewContentModeScaleToFill];
+    
+    if([newsOptions containsObject:[newSourcesid objectAtIndex:indexPath.row]])
+    {
+        cell.layer.borderColor = [UIColor blueColor].CGColor;
+        cell.layer.borderWidth = 3.0;
+    }
+    else
+    {
+        cell.layer.borderColor = [UIColor clearColor].CGColor;
+        cell.layer.borderWidth = 0.0;
+    }
     return cell;
     
     
@@ -147,7 +158,7 @@
     
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blueColor].CGColor;
-    cell.layer.borderWidth = 2.0;
+    cell.layer.borderWidth = 3.0;
     [newsOptions addObject:[newSourcesid objectAtIndex:indexPath.row]];
     
 }
@@ -206,7 +217,7 @@
         {
             
             backGroundView.translatesAutoresizingMaskIntoConstraints=YES;
-            backGroundView.frame=CGRectMake(0, self.navigationController.navigationBar.frame.size.height+20, self.view.frame.size.width, self.view.frame.size.height);
+            backGroundView.frame = CGRectMake(0, self.header.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
             [self.view addSubview:backGroundView];
             backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
             backGroundView.tableNewsCategories.backgroundColor=[UIColor whiteColor];
@@ -214,10 +225,16 @@
             backGroundView.tableNewsCategories.delegate=self;
             backGroundView.tableNewsCategories.dataSource=self;
             [backGroundView.tableNewsCategories reloadData];
-            gesture =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
-            gesture.direction=UISwipeGestureRecognizerDirectionLeft;
+            gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
             [backGroundView.sideView addGestureRecognizer:gesture];
             sender.tag=1;
+            
+            NSString * _versionNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+            NSString* _buildNumber = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+            NSString* sBuildInfo = [NSString stringWithFormat:@"V%@ (%@)", _versionNumber, _buildNumber];
+            
+            backGroundView.appVersion.text = sBuildInfo;
+
         }
         else
         {
@@ -296,7 +313,7 @@ return [newSourcesUniqueCategories count];
             }
         }
         backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
-        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, self.header.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         backgroundView.center= self.view.center;
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -345,6 +362,8 @@ dispatch_async(dispatch_get_main_queue(), ^
             [subview removeFromSuperview];
         }
     }
+    
+    menu.tag=0;
 
     
 }

@@ -13,21 +13,11 @@
 
 +(NDWebServices*)sharedInstance;
 
--(void)getNewsSources;
-
-- (void)getNewsSourcesWithCategory:(NSString*)category;
--(void)getNewsListFromSources:(NSMutableArray*)sources;
--(void)getNewsListFromSources:(NSMutableArray*)sources filterBy:(NSString*)sort;
-- (void)getNewsListFromSources:(NSMutableArray*)sources atIndex:(int)index withMatchingCategory:(NSString*)category filteredBy:(NSString*)sort;
--(void)fetchNewsListFromSources:(NSMutableArray*) filteredBy:(NSString*)sort AtIndex:(int)index;
-- (void)startFetchNewsListFromSources:(NSMutableArray*)sourceName Atindex:(int)index;
-
-//-(void)getNewsList:(NSString*)newsSource;
-//-(void)getNewsListSortedBy:(NSString*)newsSource sortedBy:(NSString*)sort;
-
-
-
-
-
+- (void) getNewsSources;
+- (void) getNewsSourcesWithCategory:(NSString*)category;
+- (void) getNewsListFromSources:(NSMutableArray*)sources;
+- (void) startFetchNewsListFromSources:(NSMutableArray*)sourceName Atindex:(int)index;
+- (void) getNewsListFromSources:(NSMutableArray*)sources filterBy:(NSString*)sort;
+- (void) fetchNewsListFromSources:(NSMutableArray*) sortedBy:(NSString*)sort AtIndex:(int)index;
 
 @end

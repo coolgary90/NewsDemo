@@ -11,5 +11,7 @@
 @interface NDCustomMenu : UIView
 @property (weak, nonatomic) IBOutlet UITableView *tableNewsCategories;
 @property (weak, nonatomic) IBOutlet UIView *sideView;
+@property (weak, nonatomic) IBOutlet UILabel *appVersion;
+
 
 @end

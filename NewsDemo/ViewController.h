@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property(weak,nonatomic) IBOutlet UILabel* welcomeAppMessage;
+@property(weak,nonatomic) IBOutlet UILabel* AppDescription;
+
 
 @end
 

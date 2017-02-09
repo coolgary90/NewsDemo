@@ -10,7 +10,7 @@
 #define Define_h
 
 
-#define KAlertMinimumSourceSelection @"Please select atleast 3 to continue..."
+#define KAlertMinimumSourceSelection @"Please select atleast 2 to continue..."
 #define kAlertOk @"Ok"
 #define KAlertNoNews @"No news available for this category"
 #define kAlertOops @"Oops..."
@@ -18,7 +18,6 @@
 #define kNewsListLoadedNotification @"NewsListLoaded"
 #define kNewsSourcesLoadedNotification @"SourceListLoaded"
 #define kCategorizeSourcesLoadedNotification @"CatagorizeSourceListLoaded"
-
 #define kPlaceHolderImage @"No-image.png"
 #define kSources @"sources";
 #define kName @"name"
@@ -33,6 +32,15 @@
 #define kNewsApiKey @"589e9375eca54120bc116e72ae1d9eeb"
 #define KNewsStatus @"status"
 #define kNewsError @"error"
+#ifdef DEBUG
+#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#define DLog(...)
+#endif
+
+#define kwelcomeMessage @"Welcome to News"
+#define kAppDescription @"The best stories from the sources you love , selected just for you. The more you need, the more personalized your News become"
+
 
 #define kColorSelectedFilter  [UIColor colorWithRed:0.0/255.0 green:77.0/255.0 blue:159.0/255.0 alpha:1.0]
 #define kColorUnSelectedFilter  [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]
