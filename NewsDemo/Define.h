@@ -37,7 +37,6 @@
 #else
 #define DLog(...)
 #endif
-
 #define kwelcomeMessage @"Welcome to News"
 #define kAppDescription @"The best stories from the sources you love , selected just for you. The more you need, the more personalized your News become"
 

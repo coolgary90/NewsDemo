@@ -58,7 +58,7 @@
 
 - (IBAction)SortNewsClicked:(UIButton*)sender
 {
-    [self loadBackGroundView];
+    [self loadBackGroundView];                                       
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
