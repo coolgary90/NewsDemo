@@ -52,7 +52,7 @@
     NDWebServices* sharedObject = [NDWebServices sharedInstance];
      [sharedObject getNewsSources];                            // Fetching list of News Sources
     
-    UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *image = [[UIImage imageNamed:@"menu5.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
@@ -138,8 +138,8 @@
     }
     else
     {
-        cell.layer.borderColor = [UIColor clearColor].CGColor;
-        cell.layer.borderWidth = 0.0;
+        cell.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.layer.borderWidth = 1.0;
     }
     return cell;
     
@@ -313,9 +313,8 @@ return [_newSourcesUniqueCategories count];
             }
         }
         backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
-        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, self.header.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
+        backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        backgroundView.center= self.view.center;
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.center=self.view.center;
         

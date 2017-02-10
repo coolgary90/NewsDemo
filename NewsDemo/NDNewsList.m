@@ -129,7 +129,7 @@
     [cell.newsImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsListImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
     cell.newsTitle.numberOfLines = 0;
     [cell.newsTitle adjustsFontSizeToFitWidth];
-    cell.newsImage.contentMode = UIViewContentModeScaleAspectFit;
+    cell.newsImage.contentMode = UIViewContentModeScaleToFill;
     cell.newsDescription.numberOfLines = 0;
     return cell;
     
@@ -146,6 +146,7 @@
 
     
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -178,11 +179,14 @@
 
     for( int j = 0; j<articlesCount; j++)
     {
-        
-      [_newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
-      [_newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
-      [_newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
-      [_newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
+        if(![[[response objectForKey:kNewsArticles][j]objectForKey:@"description"] isEqual:[NSNull null]])
+        {
+            [_newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
+            [_newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
+            [_newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
+            [_newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
+        }
+     
     
     }
     
@@ -225,7 +229,6 @@
         self.latestFilterButton.enabled = NO;
         
         backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height)];
-        backgroundView.center= self.view.center;
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.center=self.view.center;

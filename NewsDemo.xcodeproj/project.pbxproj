@@ -94,6 +94,15 @@
 		E7714EF51E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
 		E7714EF61E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
 		E7714EF71E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
+		E7C4349C1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
+		E7C4349D1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
+		E7C4349E1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
+		E7C434A01E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
+		E7C434A11E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
+		E7C434A21E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
+		E7C434A41E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
+		E7C434A51E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
+		E7C434A61E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +190,9 @@
 		E7714EEF1E488E310065002A /* NDCustomMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomMenu.xib; sourceTree = "<group>"; };
 		E7714EF31E488F950065002A /* NDCustomMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomMenu.h; sourceTree = "<group>"; };
 		E7714EF41E488F950065002A /* NDCustomMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomMenu.m; sourceTree = "<group>"; };
+		E7C4349B1E4C963000AAB187 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
+		E7C4349F1E4C970D00AAB187 /* menu3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu3.png; sourceTree = "<group>"; };
+		E7C434A31E4C991C00AAB187 /* menu5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu5.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +373,9 @@
 		E7714EDC1E484B900065002A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E7C434A31E4C991C00AAB187 /* menu5.png */,
+				E7C4349B1E4C963000AAB187 /* menu2.png */,
+				E7C4349F1E4C970D00AAB187 /* menu3.png */,
 				E7714EE21E4865480065002A /* menu.png */,
 				6D8C6C611E470A1E0006D4FF /* No-image.png */,
 			);
@@ -507,12 +522,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7C434A01E4C970D00AAB187 /* menu3.png in Resources */,
 				6D8C6C621E470A1E0006D4FF /* No-image.png in Resources */,
 				E75C64AB1E44A90C003C6245 /* LaunchScreen.storyboard in Resources */,
 				E7714EF01E488E310065002A /* NDCustomMenu.xib in Resources */,
+				E7C4349C1E4C963000AAB187 /* menu2.png in Resources */,
 				E7714EE31E4865480065002A /* menu.png in Resources */,
 				E75C64A81E44A90C003C6245 /* Assets.xcassets in Resources */,
 				6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */,
+				E7C434A41E4C991C00AAB187 /* menu5.png in Resources */,
 				E75C64A31E44A90C003C6245 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,10 +539,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7C434A11E4C970D00AAB187 /* menu3.png in Resources */,
+				E7C434A51E4C991C00AAB187 /* menu5.png in Resources */,
 				6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */,
 				E7714EF11E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C631E470A1E0006D4FF /* No-image.png in Resources */,
 				E7714EE41E4865480065002A /* menu.png in Resources */,
+				E7C4349D1E4C963000AAB187 /* menu2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,10 +553,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7C434A21E4C970D00AAB187 /* menu3.png in Resources */,
+				E7C434A61E4C991C00AAB187 /* menu5.png in Resources */,
 				6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */,
 				E7714EF21E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C641E470A1E0006D4FF /* No-image.png in Resources */,
 				E7714EE51E4865480065002A /* menu.png in Resources */,
+				E7C4349E1E4C963000AAB187 /* menu2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
