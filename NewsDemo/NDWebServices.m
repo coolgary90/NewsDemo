@@ -34,7 +34,7 @@
     NSDictionary* __block jsonResponse;
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
-    NSURLSessionDataTask* dataTask = [session dataTaskWithURL:[NSURL URLWithString:KNewsSourcesUrl] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
+    NSURLSessionDataTask* dataTask = [session dataTaskWithURL:[NSURL URLWithString:kNewsSourcesUrl] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
     if(error == nil)
     {
     jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -53,7 +53,7 @@
 
 {
     NSDictionary* __block jsonResponse;
-    NSString* Urlstring = [KNewsSourcesUrl stringByAppendingString:[NSString stringWithFormat:@"&category=%@",category]];
+    NSString* Urlstring = [kNewsSourcesUrl stringByAppendingString:[NSString stringWithFormat:@"&category=%@",category]];
     NSURLSessionConfiguration* defaultConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:defaultConfiguration];
     NSURLSessionDataTask* dataTask = [ session dataTaskWithURL:[NSURL URLWithString:Urlstring] completionHandler: ^(NSData* data , NSURLResponse* response , NSError* error){
@@ -149,7 +149,7 @@
         {
 
             jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            if(![[jsonResponse objectForKey:KNewsStatus] isEqualToString:kNewsError])
+            if(![[jsonResponse objectForKey:kNewsStatus] isEqualToString:kNewsError])
             {
                 for( int i = 0; i<[[jsonResponse objectForKey:kNewsArticles] count]; i++)
                 {

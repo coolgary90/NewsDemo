@@ -49,6 +49,7 @@
     self.topFilterButton.enabled=NO;
     self.popularFilterButton.enabled=NO;
     self.latestFilterButton.enabled=NO;
+    
 
 }
 
@@ -124,6 +125,7 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"NDCustomCell" owner:self options:nil] objectAtIndex:0];
         
     }
+    [cell.newsTitle setFont:[UIFont fontWithName:@"Helvetica-BoldOblique" size:16]];
     cell.newsTitle.text = [_newsListTitle objectAtIndex:indexPath.row];
     cell.newsDescription.text = [_newsListDescription objectAtIndex:indexPath.row];
     [cell.newsImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsListImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
@@ -131,6 +133,7 @@
     [cell.newsTitle adjustsFontSizeToFitWidth];
     cell.newsImage.contentMode = UIViewContentModeScaleToFill;
     cell.newsDescription.numberOfLines = 0;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
 
@@ -179,12 +182,12 @@
 
     for( int j = 0; j<articlesCount; j++)
     {
-        if(![[[response objectForKey:kNewsArticles][j]objectForKey:@"description"] isEqual:[NSNull null]])
+        if(![[[response objectForKey:kNewsArticles][j]objectForKey:kNewsDescription] isEqual:[NSNull null]])
         {
-            [_newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"title"] ];
-            [_newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"urlToImage"] ];
-            [_newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"description"]];
-            [_newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:@"url"]];
+            [_newsListTitle addObject:[[response objectForKey:kNewsArticles][j]objectForKey:kNewsTitle] ];
+            [_newsListImage addObject:[[response objectForKey:kNewsArticles][j]objectForKey:kNewsUrlToImage] ];
+            [_newsListDescription addObject:[[response objectForKey:kNewsArticles][j]objectForKey:kNewsDescription]];
+            [_newsListUrl addObject:[[response objectForKey:kNewsArticles][j]objectForKey:kNewsUrl]];
         }
      
     
@@ -205,7 +208,7 @@
     self.topFilterButton.enabled = YES;
     self.popularFilterButton.enabled = YES;
     self.latestFilterButton.enabled = YES;
-   UIAlertController* alert = [UIAlertController alertControllerWithTitle:kAlertOops message:KAlertNoNews preferredStyle:UIAlertControllerStyleAlert];
+   UIAlertController* alert = [UIAlertController alertControllerWithTitle:kAlertOops message:kAlertNoNews preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];

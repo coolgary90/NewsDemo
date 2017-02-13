@@ -5,6 +5,7 @@
 //  Created by Amanpreet singh on 05/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
+
 #import "UIImageView+WebCache.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
@@ -65,13 +66,13 @@
 {
     
     NSDictionary* response = info.userInfo;
-    NSUInteger totalSources = [[response objectForKey:@"sources"] count];
+    NSUInteger totalSources = [[response objectForKey:kSources] count];
     for( int j = 0; j<totalSources; j++)
     {
-        [_newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
-        [_newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
-        [_newsSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
-        [_newSourcesCategories addObject:[[response objectForKey:@"sources"][j]objectForKey:@"category"]];
+        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
+        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
+        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
+        [_newSourcesCategories addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesCategory]];
     }
     
     _newSourcesUniqueCategories = [_newSourcesCategories valueForKeyPath:kUniqueObjects];
@@ -89,13 +90,13 @@
     _newsSourcesid = [[NSMutableArray alloc]init];
     _newsOptions = [[NSMutableArray alloc]init];
     
-    NSUInteger totalSources = [[response objectForKey:@"sources"] count];
+    NSUInteger totalSources = [[response objectForKey:kSources] count];
     for( int j = 0; j<totalSources; j++)
     {
         
-        [_newsSourcesNames addObject:[[response objectForKey:@"sources"][j]objectForKey:@"name"] ];
-        [_newsSourcesImage addObject:[[[response objectForKey:@"sources"][j]objectForKey:@"urlsToLogos"] objectForKey:@"small"]];
-        [_newsSourcesid addObject:[[response objectForKey:@"sources"][j]objectForKey:@"id"]];
+        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
+        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
+        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
 
     }
     [self reloadCollectionView];
@@ -117,7 +118,18 @@
     
 }
 
-
+ -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+   if(IS_IPHONE_5)
+   {
+     return CGSizeMake(125, 125);
+    
+   }
+   else
+   {
+     return CGSizeMake(162, 138);
+    }
+}
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -130,7 +142,6 @@
     [sourceName setFont:[UIFont systemFontOfSize:15]];
     [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
     [sourcebackgroundImage setContentMode:UIViewContentModeScaleToFill];
-    
     if([_newsOptions containsObject:[_newsSourcesid objectAtIndex:indexPath.row]])
     {
         cell.layer.borderColor = [UIColor blueColor].CGColor;
@@ -142,9 +153,6 @@
         cell.layer.borderWidth = 1.0;
     }
     return cell;
-    
-    
-    
     
 }
 
@@ -163,8 +171,8 @@
 {
     
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderColor = [UIColor clearColor].CGColor;
-    cell.layer.borderWidth = 0.0;
+    cell.layer.borderColor = [UIColor blackColor].CGColor;
+    cell.layer.borderWidth = 1.0;
     [_newsOptions removeObject:[_newsSourcesid objectAtIndex:indexPath.row]];
 
 }
@@ -198,7 +206,7 @@ return [_newSourcesUniqueCategories count];
         }
         cell.textLabel.text = [[_newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
         cell.textLabel.numberOfLines=0;
-        [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
+        [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.backgroundColor = [UIColor whiteColor];
         return cell;
     
@@ -225,7 +233,7 @@ return [_newSourcesUniqueCategories count];
     if([_newsOptions count]<2)
     {
         
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:KAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:kAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
@@ -259,7 +267,7 @@ return [_newSourcesUniqueCategories count];
         if(sender.tag == 0)
         {
             
-            backGroundView.translatesAutoresizingMaskIntoConstraints=YES;
+            backGroundView.translatesAutoresizingMaskIntoConstraints = YES;
             backGroundView.frame = CGRectMake(0, self.header.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
             [self.view addSubview:backGroundView];
             backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
