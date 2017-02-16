@@ -5,27 +5,27 @@
 //  Created by Amanpreet singh on 05/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-
+#import "CustomCollectionViewCell.h"
+#import "SourceElement.h"
 #import "UIImageView+WebCache.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
 #import "NDWebServices.h"
 #import "NDNewsList.h"
+#import "DataManager.h"
 #import "NDNewsSources.h"
 
 @interface NDNewsSources ()
 {
-    NSDictionary* _jsonResponse;
-    NSMutableArray* _newsSourcesNames;
-    NSMutableArray* _newsSourcesImage;
-    NSMutableArray* _newsSourcesid;
-    NSMutableArray* _newSourcesCategories;
+    
     NSMutableArray* _newSourcesUniqueCategories;
     NSMutableArray* _newsOptions;
-    UIActivityIndicatorView* activityIndicator;
+    NSMutableArray* _newsSourcesArray;
+    UIActivityIndicatorView* customActivityIndicator;
     UITapGestureRecognizer* gesture;
     UIView* backgroundView;
     UIBarButtonItem* menu;
+    
     
 }
 
@@ -35,74 +35,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _newsSourcesImage = [[NSMutableArray alloc]init];
-    _newsSourcesNames = [[NSMutableArray alloc]init];
-    _newsSourcesid = [[NSMutableArray alloc]init];
-    _newSourcesCategories = [[NSMutableArray alloc]init];
+    _newsSourcesArray = [[NSMutableArray alloc]init];
     _newsOptions = [[NSMutableArray alloc]init];
     _newSourcesUniqueCategories = [[NSMutableArray alloc]init];
-    _jsonResponse = [[NSDictionary alloc]init];
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.center=self.view.center;
-    activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
-    activityIndicator.color = [UIColor blueColor];
-    [self.view addSubview:activityIndicator];
-    [activityIndicator startAnimating];
+
+    [self.view bringSubviewToFront:self.activityIndicator];
+    self.activityIndicator.color = [UIColor blueColor];
+    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
+    [self.activityIndicator startAnimating];
+    self.collectionView.allowsMultipleSelection=YES;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CustomCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CollectionCell"];
     
-    NDWebServices* sharedObject = [NDWebServices sharedInstance];
-     [sharedObject getNewsSources];                            // Fetching list of News Sources
-    
+    [self fetchNewsSources];
     UIImage *image = [[UIImage imageNamed:@"menu5.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsSourcesLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadSources:) name:kNewsSourcesLoadedNotification object:nil];
     
 }
 
 
--( void)reloadSources:(NSNotification*)info
-{
-    
-    NSDictionary* response = info.userInfo;
-    NSUInteger totalSources = [[response objectForKey:kSources] count];
-    for( int j = 0; j<totalSources; j++)
-    {
-        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
-        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
-        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
-        [_newSourcesCategories addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesCategory]];
-    }
-    
-    _newSourcesUniqueCategories = [_newSourcesCategories valueForKeyPath:kUniqueObjects];
-       [self reloadCollectionView];
-   
-}
 
-
--(void)reloadNewSources:(NSNotification*)info
+- (void)fetchNewsSources
 {
-    
-    NSDictionary* response = info.userInfo;
-    _newsSourcesNames = [[NSMutableArray alloc]init];
-    _newsSourcesImage = [[NSMutableArray alloc]init];
-    _newsSourcesid = [[NSMutableArray alloc]init];
-    _newsOptions = [[NSMutableArray alloc]init];
-    
-    NSUInteger totalSources = [[response objectForKey:kSources] count];
-    for( int j = 0; j<totalSources; j++)
-    {
+    DataManager* dataManagerObj = [DataManager sharedInstance];
+    [dataManagerObj getNewsList:^(NSMutableArray* newsSourceList){
         
-        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
-        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
-        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
-
-    }
-    [self reloadCollectionView];
-    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            _newsSourcesArray = newsSourceList;
+            [self.activityIndicator stopAnimating];
+            [self.activityIndicator setHidden:YES];
+            
+            [self.collectionView reloadData];
+        });
+    }];
 }
-
 
 # pragma mark CollectionView Delegates
 
@@ -114,7 +81,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [_newsSourcesNames count];
+    return [_newsSourcesArray count];
     
 }
 
@@ -133,26 +100,24 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString* cellIdentifier = @"collectionViewCell";
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    UIImageView* sourcebackgroundImage = (UIImageView*)[cell viewWithTag:100];
-    UILabel* sourceName=(UILabel*)[cell viewWithTag:101];
-    sourceName.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    sourceName.text = [_newsSourcesNames objectAtIndex:indexPath.row];
-    [sourceName setFont:[UIFont systemFontOfSize:15]];
-    [sourcebackgroundImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[_newsSourcesImage objectAtIndex:indexPath.row]]] placeholderImage:[UIImage imageNamed:kPlaceHolderImage]];
-    [sourcebackgroundImage setContentMode:UIViewContentModeScaleToFill];
-    if([_newsOptions containsObject:[_newsSourcesid objectAtIndex:indexPath.row]])
-    {
-        cell.layer.borderColor = [UIColor blueColor].CGColor;
-        cell.layer.borderWidth = 3.0;
-    }
-    else
-    {
-        cell.layer.borderColor = [UIColor blackColor].CGColor;
-        cell.layer.borderWidth = 1.0;
-    }
-    return cell;
+    static NSString* cellIdentifier = @"CollectionCell";
+    CustomCollectionViewCell* customCollectionViewCell =(CustomCollectionViewCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    [customCollectionViewCell loadCellData:sourceElementObj];
+    if([_newsOptions containsObject:sourceElementObj.sourceID ])
+        {
+            customCollectionViewCell.layer.borderColor = [UIColor blueColor].CGColor;
+            customCollectionViewCell.layer.borderWidth = 3.0;
+        }
+        else
+        {
+            customCollectionViewCell.layer.borderColor = [UIColor blackColor].CGColor;
+            customCollectionViewCell.layer.borderWidth = 1.0;
+        }
+
+    
+    return customCollectionViewCell;
+
     
 }
 
@@ -163,7 +128,9 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blueColor].CGColor;
     cell.layer.borderWidth = 3.0;
-    [_newsOptions addObject:[_newsSourcesid objectAtIndex:indexPath.row]];
+    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    
+    [_newsOptions addObject:sourceElementObj.sourceID];
     
 }
 
@@ -173,7 +140,8 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blackColor].CGColor;
     cell.layer.borderWidth = 1.0;
-    [_newsOptions removeObject:[_newsSourcesid objectAtIndex:indexPath.row]];
+    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    [_newsOptions removeObject:sourceElementObj.sourceID];
 
 }
 
@@ -190,8 +158,9 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-return [_newSourcesUniqueCategories count];
-       
+    
+    return [[[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories]count];
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -204,7 +173,8 @@ return [_newSourcesUniqueCategories count];
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             
         }
-        cell.textLabel.text = [[_newSourcesUniqueCategories objectAtIndex:indexPath.row] capitalizedString];
+       cell.textLabel.text =[[[[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] capitalizedString];
+    
         cell.textLabel.numberOfLines=0;
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.backgroundColor = [UIColor whiteColor];
@@ -214,11 +184,22 @@ return [_newSourcesUniqueCategories count];
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        [self loadBackgroundView];
-        [[NSNotificationCenter defaultCenter]removeObserver:self name:kCategorizeSourcesLoadedNotification object:nil];
-        [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(reloadNewSources:) name:kCategorizeSourcesLoadedNotification object:nil];
-        NDWebServices* sharedObject = [NDWebServices sharedInstance];
-        [sharedObject getNewsSourcesWithCategory:[_newSourcesUniqueCategories objectAtIndex:indexPath.row]];
+    [self loadBackgroundView];
+    [self.activityIndicator setHidden:NO];
+    [self.activityIndicator startAnimating];
+    DataManager* dataManagerObj = [DataManager sharedInstance];
+    [dataManagerObj getNewsListWithCategory:[[[[NSUserDefaults standardUserDefaults] objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] lowercaseString]withCompetionHandler:^(NSMutableArray* newSourceList){
+        dispatch_async(dispatch_get_main_queue(), ^{
+        _newsSourcesArray = [[NSMutableArray alloc]init];
+        _newsSourcesArray = newSourceList;
+            [self.activityIndicator stopAnimating];
+            [self.activityIndicator setHidden:YES];
+            [self reloadCollectionView];
+//            [self.collectionView reloadData];
+        });
+
+        
+    }];
     
 }
 
@@ -323,14 +304,10 @@ return [_newSourcesUniqueCategories count];
         backgroundView.translatesAutoresizingMaskIntoConstraints=YES;
         backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activityIndicator.center=self.view.center;
-        
-        activityIndicator.transform=CGAffineTransformMakeScale(2.0, 2.0);
-        activityIndicator.color = [UIColor blueColor];
-        [backgroundView addSubview:activityIndicator];
         [self.view addSubview:backgroundView];
-        [activityIndicator startAnimating];
+        [self.view bringSubviewToFront:self.activityIndicator];
+        [self.activityIndicator setHidden:NO];
+        [self.activityIndicator startAnimating];
         menu.tag=0;
 
     });
@@ -345,8 +322,7 @@ return [_newSourcesUniqueCategories count];
     
 dispatch_async(dispatch_get_main_queue(), ^
 {
-    [activityIndicator stopAnimating];
-    [activityIndicator removeFromSuperview];
+
     [backgroundView removeFromSuperview];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -376,7 +352,46 @@ dispatch_async(dispatch_get_main_queue(), ^
 }
 
 
+//-( void)reloadSources:(NSNotification*)info
+//{
+//
+//    NSDictionary* response = info.userInfo;
+//    NSUInteger totalSources = [[response objectForKey:kSources] count];
+//    for( int j = 0; j<totalSources; j++)
+//    {
+//        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
+//        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
+//        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
+//        [_newSourcesCategories addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesCategory]];
+//    }
+//
+//    _newSourcesUniqueCategories = [_newSourcesCategories valueForKeyPath:kUniqueObjects];
+//       [self reloadCollectionView];
+//
+//}
 
+
+//-(void)reloadNewSources:(NSNotification*)info
+//{
+//
+//    NSDictionary* response = info.userInfo;
+//    _newsSourcesNames = [[NSMutableArray alloc]init];
+//    _newsSourcesImage = [[NSMutableArray alloc]init];
+//    _newsSourcesid = [[NSMutableArray alloc]init];
+//    _newsOptions = [[NSMutableArray alloc]init];
+//
+//    NSUInteger totalSources = [[response objectForKey:kSources] count];
+//    for( int j = 0; j<totalSources; j++)
+//    {
+//
+//        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
+//        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
+//        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
+//
+//    }
+//    [self reloadCollectionView];
+//
+//}
 
     
 /*

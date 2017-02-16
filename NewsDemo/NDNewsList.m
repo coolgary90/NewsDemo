@@ -6,6 +6,7 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "NDCustomCell.h"
+#import "DataManager.h"
 #import "Define.h"
 #import "NDNewsDetail.h"
 #import "NDCustomMenu.h"
@@ -16,6 +17,7 @@
 @interface NDNewsList ()
 {
     NSDictionary* _jsonResponse;
+    NSMutableArray* _newsList;
     NSMutableArray* _newsListImage;
     NSMutableArray* _newsListTitle;
     NSMutableArray* _newsListDescription;
@@ -34,8 +36,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NDWebServices* sharedObject = [NDWebServices sharedInstance];
-    [sharedObject getNewsListFromSources:self.selectedNewsSources];
+    _newsList  =[[ NSMutableArray alloc]init];
+    DataManager* dataManagerObj =[DataManager sharedInstance];
+    
+    
+    [dataManagerObj getNewsListFromSources:self.selectedNewsSources withCompletionHandler:^(NSMutableArray* receivedNewsList){
+        
+        _newsList=receivedNewsList;
+        
+    }];
+    
+//    NDWebServices* sharedObject = [NDWebServices sharedInstance];
+//    [sharedObject getNewsListFromSources:self.selectedNewsSources];
     _newsFilterValue = kTopNews;
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center = self.view.center;
@@ -44,8 +56,8 @@
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
     self.tableViewNewsList.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNewsListLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(newsListReceived:) name:kNewsListLoadedNotification object:nil];
     self.topFilterButton.enabled=NO;
     self.popularFilterButton.enabled=NO;
     self.latestFilterButton.enabled=NO;
