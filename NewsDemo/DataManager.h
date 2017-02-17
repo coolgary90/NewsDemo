@@ -16,22 +16,7 @@
 
 + (DataManager*) sharedInstance;
 
-// Media API
-//- (void) getCategoryListwithCallback:(void (^)(NSArray* categoryList))callback;
-//
-//- (void) getVideoListforCategory:(NSString*)category
-//                    withCallback:(void (^)(CategoryBasedData* categoryBasedData))callback;
-//// News Feed API
-//- (void) getFeedListwithCallback:(void(^)(NSArray* feedList)) callback;
-//
-//// User API
-////- (void) sendSignUpRequestWithDetails:(SignUpForm*)signUpForm
-////                         withCallback:(void (^)(WebServiceResponse *response))callback;
-//
-//- (void) sendLogInRequestWithDetails:(NSDictionary*)dict
-//                        withCallback:(void (^)(WebServiceResponse* user))callback;
-//- (void) sendLogOutRequest:(void (^)(WebServiceResponse* response))callback;
-//- (void) sendRefreshRequestWithCallback:(void (^)(WebServiceResponse* response))callback;
+
 
 
 

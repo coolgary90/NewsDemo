@@ -31,6 +31,7 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    
     dispatch_async(dispatch_get_main_queue(), ^
     {
         [self.activityIndicator stopAnimating];

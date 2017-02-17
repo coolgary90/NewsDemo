@@ -213,6 +213,7 @@
 {
 	if (data) {
 		NSString *responseString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"%@",responseString);
 //		MFLogDEBUGINFO(@"Response String # %@",responseString);
 	}
 }
