@@ -5,7 +5,7 @@
 //  Created by Amanpreet singh on 06/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-
+#import "NewsListElement.h"
 #import <UIKit/UIKit.h>
 
 @interface NDCustomCell : UITableViewCell
@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel* newsDescription;
 @property (weak, nonatomic) IBOutlet UIImageView* newsImage;
 
+
+-(void)loadCellData:(NewsListElement*)newsList;
 @end

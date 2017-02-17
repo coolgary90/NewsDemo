@@ -13,12 +13,13 @@
 @property(strong, nonatomic) NSMutableArray* newsCategories;
 @property(strong, nonatomic) NSMutableArray* selectedNewsSources;
 
-@property(strong, nonatomic) IBOutlet UITableView* tableViewNewsList;
-@property(strong, nonatomic) IBOutlet UITableView* tableViewNewsCategories;
-@property(strong, nonatomic) IBOutlet UIView* backGroundView;
-@property(strong, nonatomic) IBOutlet UIButton* topFilterButton;
-@property(strong, nonatomic) IBOutlet UIButton* latestFilterButton;
-@property(strong, nonatomic) IBOutlet UIButton* popularFilterButton;
+@property(weak, nonatomic) IBOutlet UITableView* tableViewNewsList;
+@property(weak, nonatomic) IBOutlet UITableView* tableViewNewsCategories;
+@property(weak, nonatomic) IBOutlet UIView* backGroundView;
+@property(weak, nonatomic) IBOutlet UIButton* topFilterButton;
+@property(weak, nonatomic) IBOutlet UIButton* latestFilterButton;
+@property(weak, nonatomic) IBOutlet UIButton* popularFilterButton;
+@property(weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
 
 
 

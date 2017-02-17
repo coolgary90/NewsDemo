@@ -9,9 +9,6 @@
 #import "NDNewsDetail.h"
 
 @interface NDNewsDetail ()
-{
-    UIActivityIndicatorView* activityIndicator;
-}
 
 @end
 
@@ -20,15 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    self.webView.delegate = self;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.newsUrl]]];
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.center=self.view.center;
-    activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
-    activityIndicator.color = [UIColor blueColor];
-    [self.view addSubview:activityIndicator];
-    [activityIndicator startAnimating];
+    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
+    [self.view bringSubviewToFront:self.activityIndicator];
+    [self.activityIndicator startAnimating];
     
     // Do any additional setup after loading the view.
 }
@@ -41,8 +33,8 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     dispatch_async(dispatch_get_main_queue(), ^
     {
-        [activityIndicator stopAnimating];
-        [activityIndicator removeFromSuperview];
+        [self.activityIndicator stopAnimating];
+        [self.activityIndicator setHidden:YES];
         
     }
     );

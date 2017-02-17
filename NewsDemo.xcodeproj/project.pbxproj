@@ -73,24 +73,12 @@
 		E71E29181E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
 		E71E29191E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
 		E71E291A1E4B3692002BE33A /* NDNewsDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetail.m */; };
-		E73FF3561E557C9500348C4C /* CategoryBasedData.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3451E557C9500348C4C /* CategoryBasedData.m */; };
-		E73FF3571E557C9500348C4C /* CategoryBasedData.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3451E557C9500348C4C /* CategoryBasedData.m */; };
-		E73FF3581E557C9500348C4C /* CategoryBasedData.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3451E557C9500348C4C /* CategoryBasedData.m */; };
 		E73FF3591E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
 		E73FF35A1E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
 		E73FF35B1E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
-		E73FF35C1E557C9500348C4C /* ICreativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3491E557C9500348C4C /* ICreativeViewController.m */; };
-		E73FF35D1E557C9500348C4C /* ICreativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3491E557C9500348C4C /* ICreativeViewController.m */; };
-		E73FF35E1E557C9500348C4C /* ICreativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3491E557C9500348C4C /* ICreativeViewController.m */; };
-		E73FF35F1E557C9500348C4C /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34B1E557C9500348C4C /* Media.m */; };
-		E73FF3601E557C9500348C4C /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34B1E557C9500348C4C /* Media.m */; };
-		E73FF3611E557C9500348C4C /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34B1E557C9500348C4C /* Media.m */; };
 		E73FF3621E557C9500348C4C /* MFLog.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34D1E557C9500348C4C /* MFLog.m */; };
 		E73FF3631E557C9500348C4C /* MFLog.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34D1E557C9500348C4C /* MFLog.m */; };
 		E73FF3641E557C9500348C4C /* MFLog.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34D1E557C9500348C4C /* MFLog.m */; };
-		E73FF3651E557C9500348C4C /* SubCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34F1E557C9500348C4C /* SubCategory.m */; };
-		E73FF3661E557C9500348C4C /* SubCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34F1E557C9500348C4C /* SubCategory.m */; };
-		E73FF3671E557C9500348C4C /* SubCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF34F1E557C9500348C4C /* SubCategory.m */; };
 		E73FF3681E557C9500348C4C /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3511E557C9500348C4C /* UIUtils.m */; };
 		E73FF3691E557C9500348C4C /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3511E557C9500348C4C /* UIUtils.m */; };
 		E73FF36A1E557C9500348C4C /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3511E557C9500348C4C /* UIUtils.m */; };
@@ -121,27 +109,18 @@
 		E75C64AB1E44A90C003C6245 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75C64A91E44A90C003C6245 /* LaunchScreen.storyboard */; };
 		E75C64B61E44A90D003C6245 /* NewsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64B51E44A90D003C6245 /* NewsDemoTests.m */; };
 		E75C64C11E44A90D003C6245 /* NewsDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64C01E44A90D003C6245 /* NewsDemoUITests.m */; };
-		E7714EDF1E484D400065002A /* NDWebServices.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EDE1E484D400065002A /* NDWebServices.m */; };
-		E7714EE01E484D400065002A /* NDWebServices.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EDE1E484D400065002A /* NDWebServices.m */; };
-		E7714EE11E484D400065002A /* NDWebServices.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EDE1E484D400065002A /* NDWebServices.m */; };
-		E7714EE31E4865480065002A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7714EE21E4865480065002A /* menu.png */; };
-		E7714EE41E4865480065002A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7714EE21E4865480065002A /* menu.png */; };
-		E7714EE51E4865480065002A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7714EE21E4865480065002A /* menu.png */; };
+		E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
+		E75DEBA51E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
+		E75DEBA61E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
 		E7714EF01E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
 		E7714EF11E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
 		E7714EF21E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
 		E7714EF51E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
 		E7714EF61E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
 		E7714EF71E488F950065002A /* NDCustomMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E7714EF41E488F950065002A /* NDCustomMenu.m */; };
-		E7C4349C1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
-		E7C4349D1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
-		E7C4349E1E4C963000AAB187 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349B1E4C963000AAB187 /* menu2.png */; };
-		E7C434A01E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
-		E7C434A11E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
-		E7C434A21E4C970D00AAB187 /* menu3.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C4349F1E4C970D00AAB187 /* menu3.png */; };
-		E7C434A41E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
-		E7C434A51E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
-		E7C434A61E4C991C00AAB187 /* menu5.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu5.png */; };
+		E7C434A41E4C991C00AAB187 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu.png */; };
+		E7C434A51E4C991C00AAB187 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu.png */; };
+		E7C434A61E4C991C00AAB187 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E7C434A31E4C991C00AAB187 /* menu.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,18 +185,10 @@
 		E71E29161E4B3692002BE33A /* NDNewsDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsDetail.h; sourceTree = "<group>"; };
 		E71E29171E4B3692002BE33A /* NDNewsDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsDetail.m; sourceTree = "<group>"; };
 		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
-		E73FF3441E557C9500348C4C /* CategoryBasedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryBasedData.h; sourceTree = "<group>"; };
-		E73FF3451E557C9500348C4C /* CategoryBasedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryBasedData.m; sourceTree = "<group>"; };
 		E73FF3461E557C9500348C4C /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		E73FF3471E557C9500348C4C /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
-		E73FF3481E557C9500348C4C /* ICreativeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICreativeViewController.h; sourceTree = "<group>"; };
-		E73FF3491E557C9500348C4C /* ICreativeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICreativeViewController.m; sourceTree = "<group>"; };
-		E73FF34A1E557C9500348C4C /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
-		E73FF34B1E557C9500348C4C /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
 		E73FF34C1E557C9500348C4C /* MFLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFLog.h; sourceTree = "<group>"; };
 		E73FF34D1E557C9500348C4C /* MFLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFLog.m; sourceTree = "<group>"; };
-		E73FF34E1E557C9500348C4C /* SubCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategory.h; sourceTree = "<group>"; };
-		E73FF34F1E557C9500348C4C /* SubCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategory.m; sourceTree = "<group>"; };
 		E73FF3501E557C9500348C4C /* UIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIUtils.h; sourceTree = "<group>"; };
 		E73FF3511E557C9500348C4C /* UIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIUtils.m; sourceTree = "<group>"; };
 		E73FF3521E557C9500348C4C /* WebServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServiceManager.h; sourceTree = "<group>"; };
@@ -248,15 +219,12 @@
 		E75C64BC1E44A90D003C6245 /* NewsDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75C64C01E44A90D003C6245 /* NewsDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsDemoUITests.m; sourceTree = "<group>"; };
 		E75C64C21E44A90D003C6245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E7714EDD1E484D400065002A /* NDWebServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDWebServices.h; sourceTree = "<group>"; };
-		E7714EDE1E484D400065002A /* NDWebServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDWebServices.m; sourceTree = "<group>"; };
-		E7714EE21E4865480065002A /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		E75DEBA21E56D05E0084665B /* NewsListElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsListElement.h; sourceTree = "<group>"; };
+		E75DEBA31E56D05E0084665B /* NewsListElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsListElement.m; sourceTree = "<group>"; };
 		E7714EEF1E488E310065002A /* NDCustomMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomMenu.xib; sourceTree = "<group>"; };
 		E7714EF31E488F950065002A /* NDCustomMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomMenu.h; sourceTree = "<group>"; };
 		E7714EF41E488F950065002A /* NDCustomMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomMenu.m; sourceTree = "<group>"; };
-		E7C4349B1E4C963000AAB187 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
-		E7C4349F1E4C970D00AAB187 /* menu3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu3.png; sourceTree = "<group>"; };
-		E7C434A31E4C991C00AAB187 /* menu5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu5.png; sourceTree = "<group>"; };
+		E7C434A31E4C991C00AAB187 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,22 +295,14 @@
 		E73199D61E4C3AA9003D946D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E73FF3841E55B5F500348C4C /* SourceCategories.h */,
-				E73FF3851E55B5F500348C4C /* SourceCategories.m */,
-				E7714EDD1E484D400065002A /* NDWebServices.h */,
-				E7714EDE1E484D400065002A /* NDWebServices.m */,
 				E73FF3711E55883D00348C4C /* SourceElement.h */,
 				E73FF3721E55883D00348C4C /* SourceElement.m */,
-				E73FF3441E557C9500348C4C /* CategoryBasedData.h */,
-				E73FF3451E557C9500348C4C /* CategoryBasedData.m */,
-				E73FF3481E557C9500348C4C /* ICreativeViewController.h */,
-				E73FF3491E557C9500348C4C /* ICreativeViewController.m */,
-				E73FF34A1E557C9500348C4C /* Media.h */,
-				E73FF34B1E557C9500348C4C /* Media.m */,
+				E73FF3841E55B5F500348C4C /* SourceCategories.h */,
+				E73FF3851E55B5F500348C4C /* SourceCategories.m */,
+				E75DEBA21E56D05E0084665B /* NewsListElement.h */,
+				E75DEBA31E56D05E0084665B /* NewsListElement.m */,
 				E73FF34C1E557C9500348C4C /* MFLog.h */,
 				E73FF34D1E557C9500348C4C /* MFLog.m */,
-				E73FF34E1E557C9500348C4C /* SubCategory.h */,
-				E73FF34F1E557C9500348C4C /* SubCategory.m */,
 				E73FF3501E557C9500348C4C /* UIUtils.h */,
 				E73FF3511E557C9500348C4C /* UIUtils.m */,
 				E73FF3521E557C9500348C4C /* WebServiceManager.h */,
@@ -424,8 +384,8 @@
 		E7714ED81E484B340065002A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E73FF3891E55C48200348C4C /* Data Manager */,
 				E7714ED91E484B400065002A /* Appdelegate */,
+				E73FF3891E55C48200348C4C /* Data Manager */,
 				E73199D61E4C3AA9003D946D /* Model */,
 				E7C434981E4C662300AAB187 /* View Controllers */,
 				E7714EDA1E484B580065002A /* CustomViews */,
@@ -467,10 +427,7 @@
 		E7714EDC1E484B900065002A /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				E7C434A31E4C991C00AAB187 /* menu5.png */,
-				E7C4349B1E4C963000AAB187 /* menu2.png */,
-				E7C4349F1E4C970D00AAB187 /* menu3.png */,
-				E7714EE21E4865480065002A /* menu.png */,
+				E7C434A31E4C991C00AAB187 /* menu.png */,
 				6D8C6C611E470A1E0006D4FF /* No-image.png */,
 			);
 			name = Images;
@@ -619,15 +576,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7C434A01E4C970D00AAB187 /* menu3.png in Resources */,
 				6D8C6C621E470A1E0006D4FF /* No-image.png in Resources */,
 				E75C64AB1E44A90C003C6245 /* LaunchScreen.storyboard in Resources */,
 				E7714EF01E488E310065002A /* NDCustomMenu.xib in Resources */,
-				E7C4349C1E4C963000AAB187 /* menu2.png in Resources */,
-				E7714EE31E4865480065002A /* menu.png in Resources */,
 				E75C64A81E44A90C003C6245 /* Assets.xcassets in Resources */,
 				6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */,
-				E7C434A41E4C991C00AAB187 /* menu5.png in Resources */,
+				E7C434A41E4C991C00AAB187 /* menu.png in Resources */,
 				E73FF3811E55955800348C4C /* CustomCollectionViewCell.xib in Resources */,
 				E75C64A31E44A90C003C6245 /* Main.storyboard in Resources */,
 			);
@@ -637,13 +591,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7C434A11E4C970D00AAB187 /* menu3.png in Resources */,
-				E7C434A51E4C991C00AAB187 /* menu5.png in Resources */,
+				E7C434A51E4C991C00AAB187 /* menu.png in Resources */,
 				6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */,
 				E7714EF11E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C631E470A1E0006D4FF /* No-image.png in Resources */,
-				E7714EE41E4865480065002A /* menu.png in Resources */,
-				E7C4349D1E4C963000AAB187 /* menu2.png in Resources */,
 				E73FF3821E55955800348C4C /* CustomCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,13 +603,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7C434A21E4C970D00AAB187 /* menu3.png in Resources */,
-				E7C434A61E4C991C00AAB187 /* menu5.png in Resources */,
+				E7C434A61E4C991C00AAB187 /* menu.png in Resources */,
 				6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */,
 				E7714EF21E488E310065002A /* NDCustomMenu.xib in Resources */,
 				6D8C6C641E470A1E0006D4FF /* No-image.png in Resources */,
-				E7714EE51E4865480065002A /* menu.png in Resources */,
-				E7C4349E1E4C963000AAB187 /* menu2.png in Resources */,
 				E73FF3831E55955800348C4C /* CustomCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,10 +624,10 @@
 				6D8C6C581E47043E0006D4FF /* UIImageView+HighlightedWebCache.m in Sources */,
 				E73FF37E1E55955800348C4C /* CustomCollectionViewCell.m in Sources */,
 				6DCE71251E47A6C4000B30BC /* NDNewsList.m in Sources */,
+				E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */,
 				6D8C6C5B1E47043E0006D4FF /* UIImageView+WebCache.m in Sources */,
 				6D8C6C551E47043E0006D4FF /* UIImage+WebP.m in Sources */,
 				6D8C6C491E47043E0006D4FF /* SDWebImagePrefetcher.m in Sources */,
-				E73FF35F1E557C9500348C4C /* Media.m in Sources */,
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
 				E73FF3731E55883D00348C4C /* SourceElement.m in Sources */,
 				E73FF3681E557C9500348C4C /* UIUtils.m in Sources */,
@@ -691,10 +639,8 @@
 				6D8C6C071E46F8E20006D4FF /* NDNewsSources.m in Sources */,
 				6D8C6C461E47043E0006D4FF /* SDWebImageManager.m in Sources */,
 				6D8C6C5E1E47043E0006D4FF /* UIView+WebCacheOperation.m in Sources */,
-				E73FF3651E557C9500348C4C /* SubCategory.m in Sources */,
 				6D8C6C4C1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C521E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
-				E7714EDF1E484D400065002A /* NDWebServices.m in Sources */,
 				E75C649A1E44A90C003C6245 /* main.m in Sources */,
 				6D8C6C431E47043E0006D4FF /* SDWebImageDownloaderOperation.m in Sources */,
 				6D8C6C4F1E47043E0006D4FF /* UIImage+GIF.m in Sources */,
@@ -703,9 +649,7 @@
 				E75C64A61E44A90C003C6245 /* NewsDemo.xcdatamodeld in Sources */,
 				E7714EF51E488F950065002A /* NDCustomMenu.m in Sources */,
 				6D8C6C311E47043E0006D4FF /* MKAnnotationView+WebCache.m in Sources */,
-				E73FF35C1E557C9500348C4C /* ICreativeViewController.m in Sources */,
 				E73FF36B1E557C9500348C4C /* WebServiceManager.m in Sources */,
-				E73FF3561E557C9500348C4C /* CategoryBasedData.m in Sources */,
 				6DCE712B1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				6D8C6C371E47043E0006D4FF /* SDImageCache.m in Sources */,
 			);
@@ -722,9 +666,7 @@
 				6D8C6C591E47043E0006D4FF /* UIImageView+HighlightedWebCache.m in Sources */,
 				6D8C6C4D1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C5C1E47043E0006D4FF /* UIImageView+WebCache.m in Sources */,
-				E73FF3601E557C9500348C4C /* Media.m in Sources */,
 				6D8C6C3E1E47043E0006D4FF /* SDWebImageDecoder.m in Sources */,
-				E73FF35D1E557C9500348C4C /* ICreativeViewController.m in Sources */,
 				6DCE712C1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF61E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3741E55883D00348C4C /* SourceElement.m in Sources */,
@@ -742,10 +684,8 @@
 				6D8C6C531E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
 				E73FF3871E55B5F500348C4C /* SourceCategories.m in Sources */,
 				6D8C6C4A1E47043E0006D4FF /* SDWebImagePrefetcher.m in Sources */,
-				E7714EE01E484D400065002A /* NDWebServices.m in Sources */,
+				E75DEBA51E56D05E0084665B /* NewsListElement.m in Sources */,
 				6D8C6C321E47043E0006D4FF /* MKAnnotationView+WebCache.m in Sources */,
-				E73FF3661E557C9500348C4C /* SubCategory.m in Sources */,
-				E73FF3571E557C9500348C4C /* CategoryBasedData.m in Sources */,
 				E73FF36C1E557C9500348C4C /* WebServiceManager.m in Sources */,
 				6D8C6C5F1E47043E0006D4FF /* UIView+WebCacheOperation.m in Sources */,
 				6D8C6C381E47043E0006D4FF /* SDImageCache.m in Sources */,
@@ -764,9 +704,7 @@
 				6D8C6C5A1E47043E0006D4FF /* UIImageView+HighlightedWebCache.m in Sources */,
 				6D8C6C4E1E47043E0006D4FF /* UIButton+WebCache.m in Sources */,
 				6D8C6C5D1E47043E0006D4FF /* UIImageView+WebCache.m in Sources */,
-				E73FF3611E557C9500348C4C /* Media.m in Sources */,
 				6D8C6C3F1E47043E0006D4FF /* SDWebImageDecoder.m in Sources */,
-				E73FF35E1E557C9500348C4C /* ICreativeViewController.m in Sources */,
 				6DCE712D1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF71E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3751E55883D00348C4C /* SourceElement.m in Sources */,
@@ -784,10 +722,8 @@
 				6D8C6C541E47043E0006D4FF /* UIImage+MultiFormat.m in Sources */,
 				E73FF3881E55B5F500348C4C /* SourceCategories.m in Sources */,
 				6D8C6C4B1E47043E0006D4FF /* SDWebImagePrefetcher.m in Sources */,
-				E7714EE11E484D400065002A /* NDWebServices.m in Sources */,
+				E75DEBA61E56D05E0084665B /* NewsListElement.m in Sources */,
 				6D8C6C331E47043E0006D4FF /* MKAnnotationView+WebCache.m in Sources */,
-				E73FF3671E557C9500348C4C /* SubCategory.m in Sources */,
-				E73FF3581E557C9500348C4C /* CategoryBasedData.m in Sources */,
 				E73FF36D1E557C9500348C4C /* WebServiceManager.m in Sources */,
 				6D8C6C601E47043E0006D4FF /* UIView+WebCacheOperation.m in Sources */,
 				6D8C6C391E47043E0006D4FF /* SDImageCache.m in Sources */,

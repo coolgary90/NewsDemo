@@ -8,11 +8,10 @@
 
 
 #import "Define.h"
+#import "NewsListElement.h"
 #import "SourceCategories.h"
 #import "WebServiceManager.h"
 #import "UIUtils.h"
-//#import "User.h"
-#import "CategoryBasedData.h"
 #import "SourceElement.h"
 #import "DataManager.h"
 
@@ -24,7 +23,7 @@
 
 @implementation DataManager
 {
-    NSMutableArray* fetchedArticles;
+    
 }
 
 + (instancetype)sharedInstance
@@ -119,71 +118,163 @@
     
 }
 
--(void)getNewsListFromSources:(NSMutableArray*)sources withCompletionHandler:(void(^)(NSMutableArray* newsList))completionBlock
+-(void)getNewsListFromSources:(NSMutableArray*)sources  withCompetionHandler:(void (^)(NSMutableArray *))completionBlock
 {
+    NSMutableArray* fetchedSources= [[NSMutableArray alloc]init];
     
-    fetchedArticles = [[NSMutableArray alloc]init];
-    NSMutableArray* finalList  = [[NSMutableArray alloc]init];
-//    NSMutableArray* myarray = [[NSMutableArray alloc]init];
-//    for (int __block i=0; i<[sources count]; i++) {
+    for(int i=0;i<[sources count];i++)
+    {
+        [self fetchNewsList:[sources objectAtIndex:i]  withFilter:nil withCompetionHandler:^(NSMutableArray* finalArray)
+        {
+            [fetchedSources addObjectsFromArray:finalArray];
+            if(i==([sources count]-1))
+            completionBlock(fetchedSources);
+         }];
+    }
+}
+
+
+-(void)getNewsListFromSources:(NSMutableArray*)sources filterBy:(NSString*)filter withCompletionHandler:(void(^)(NSMutableArray* newsList))completionBlock{
     
     
-    __block int i= 0;
-        [self fetchNewsList:sources withIndex:i withCompletionHandler:^(NSMutableArray* arra){
-            
-            i++;
-            if(i<[sources count])
-            {
-                
-                [finalList addObjectsFromArray:arra];
-                 [self fetchNewsList:sources withIndex:0 withCompletionHandler:^(NSMutableArray* arra){
-                     
-                 }];
-                
-            }
-            else
-            {
-                completionBlock(finalList);
-                
-            }
-        }];
-//            [myarray addObject:arra];
-//            i++;
-//        }];
-//        
-//    }
-   
+    NSMutableArray* fetchedSources= [[NSMutableArray alloc]init];
     
+    for(int i=0;i<[sources count];i++)
+    {
+        [self fetchNewsList:[sources objectAtIndex:i]  withFilter:filter withCompetionHandler:^(NSMutableArray* finalArray)
+         {
+             [fetchedSources addObjectsFromArray:finalArray];
+             if(i==([sources count]-1))
+                 
+                 completionBlock(fetchedSources);
+         }];
+    }
+
     
 }
 
 
-- (void)fetchNewsList:(NSMutableArray*)newsSource withIndex:(int)index withCompletionHandler:(void(^)(NSMutableArray* newsList))completionBlock
-{
-    
-    int __block indexValue = index;
 
-    NSString* urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",[newsSource objectAtIndex:indexValue],kNewsApiKey]];
+
+- (void)fetchNewsList:(NSString*)newsSource  withFilter:(NSString*)filter withCompetionHandler:(void (^)(NSMutableArray *))completionBlock{
+    
+    NSString* urlString;
+    NSString* sortedBy;
+    
+    if(filter == nil)
+    {
+        sortedBy = filter;
+        
+        urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",newsSource,kNewsApiKey]];
+    }
+    else
+    {
+        sortedBy = filter;
+        urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&sortBy=%@&apiKey=%@",newsSource,sortedBy,kNewsApiKey]];
+    }
     NSURLRequest* request  = [WebServiceManager getRequestWithService:urlString];
     
     [WebServiceManager sendRequest:request completion:^(WebServiceResponse* response){
+        
         if(response.status)
         {
             
-            NSDictionary* jsonResponse;
-            jsonResponse = [self dictFromJson:response.responseData];
+            NSMutableArray* sourceData = [[NSMutableArray alloc] init];
+            NSDictionary* responseDict;
+            responseDict = [self dictFromJson:response.responseData];
+            NSArray* articlesArray = [responseDict objectForKey:kNewsArticles];
             
-            for (int i = 0; i<[[jsonResponse objectForKey:kNewsArticles]count]; i++)
+            for (NSDictionary* articleDict in articlesArray)
             {
-                [fetchedArticles addObject:[jsonResponse objectForKey:kNewsArticles][i]];
+             if(![[articleDict objectForKey:kNewsDescription] isEqual:[NSNull null]] && ![[articleDict objectForKey:kNewsUrlToImage] isEqual:[NSNull null]])
+            [sourceData addObject:[NewsListElement createNewsList:articleDict]];
             }
-            
-        
-             completionBlock(fetchedArticles);
+            completionBlock(sourceData);
         }
-    
+        else
+        {
+            completionBlock(nil);
+
+        }
+
     }];
 }
+
+
+
+//- (void)fetchNewsList:(NSMutableArray*)newsSource withIndex:(int)index withFilter:(NSString*)filter{
+//    
+//    int __block indexValue = index;
+//    NSString* urlString;
+//    NSString* sortedBy;
+//    
+//    if(filter == nil)
+//    {
+//        sortedBy = filter;
+//        
+//     urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&apiKey=%@",[newsSource objectAtIndex:indexValue],kNewsApiKey]];
+//    }
+//    else
+//    {
+//        sortedBy = filter;
+//         urlString = [kNewsFromSourceUrl stringByAppendingString:[NSString stringWithFormat:@"source=%@&sortBy=%@&apiKey=%@",[newsSource objectAtIndex:indexValue],sortedBy,kNewsApiKey]];
+//    }
+//    NSURLRequest* request  = [WebServiceManager getRequestWithService:urlString];
+//    [WebServiceManager sendRequest:request completion:^(WebServiceResponse* response){
+//        if(response.status)
+//        {
+//            
+//            NSDictionary* jsonResponse;
+//            jsonResponse = [self dictFromJson:response.responseData];
+//            
+//            for (int i = 0; i<[[jsonResponse objectForKey:kNewsArticles]count]; i++)
+//            {
+//                [fetchedArticles addObject:[jsonResponse objectForKey:kNewsArticles][i]];
+//            }
+//            indexValue++;
+//            if(indexValue<[newsSource count])
+//            {
+//                [self fetchNewsList:newsSource withIndex:indexValue withFilter:sortedBy];
+//            }
+//            else
+//            {
+//                [self buildNewsList:fetchedArticles];
+//            }
+//        }
+//    }];
+//}
+
+
+- (NSMutableArray*)buildNewsList:(NSMutableArray*)newsList
+{
+ 
+    NSMutableArray* finalNewsListArray = [[NSMutableArray alloc]init];
+    for(NSDictionary* newsListDict in newsList)
+    {
+        [finalNewsListArray addObject:[NewsListElement createNewsList:newsListDict]];
+        
+    }
+    return finalNewsListArray;
+//    NSDictionary* finalNewsListDict = [NSDictionary dictionaryWithObjectsAndKeys:finalNewsListArray,@"finalNewsList", nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:finalNewsListDict];
+    
+}
+//- (void)buildNewsList:(NSMutableArray*)newsList
+//{
+//    
+//    NSMutableArray* finalNewsListArray = [[NSMutableArray alloc]init];
+//    for(NSDictionary* newsListDict in newsList)
+//    {
+//        [finalNewsListArray addObject:[NewsListElement createNewsList:newsListDict]];
+//        
+//    }
+//    NSDictionary* finalNewsListDict = [NSDictionary dictionaryWithObjectsAndKeys:finalNewsListArray,@"finalNewsList", nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kNewsListLoadedNotification object:self userInfo:finalNewsListDict];
+//    
+//}
+
+
+
 
 
 
@@ -367,23 +458,23 @@
 	}
 }
 
-- (void) addMediaToSavedList:(Media*)media
-{
-	if (media == nil)
-		return;
-	
-	if (self.savedMediaList == nil)
-		[self readSavedMediaData];
+//- (void) addMediaToSavedList:(Media*)media
+//{
+//	if (media == nil)
+//		return;
+//	
+//	if (self.savedMediaList == nil)
+//		[self readSavedMediaData];
+//
+//	[self.savedMediaList addObject:media];
+//	[self saveMediaData];
+//}
 
-	[self.savedMediaList addObject:media];
-	[self saveMediaData];
-}
-
-- (void) deleteMediafromSavedList:(Media*)media
-{
-	[self.savedMediaList removeObject:media];
-	[self saveMediaData];
-}
+//- (void) deleteMediafromSavedList:(Media*)media
+//{
+//	[self.savedMediaList removeObject:media];
+//	[self saveMediaData];
+//}
 
 - (NSArray*) getMediaList
 {

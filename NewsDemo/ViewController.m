@@ -20,6 +20,8 @@
     
     self.welcomeAppMessage.text = kwelcomeMessage;
     self.AppDescription.text = kAppDescription;
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kNewsUniqueSourceCategories];
+    
     
     
 

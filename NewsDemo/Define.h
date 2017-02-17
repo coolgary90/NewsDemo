@@ -40,6 +40,7 @@
 #define kNewsApiKey @"589e9375eca54120bc116e72ae1d9eeb"
 #define kNewsStatus @"status"
 #define kNewsError @"error"
+#define KNoNetwork @"No internet Connectivity"
 
 #define kNewsUniqueSourceCategories @"UniqueSourceCategories"
 

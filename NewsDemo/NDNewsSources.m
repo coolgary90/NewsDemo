@@ -6,22 +6,20 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "CustomCollectionViewCell.h"
+#import "UIUtils.h"
+#import "WebServiceManager.h"
 #import "SourceElement.h"
 #import "UIImageView+WebCache.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
-#import "NDWebServices.h"
 #import "NDNewsList.h"
 #import "DataManager.h"
 #import "NDNewsSources.h"
 
 @interface NDNewsSources ()
 {
-    
-    NSMutableArray* _newSourcesUniqueCategories;
     NSMutableArray* _newsOptions;
-    NSMutableArray* _newsSourcesArray;
-    UIActivityIndicatorView* customActivityIndicator;
+    NSMutableArray* _newsSources;
     UITapGestureRecognizer* gesture;
     UIView* backgroundView;
     UIBarButtonItem* menu;
@@ -35,21 +33,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _newsSourcesArray = [[NSMutableArray alloc]init];
-    _newsOptions = [[NSMutableArray alloc]init];
-    _newSourcesUniqueCategories = [[NSMutableArray alloc]init];
-
-    [self.view bringSubviewToFront:self.activityIndicator];
-    self.activityIndicator.color = [UIColor blueColor];
-    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
-    [self.activityIndicator startAnimating];
-    self.collectionView.allowsMultipleSelection=YES;
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CustomCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CollectionCell"];
     
-    [self fetchNewsSources];
-    UIImage *image = [[UIImage imageNamed:@"menu5.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.collectionView.allowsMultipleSelection=YES;
+    UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CustomCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CollectionCell"];
+    [self fetchNewsSources];
+
     
 }
 
@@ -57,18 +48,29 @@
 
 - (void)fetchNewsSources
 {
+    
+    if([WebServiceManager isConnectedToNetwork])
+    {
+    [self.view bringSubviewToFront:self.activityIndicator];
+    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
+    [self.activityIndicator startAnimating];
     DataManager* dataManagerObj = [DataManager sharedInstance];
     [dataManagerObj getNewsList:^(NSMutableArray* newsSourceList){
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            _newsSourcesArray = newsSourceList;
+            _newsSources = [[NSMutableArray alloc]init];
+            _newsOptions = [[NSMutableArray alloc]init];
+            _newsSources = newsSourceList;
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
-            
             [self.collectionView reloadData];
         });
     }];
+    }
+    else
+    [UIUtils messageAlert:KNoNetwork title:kAlertOops presentViewC:self];
+        
+        
 }
 
 # pragma mark CollectionView Delegates
@@ -81,7 +83,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [_newsSourcesArray count];
+    return [_newsSources count];
     
 }
 
@@ -102,7 +104,7 @@
     
     static NSString* cellIdentifier = @"CollectionCell";
     CustomCollectionViewCell* customCollectionViewCell =(CustomCollectionViewCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
     [customCollectionViewCell loadCellData:sourceElementObj];
     if([_newsOptions containsObject:sourceElementObj.sourceID ])
         {
@@ -128,7 +130,7 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blueColor].CGColor;
     cell.layer.borderWidth = 3.0;
-    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
     
     [_newsOptions addObject:sourceElementObj.sourceID];
     
@@ -140,7 +142,7 @@
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
     cell.layer.borderColor = [UIColor blackColor].CGColor;
     cell.layer.borderWidth = 1.0;
-    SourceElement* sourceElementObj = [_newsSourcesArray objectAtIndex:indexPath.row];
+    SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
     [_newsOptions removeObject:sourceElementObj.sourceID];
 
 }
@@ -185,17 +187,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self loadBackgroundView];
-    [self.activityIndicator setHidden:NO];
-    [self.activityIndicator startAnimating];
+    _newsOptions = [[NSMutableArray alloc]init];
     DataManager* dataManagerObj = [DataManager sharedInstance];
     [dataManagerObj getNewsListWithCategory:[[[[NSUserDefaults standardUserDefaults] objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] lowercaseString]withCompetionHandler:^(NSMutableArray* newSourceList){
         dispatch_async(dispatch_get_main_queue(), ^{
-        _newsSourcesArray = [[NSMutableArray alloc]init];
-        _newsSourcesArray = newSourceList;
+        [_newsSources removeAllObjects];
+        _newsSources = newSourceList;
             [self.activityIndicator stopAnimating];
             [self.activityIndicator setHidden:YES];
             [self reloadCollectionView];
-//            [self.collectionView reloadData];
         });
 
         
@@ -225,7 +225,7 @@
         UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
         NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
         newsListObj.selectedNewsSources = _newsOptions ;
-        newsListObj.newsCategories = _newSourcesUniqueCategories;
+        newsListObj.newsCategories = [[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] ;
         [self.navigationController pushViewController:newsListObj animated:YES];
         
     }
@@ -324,9 +324,6 @@ dispatch_async(dispatch_get_main_queue(), ^
 {
 
     [backgroundView removeFromSuperview];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.allowsMultipleSelection=YES;
     [self.collectionView reloadData];
                        
 });
@@ -352,48 +349,7 @@ dispatch_async(dispatch_get_main_queue(), ^
 }
 
 
-//-( void)reloadSources:(NSNotification*)info
-//{
-//
-//    NSDictionary* response = info.userInfo;
-//    NSUInteger totalSources = [[response objectForKey:kSources] count];
-//    for( int j = 0; j<totalSources; j++)
-//    {
-//        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
-//        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
-//        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
-//        [_newSourcesCategories addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesCategory]];
-//    }
-//
-//    _newSourcesUniqueCategories = [_newSourcesCategories valueForKeyPath:kUniqueObjects];
-//       [self reloadCollectionView];
-//
-//}
 
-
-//-(void)reloadNewSources:(NSNotification*)info
-//{
-//
-//    NSDictionary* response = info.userInfo;
-//    _newsSourcesNames = [[NSMutableArray alloc]init];
-//    _newsSourcesImage = [[NSMutableArray alloc]init];
-//    _newsSourcesid = [[NSMutableArray alloc]init];
-//    _newsOptions = [[NSMutableArray alloc]init];
-//
-//    NSUInteger totalSources = [[response objectForKey:kSources] count];
-//    for( int j = 0; j<totalSources; j++)
-//    {
-//
-//        [_newsSourcesNames addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourceName] ];
-//        [_newsSourcesImage addObject:[[[response objectForKey:kSources][j]objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"]];
-//        [_newsSourcesid addObject:[[response objectForKey:kSources][j]objectForKey:kNewsSourcesId]];
-//
-//    }
-//    [self reloadCollectionView];
-//
-//}
-
-    
 /*
 #pragma mark - Navigation
 
