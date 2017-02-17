@@ -13,7 +13,6 @@
 #import "Define.h"
 #import "NDNewsDetail.h"
 #import "NDCustomMenu.h"
-#import "UIImageView+WebCache.h"
 #import "NDNewsList.h"
 
 @interface NDNewsList ()

@@ -9,7 +9,6 @@
 #import "UIUtils.h"
 #import "WebServiceManager.h"
 #import "SourceElement.h"
-#import "UIImageView+WebCache.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
 #import "NDNewsList.h"
@@ -44,7 +43,7 @@
     
 }
 
-
+// This method fetch News Sources from API
 
 - (void)fetchNewsSources
 {
@@ -176,7 +175,6 @@
             
         }
        cell.textLabel.text =[[[[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] capitalizedString];
-    
         cell.textLabel.numberOfLines=0;
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.backgroundColor = [UIColor whiteColor];
@@ -213,12 +211,7 @@
 {
     if([_newsOptions count]<2)
     {
-        
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:kAlertMinimumSourceSelection preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:kAlertOk style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-        
+        [UIUtils messageAlert:kAlertMinimumSourceSelection title:nil presentViewC:self];
     }
     else
     {

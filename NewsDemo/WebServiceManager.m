@@ -42,13 +42,10 @@
 
 + (NSMutableURLRequest*) getRequestWithService:(NSString*)service
 {
-//	NSString* urlString = [kBaseURL stringByAppendingString:service];
-//    urlString = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 	NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:
 									[NSURL URLWithString:service]];
 	[request setHTTPMethod:@"GET"];
 	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:KSecretKey forHTTPHeaderField:@"x-api-key"];
 	[request setTimeoutInterval:60.0];
 
 	return request;
@@ -120,27 +117,9 @@
           dispatch_async(dispatch_get_main_queue(), ^
                          {
                              
-                             
-//                             NSDictionary* mydict  = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
-//                             
-                             serviceResponse.responseData = responseData;
-//                             
-//                             
-//                             NSDictionary* responseDict = nil;
-//                             if (responseData)
-//                             {
-//                                 responseDict = [[NSJSONSerialization
-//                                                 JSONObjectWithData:responseData options:kNilOptions error:nil] objectForKey:@"sources"];
-//                             }
-//                             
-//                             NSString* errorString =[responseDict objectForKey:@"message"];
-//                             serviceResponse.errorString = errorString;
-//                             
-//                             Boolean status= [[responseDict objectForKey:@"status"] boolValue];
-//                             if (status)
-                                 serviceResponse.status=true;
-//                             else
-//                                 serviceResponse.status=false;
+                            serviceResponse.responseData = responseData;
+                            serviceResponse.status=true;
+
                              
                              callback(serviceResponse);
                          });

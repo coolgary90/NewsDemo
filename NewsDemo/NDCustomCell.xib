@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="430" height="113"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="430" height="112.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="430" height="112"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0q-0g-ALC">
@@ -33,8 +33,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-Mr-TGZ">
-                        <rect key="frame" x="350" y="20" width="70" height="72.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="No-image.png" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-Mr-TGZ">
+                        <rect key="frame" x="350" y="20" width="70" height="73"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="sVi-Hu-I3i"/>
                         </constraints>
@@ -61,4 +61,7 @@
             <point key="canvasLocation" x="89" y="154.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="No-image.png" width="100" height="100"/>
+    </resources>
 </document>

@@ -5,7 +5,6 @@
 //  Created by Amanpreet singh on 06/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-#import "UIImageView+WebCache.h"
 #import "NDCustomCell.h"
 
 @implementation NDCustomCell
@@ -30,11 +29,18 @@
     [self.newsTitle adjustsFontSizeToFitWidth];
     self.newsDescription.text = newsList.newsDescription;
     self.newsDescription.numberOfLines = 0;
-    [self.newsImage sd_setImageWithURL:[NSURL URLWithString:newsList.newsImage] placeholderImage:[UIImage imageNamed:@"No-image.png"]];
-    self.newsImage.contentMode = UIViewContentModeScaleToFill;
-
-
-
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 2), ^
+    {
+      NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:newsList.newsImage]];
+       dispatch_async(dispatch_get_main_queue(), ^
+        {
+            self.newsImage.image = [UIImage imageWithData:data];
+            self.newsImage.contentMode = UIViewContentModeScaleToFill;
+        });
+                       
+    });
+    
 }
 
 
