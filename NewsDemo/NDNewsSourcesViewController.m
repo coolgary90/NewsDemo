@@ -11,11 +11,11 @@
 #import "SourceElement.h"
 #import "NDCustomMenu.h"
 #import "Define.h"
-#import "NDNewsList.h"
+#import "NDNewsListViewController.h"
 #import "DataManager.h"
-#import "NDNewsSources.h"
+#import "NDNewsSourcesViewController.h"
 
-@interface NDNewsSources ()
+@interface NDNewsSourcesViewController ()
 {
     NSMutableArray* _newsOptions;
     NSMutableArray* _newsSources;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation NDNewsSources
+@implementation NDNewsSourcesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -217,7 +217,7 @@
     else
     {
         UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
-        NDNewsList* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
+        NDNewsListViewController* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
         newsListObj.selectedNewsSources = _newsOptions ;
         newsListObj.newsCategories = [[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] ;
         [self.navigationController pushViewController:newsListObj animated:YES];

@@ -10,31 +10,27 @@
 
 @interface DataManager : NSObject
 
-//@property (nonatomic, strong) User *user;
 @property (nonatomic, strong) NSArray* categoryList;
 @property (nonatomic, assign) BOOL allowWifiDownload;
 
-+ (DataManager*) sharedInstance;
++ (DataManager*)sharedInstance;
 
 
+# pragma mark Sources and News Fetch Methods
 
-
-
-
-// My Methods
-- (void)getNewsList :(void(^)(NSMutableArray* sourceList))completionBlock;
-- (void)getNewsListWithCategory:(NSString*)category withCompetionHandler:(void(^)(NSMutableArray* sourceList))completionBlock;
 -(void)getNewsListFromSources:(NSMutableArray*)sources withCompetionHandler:(void(^)(NSMutableArray* sourceList))completionBlock;
+
+
+- (void)getNewsListWithCategory:(NSString*)category withCompetionHandler:(void(^)(NSMutableArray* sourceList))completionBlock;
+
+
+- (void)getNewsList :(void(^)(NSMutableArray* sourceList))completionBlock;
+
 
 -(void)getNewsListFromSources:(NSMutableArray*)sources filterBy:(NSString*)filter withCompletionHandler:(void(^)(NSMutableArray* newsList))completionBlock;
 
 
 
 #pragma mark -
-//- (void) addMediaToSavedList:(Media*)media;
-//- (void) deleteMediafromSavedList:(Media*)media;
-//- (NSArray*) getMediaList;
-
 @end
 
-#define gDataManager [DataManager sharedInstance]

@@ -1,5 +1,5 @@
 //
-//  NDNewsList.h
+//  NDNewsListViewController.h
 //  NewsDemo
 //
 //  Created by Amanpreet singh on 06/02/17.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NDNewsList : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface NDNewsListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property(strong, nonatomic) NSString* newsId;
 @property(strong, nonatomic) NSMutableArray* newsCategories;
 @property(strong, nonatomic) NSMutableArray* selectedNewsSources;

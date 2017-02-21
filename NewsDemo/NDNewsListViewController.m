@@ -1,5 +1,5 @@
 //
-//  NDNewsList.m
+//  NDNewsListViewController.m
 //  NewsDemo
 //
 //  Created by Amanpreet singh on 06/02/17.
@@ -11,11 +11,11 @@
 #import "NewsListElement.h"
 #import "DataManager.h"
 #import "Define.h"
-#import "NDNewsDetail.h"
+#import "NDNewsDetailViewController.h"
 #import "NDCustomMenu.h"
-#import "NDNewsList.h"
+#import "NDNewsListViewController.h"
 
-@interface NDNewsList ()
+@interface NDNewsListViewController ()
 {
 
     NSMutableArray* _newsList;
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation NDNewsList
+@implementation NDNewsListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -182,7 +182,7 @@
 {
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:kMain bundle:nil];
-    NDNewsDetail *newsDetailObj = [storyboard instantiateViewControllerWithIdentifier:@"NewsDetail"];
+    NDNewsDetailViewController *newsDetailObj = [storyboard instantiateViewControllerWithIdentifier:@"NewsDetail"];
     NewsListElement* newsListElementObj = [_newsList objectAtIndex:indexPath.row];
     newsDetailObj.newsUrl = newsListElementObj.newsUrl;
     [self.navigationController pushViewController:newsDetailObj animated:YES];

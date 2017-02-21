@@ -6,13 +6,13 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 
-#import "NDNewsDetail.h"
+#import "NDNewsDetailViewController.h"
 
-@interface NDNewsDetail ()
+@interface NDNewsDetailViewController ()
 
 @end
 
-@implementation NDNewsDetail
+@implementation NDNewsDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

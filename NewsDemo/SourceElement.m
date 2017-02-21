@@ -10,19 +10,14 @@
 
 @implementation SourceElement
 
-
-
 +(instancetype)createSourceList:(NSDictionary*)dict
 {
     SourceElement* sourceElementobj = [[SourceElement alloc]initWithArray:dict];
     return sourceElementobj;
-    
 }
 
-
-- (instancetype)initWithArray:(NSDictionary*)dict{
-    
-    
+- (instancetype)initWithArray:(NSDictionary*)dict
+{
     if(self = [super init])
     {
     self.sourceName = [dict objectForKey:kNewsSourceName];
@@ -30,6 +25,6 @@
     self.sourceImage = [[dict objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"];
     }
     return self;
-    
 }
+
 @end

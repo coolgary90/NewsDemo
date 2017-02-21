@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NDNewsSources : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource>
+@interface NDNewsSourcesViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource>
 
 @property(weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property(weak, nonatomic) IBOutlet UILabel* header;
 @property(weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
-
-
 
 @end

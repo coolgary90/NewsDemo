@@ -111,10 +111,10 @@
             </objects>
             <point key="canvasLocation" x="1001" y="-58"/>
         </scene>
-        <!--News Sources-->
+        <!--News Sources View Controller-->
         <scene sceneID="5m9-JM-rhR">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9qc-5D-ceh" customClass="NDNewsSources" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9qc-5D-ceh" customClass="NDNewsSourcesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TND-bq-tFX"/>
                         <viewControllerLayoutGuide type="bottom" id="wuq-Fs-dK0"/>
@@ -204,10 +204,10 @@
             </objects>
             <point key="canvasLocation" x="1756" y="-74.212893553223395"/>
         </scene>
-        <!--News List-->
+        <!--News List View Controller-->
         <scene sceneID="U09-Dr-fWe">
             <objects>
-                <viewController storyboardIdentifier="newsList" id="nY4-lR-1cL" customClass="NDNewsList" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newsList" id="nY4-lR-1cL" customClass="NDNewsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y0w-1K-3sv"/>
                         <viewControllerLayoutGuide type="bottom" id="e7m-T8-ZCb"/>
@@ -330,10 +330,10 @@
             </objects>
             <point key="canvasLocation" x="2759.1999999999998" y="-24.7376311844078"/>
         </scene>
-        <!--News Detail-->
+        <!--News Detail View Controller-->
         <scene sceneID="wGF-oZ-sr4">
             <objects>
-                <viewController storyboardIdentifier="NewsDetail" automaticallyAdjustsScrollViewInsets="NO" id="H59-sI-ONI" customClass="NDNewsDetail" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsDetail" automaticallyAdjustsScrollViewInsets="NO" id="H59-sI-ONI" customClass="NDNewsDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1S6-cH-1gc"/>
                         <viewControllerLayoutGuide type="bottom" id="XKi-F8-1t5"/>

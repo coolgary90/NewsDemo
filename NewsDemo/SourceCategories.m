@@ -28,15 +28,12 @@
 {
     NSMutableArray* sourceCategoriesArray = [[NSMutableArray alloc]init];
     NSMutableArray* uniqueSourceCategories = [[ NSMutableArray alloc]init];
-    
     for(NSDictionary* dict in sourceList)
     {
-        
         [sourceCategoriesArray addObject:[dict objectForKey:kNewsSourcesCategory]];
-        
-
     }
-        uniqueSourceCategories = [sourceCategoriesArray valueForKeyPath:kUniqueObjects];
+    uniqueSourceCategories = [sourceCategoriesArray valueForKeyPath:kUniqueObjects];
+    
     return uniqueSourceCategories;
 }
 @end
