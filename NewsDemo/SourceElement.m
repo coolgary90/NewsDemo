@@ -26,7 +26,7 @@
     if(self = [super init])
     {
     self.sourceName = [dict objectForKey:kNewsSourceName];
-    self.sourceID =[ dict objectForKey:kNewsSourcesId];
+    self.sourceID = [dict objectForKey:kNewsSourcesId];
     self.sourceImage = [[dict objectForKey:kNewsSourcesUrlToLogo] objectForKey:@"small"];
     }
     return self;

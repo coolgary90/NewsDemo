@@ -33,6 +33,10 @@
     
     _newsFilterValue = kTopNews;
     self.tableViewNewsList.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
+    self.tableViewNewsList.estimatedRowHeight = 50;
+    [self.tableViewNewsList setNeedsLayout];
+    [self.tableViewNewsList layoutIfNeeded];
     self.topFilterButton.enabled=NO;
     self.popularFilterButton.enabled=NO;
     self.latestFilterButton.enabled=NO;
@@ -155,6 +159,7 @@
     
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 
@@ -184,14 +189,6 @@
 
     
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 150;
-    
-}
-
 
 
 #pragma mark Custom Methods
@@ -252,7 +249,6 @@ dispatch_async(dispatch_get_main_queue(), ^
         self.topFilterButton.enabled = YES;
         self.popularFilterButton.enabled = YES;
         self.latestFilterButton.enabled = YES;
-        self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
         [self.tableViewNewsList reloadData];
     });
     

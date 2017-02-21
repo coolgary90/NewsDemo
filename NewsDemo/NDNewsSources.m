@@ -33,10 +33,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.collectionView.allowsMultipleSelection=YES;
+    
     UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
     self.navigationItem.leftBarButtonItem=menu;
+    self.collectionView.allowsMultipleSelection=YES;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CustomCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CollectionCell"];
     [self fetchNewsSources];
 

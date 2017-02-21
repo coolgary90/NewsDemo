@@ -21,7 +21,7 @@
     if(self = [super init])
     {
         self.newsTitle = [newsList objectForKey:kNewsTitle];
-        self.newsDescription =[ newsList objectForKey:kNewsDescription];
+        self.newsDescription = [newsList objectForKey:kNewsDescription];
         self.newsImage = [newsList objectForKey:kNewsUrlToImage];
         self.newsUrl = [newsList objectForKey:kNewsUrl];
         

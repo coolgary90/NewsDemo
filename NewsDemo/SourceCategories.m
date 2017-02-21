@@ -27,7 +27,7 @@
  -(NSMutableArray*)uniqueSourceCategories:(NSMutableArray *)sourceList
 {
     NSMutableArray* sourceCategoriesArray = [[NSMutableArray alloc]init];
-    NSMutableArray* uniqueSourceCategories  =[[ NSMutableArray alloc]init];
+    NSMutableArray* uniqueSourceCategories = [[ NSMutableArray alloc]init];
     
     for(NSDictionary* dict in sourceList)
     {

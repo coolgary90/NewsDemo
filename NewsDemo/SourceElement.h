@@ -13,10 +13,10 @@
 
 +(instancetype)createSourceList:(NSDictionary*)fetchedSource;
 
-@property(strong,nonatomic) NSString* sourceName;
-@property(strong,nonatomic) NSString* sourceID;
-@property(strong,nonatomic) NSString* sourceImage;
-@property(weak,nonatomic) NSString* sourceCategory;
+@property(strong, nonatomic) NSString* sourceName;
+@property(strong, nonatomic) NSString* sourceID;
+@property(strong, nonatomic) NSString* sourceImage;
+@property(weak, nonatomic) NSString* sourceCategory;
 
 
 
