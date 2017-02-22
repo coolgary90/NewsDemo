@@ -22,6 +22,9 @@
 		6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
+		E71C3A821E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
+		E71C3A831E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
+		E71C3A841E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
 		E71E29181E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E29191E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E291A1E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
@@ -101,6 +104,8 @@
 		6DCE71281E47A848000B30BC /* NDCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomCell.h; sourceTree = "<group>"; };
 		6DCE71291E47A848000B30BC /* NDCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomCell.m; sourceTree = "<group>"; };
 		6DCE712A1E47A848000B30BC /* NDCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomCell.xib; sourceTree = "<group>"; };
+		E71C3A801E5D63230038A31B /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
+		E71C3A811E5D63230038A31B /* ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLoader.m; sourceTree = "<group>"; };
 		E71E29161E4B3692002BE33A /* NDNewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsDetailViewController.h; sourceTree = "<group>"; };
 		E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsDetailViewController.m; sourceTree = "<group>"; };
 		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
@@ -188,6 +193,8 @@
 				E73FF3531E557C9500348C4C /* WebServiceManager.m */,
 				E73FF3541E557C9500348C4C /* WebServiceResponse.h */,
 				E73FF3551E557C9500348C4C /* WebServiceResponse.m */,
+				E71C3A801E5D63230038A31B /* ImageLoader.h */,
+				E71C3A811E5D63230038A31B /* ImageLoader.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -503,6 +510,7 @@
 				6DCE71251E47A6C4000B30BC /* NDNewsListViewController.m in Sources */,
 				E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */,
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
+				E71C3A821E5D63230038A31B /* ImageLoader.m in Sources */,
 				E73FF3731E55883D00348C4C /* SourceElement.m in Sources */,
 				E73FF3681E557C9500348C4C /* UIUtils.m in Sources */,
 				E73FF3621E557C9500348C4C /* MFLog.m in Sources */,
@@ -523,6 +531,7 @@
 			files = (
 				E73FF35A1E557C9500348C4C /* DataManager.m in Sources */,
 				E73FF3631E557C9500348C4C /* MFLog.m in Sources */,
+				E71C3A831E5D63230038A31B /* ImageLoader.m in Sources */,
 				6DCE712C1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF61E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3741E55883D00348C4C /* SourceElement.m in Sources */,
@@ -545,6 +554,7 @@
 			files = (
 				E73FF35B1E557C9500348C4C /* DataManager.m in Sources */,
 				E73FF3641E557C9500348C4C /* MFLog.m in Sources */,
+				E71C3A841E5D63230038A31B /* ImageLoader.m in Sources */,
 				6DCE712D1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF71E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3751E55883D00348C4C /* SourceElement.m in Sources */,

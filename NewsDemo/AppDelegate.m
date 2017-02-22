@@ -5,7 +5,7 @@
 //  Created by Amanpreet Singh on 03/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-
+#import "ImageLoader.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -28,12 +28,16 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    ImageLoader* sharedObject  = [ImageLoader sharedInstance];
+    sharedObject.cache =nil;
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
@@ -44,6 +48,10 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
+    ImageLoader* sharedObject  = [ImageLoader sharedInstance];
+    sharedObject.cache =nil;
+    
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];

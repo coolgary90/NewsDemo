@@ -34,7 +34,7 @@
     _newsFilterValue = kTopNews;
     self.tableViewNewsList.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableViewNewsList.rowHeight = UITableViewAutomaticDimension;
-    self.tableViewNewsList.estimatedRowHeight = 50;
+    self.tableViewNewsList.estimatedRowHeight = 70;
     [self.tableViewNewsList setNeedsLayout];
     [self.tableViewNewsList layoutIfNeeded];
     self.topFilterButton.enabled=NO;

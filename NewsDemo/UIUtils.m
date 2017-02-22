@@ -25,7 +25,7 @@
 														  handler:nil];
 	[alert addAction:dismissAction];
 	if (sender.presentedViewController)
-	{	// if alraeady any other sender.presentedViewController present.. dismiss first.
+	{	// if already any other sender.presentedViewController present.. dismiss first.
 		if ([sender.presentedViewController isKindOfClass:[UIAlertController class]])
 			[sender dismissViewControllerAnimated:NO completion:nil];
 	}

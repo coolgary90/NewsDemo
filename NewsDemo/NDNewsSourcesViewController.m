@@ -75,11 +75,6 @@
 
 # pragma mark CollectionView Delegates
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-    
-}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -103,21 +98,21 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString* cellIdentifier = @"CollectionCell";
+    
     CustomCollectionViewCell* customCollectionViewCell =(CustomCollectionViewCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
     SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
+    
     [customCollectionViewCell loadCellData:sourceElementObj];
     if([_newsOptions containsObject:sourceElementObj.sourceID ])
         {
-            customCollectionViewCell.layer.borderColor = [UIColor blueColor].CGColor;
-            customCollectionViewCell.layer.borderWidth = 3.0;
+            [self makeCellLookSelectedwithIndexPath:customCollectionViewCell];
         }
         else
         {
-            customCollectionViewCell.layer.borderColor = [UIColor blackColor].CGColor;
-            customCollectionViewCell.layer.borderWidth = 1.0;
-        }
+            [self makeCellLookDeselectedwithIndexPath:customCollectionViewCell];
 
-    
+        }
     return customCollectionViewCell;
 
     
@@ -126,28 +121,34 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderColor = [UIColor blueColor].CGColor;
-    cell.layer.borderWidth = 3.0;
+    [self makeCellLookSelectedwithIndexPath:cell];
     SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
-    
     [_newsOptions addObject:sourceElementObj.sourceID];
     
 }
 
+
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     UICollectionViewCell* cell  = [self.collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.borderColor = [UIColor blackColor].CGColor;
-    cell.layer.borderWidth = 1.0;
+    
+    [self makeCellLookDeselectedwithIndexPath:cell];
     SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
     [_newsOptions removeObject:sourceElementObj.sourceID];
-
 }
 
+-(void)makeCellLookSelectedwithIndexPath:(UICollectionViewCell*)cell
+{
+    cell.layer.borderColor = [UIColor blueColor].CGColor;
+    cell.layer.borderWidth = 3.0;
+}
 
+-(void)makeCellLookDeselectedwithIndexPath:(UICollectionViewCell*)cell
+{
+    cell.layer.borderColor = [UIColor blackColor].CGColor;
+    cell.layer.borderWidth = 1.0;
+}
 
 
 # pragma mark TableView Delegates
