@@ -6,13 +6,13 @@
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
 #import "Define.h"
-#import "ViewController.h"
+#import "InitialViewController.h"
 
-@interface ViewController ()
+@interface InitialViewController ()
 
 @end
 
-@implementation ViewController
+@implementation InitialViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

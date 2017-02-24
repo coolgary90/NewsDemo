@@ -7,51 +7,99 @@
 //
 #import <UIKit/UIKit.h>
 #import "ImageLoader.h"
+#import "DataManager.h"
 
 @implementation ImageLoader
 
 
-+(ImageLoader*)sharedInstance
-{
-    static ImageLoader* sharedObject =nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedObject  = [[ImageLoader alloc]init];
-    });
-    return sharedObject;
-}
-
--(id)init
-{
-   
-    if(self = [super init])
-    {
-       self.cache = [[NSCache alloc]init];
-    }
-    return self;
-}
 
 
--(void)loadingImage:(NSString *)urlString withcompletionHandler:(void (^)(UIImage *))completionBlock
+
++(void) loadingImage:(NSString*)urlString withImageView:(UIImageView*)imageView
 {
-    
-    UIImage* sourceimage  = [self.cache objectForKey:urlString];
+    __block NSString *imageUrl = urlString;
+    imageView.image = nil;
+    __block UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
     if(!sourceimage)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-        {
-        NSData* data = [NSData dataWithContentsOfURL: [NSURL URLWithString:urlString]];
-        UIImage* finalImage = [UIImage imageWithData:data];
-        [self.cache setObject:finalImage forKey:urlString];
-        completionBlock(finalImage);
-        });
+        
+        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        
+        [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:
+          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+          {
+              if(data)
+              {
+                  sourceimage = [UIImage imageWithData:data];
+                  [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
+                  if(imageUrl==urlString)
+                      dispatch_async(dispatch_get_main_queue(), ^
+                                     {
+                                         imageView.image= sourceimage;
+                                         imageView.contentMode = UIViewContentModeScaleToFill;
+                                     });
+                  
+              }}] resume];
+        
     }
+    //});
+    
     else
-     {
-         completionBlock(sourceimage);
+    {
+        if(imageUrl==urlString)
+            dispatch_async(dispatch_get_main_queue(), ^{
+                imageView.image= sourceimage;
+                imageView.contentMode = UIViewContentModeScaleToFill;
+            });
     }
 }
 
+
++(void) loadingImageFromUrl:(NSString*)urlString withCompletion:(void (^)(UIImage* ,NSString*))completionBlock{
+    
+    __block UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
+    if(!sourceimage)
+    {
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:
+          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+          {
+              if(data)
+              {
+                  sourceimage = [UIImage imageWithData:data];
+                  [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
+                  completionBlock(sourceimage,urlString);
+                  
+                  
+              }}] resume];
+//        [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:
+//          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+//          {
+//              if(data)
+//              {
+//                  sourceimage = [UIImage imageWithData:data];
+//                  [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
+//                  completionBlock(sourceimage,urlString);
+//                  
+//                  
+//              }}] resume];
+        
+    }
+    else
+    {
+        
+        completionBlock(sourceimage,urlString);
+    }
+    
+}
+
++(UIImage*)loadingImageFromCache:(NSString*)urlString
+{
+    
+    UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
+    return sourceimage;
+}
 
 
 

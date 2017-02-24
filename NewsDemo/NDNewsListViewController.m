@@ -263,12 +263,6 @@ dispatch_async(dispatch_get_main_queue(), ^
 
 
 
-//-(void)newsListReceived:(NSNotification*)info
-//{
-//
-//    [self reloadSources:info.userInfo];
-//}
-
 /*
 #pragma mark - Navigation
 

@@ -40,6 +40,7 @@
                 <constraint firstItem="YN9-21-5JN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eSC-7P-nhw"/>
                 <constraint firstAttribute="bottom" secondItem="YN9-21-5JN" secondAttribute="bottom" constant="30" id="ovb-QI-hkq"/>
             </constraints>
+            <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
             <size key="customSize" width="149" height="112"/>
             <connections>
                 <outlet property="sourceImage" destination="YN9-21-5JN" id="cix-js-TTz"/>

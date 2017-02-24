@@ -28,6 +28,9 @@
 		E71E29181E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E29191E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E291A1E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
+		E7302F271E5EBF9F0078998F /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7302F261E5EBF9F0078998F /* ImageManager.m */; };
+		E7302F281E5EBF9F0078998F /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7302F261E5EBF9F0078998F /* ImageManager.m */; };
+		E7302F291E5EBF9F0078998F /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7302F261E5EBF9F0078998F /* ImageManager.m */; };
 		E73FF3591E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
 		E73FF35A1E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
 		E73FF35B1E557C9500348C4C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3471E557C9500348C4C /* DataManager.m */; };
@@ -57,7 +60,7 @@
 		E73FF3881E55B5F500348C4C /* SourceCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = E73FF3851E55B5F500348C4C /* SourceCategories.m */; };
 		E75C649A1E44A90C003C6245 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C64991E44A90C003C6245 /* main.m */; };
 		E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C649C1E44A90C003C6245 /* AppDelegate.m */; };
-		E75C64A01E44A90C003C6245 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C649F1E44A90C003C6245 /* ViewController.m */; };
+		E75C64A01E44A90C003C6245 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E75C649F1E44A90C003C6245 /* InitialViewController.m */; };
 		E75C64A31E44A90C003C6245 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75C64A11E44A90C003C6245 /* Main.storyboard */; };
 		E75C64A61E44A90C003C6245 /* NewsDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E75C64A41E44A90C003C6245 /* NewsDemo.xcdatamodeld */; };
 		E75C64A81E44A90C003C6245 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E75C64A71E44A90C003C6245 /* Assets.xcassets */; };
@@ -109,6 +112,8 @@
 		E71E29161E4B3692002BE33A /* NDNewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsDetailViewController.h; sourceTree = "<group>"; };
 		E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsDetailViewController.m; sourceTree = "<group>"; };
 		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
+		E7302F251E5EBF9F0078998F /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		E7302F261E5EBF9F0078998F /* ImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageManager.m; sourceTree = "<group>"; };
 		E73FF3461E557C9500348C4C /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		E73FF3471E557C9500348C4C /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		E73FF34C1E557C9500348C4C /* MFLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFLog.h; sourceTree = "<group>"; };
@@ -130,8 +135,8 @@
 		E75C64991E44A90C003C6245 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E75C649B1E44A90C003C6245 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E75C649C1E44A90C003C6245 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E75C649E1E44A90C003C6245 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E75C649F1E44A90C003C6245 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E75C649E1E44A90C003C6245 /* InitialViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		E75C649F1E44A90C003C6245 /* InitialViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		E75C64A21E44A90C003C6245 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E75C64A51E44A90C003C6245 /* NewsDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewsDemo.xcdatamodel; sourceTree = "<group>"; };
 		E75C64A71E44A90C003C6245 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -193,6 +198,8 @@
 				E73FF3531E557C9500348C4C /* WebServiceManager.m */,
 				E73FF3541E557C9500348C4C /* WebServiceResponse.h */,
 				E73FF3551E557C9500348C4C /* WebServiceResponse.m */,
+				E7302F251E5EBF9F0078998F /* ImageManager.h */,
+				E7302F261E5EBF9F0078998F /* ImageManager.m */,
 				E71C3A801E5D63230038A31B /* ImageLoader.h */,
 				E71C3A811E5D63230038A31B /* ImageLoader.m */,
 			);
@@ -321,8 +328,8 @@
 		E7C434981E4C662300AAB187 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E75C649E1E44A90C003C6245 /* ViewController.h */,
-				E75C649F1E44A90C003C6245 /* ViewController.m */,
+				E75C649E1E44A90C003C6245 /* InitialViewController.h */,
+				E75C649F1E44A90C003C6245 /* InitialViewController.m */,
 				6D8C6C051E46F8E20006D4FF /* NDNewsSourcesViewController.h */,
 				6D8C6C061E46F8E20006D4FF /* NDNewsSourcesViewController.m */,
 				6DCE71231E47A6C4000B30BC /* NDNewsListViewController.h */,
@@ -503,13 +510,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E75C64A01E44A90C003C6245 /* ViewController.m in Sources */,
+				E75C64A01E44A90C003C6245 /* InitialViewController.m in Sources */,
 				E73FF36E1E557C9500348C4C /* WebServiceResponse.m in Sources */,
 				E73FF3861E55B5F500348C4C /* SourceCategories.m in Sources */,
 				E73FF37E1E55955800348C4C /* CustomCollectionViewCell.m in Sources */,
 				6DCE71251E47A6C4000B30BC /* NDNewsListViewController.m in Sources */,
 				E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */,
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
+				E7302F271E5EBF9F0078998F /* ImageManager.m in Sources */,
 				E71C3A821E5D63230038A31B /* ImageLoader.m in Sources */,
 				E73FF3731E55883D00348C4C /* SourceElement.m in Sources */,
 				E73FF3681E557C9500348C4C /* UIUtils.m in Sources */,
@@ -544,6 +552,7 @@
 				E73FF3871E55B5F500348C4C /* SourceCategories.m in Sources */,
 				E75DEBA51E56D05E0084665B /* NewsListElement.m in Sources */,
 				E73FF36C1E557C9500348C4C /* WebServiceManager.m in Sources */,
+				E7302F281E5EBF9F0078998F /* ImageManager.m in Sources */,
 				E73FF3691E557C9500348C4C /* UIUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,6 +576,7 @@
 				E73FF3881E55B5F500348C4C /* SourceCategories.m in Sources */,
 				E75DEBA61E56D05E0084665B /* NewsListElement.m in Sources */,
 				E73FF36D1E557C9500348C4C /* WebServiceManager.m in Sources */,
+				E7302F291E5EBF9F0078998F /* ImageManager.m in Sources */,
 				E73FF36A1E557C9500348C4C /* UIUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

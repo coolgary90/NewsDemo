@@ -14,8 +14,9 @@
 
 @property(weak,nonatomic) IBOutlet UIImageView* sourceImage;
 @property(weak,nonatomic) IBOutlet UILabel* sourceLabel;
-
--(void)loadCellData:(SourceElement*)sourceElementObj;
+@property(weak, nonatomic) IBOutlet UIActivityIndicatorView* cellIndicator;
+@property (strong,nonatomic) SourceElement* sourceElement;
+-(void)loadCellData:(SourceElement*)sourceElementObj ;
 
 
 @end

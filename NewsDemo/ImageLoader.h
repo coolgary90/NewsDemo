@@ -10,9 +10,18 @@
 
 @interface ImageLoader : NSObject
 
-@property(strong,nonatomic) NSCache* cache;
 
-+(ImageLoader*)sharedInstance;
 
--(void)loadingImage:(NSString*)urlString withcompletionHandler:(void(^)(UIImage* myimage))completionBlock;
++(void) loadingImage:(NSString*)urlString withImageView:(UIImageView*)imageView;
+
++(void) loadingSourceImage:(NSString*)urlString withcompletionHandler:(void(^)(UIImage* myimage))completionBlock;
+
+@property(strong,nonatomic) NSString* imageUrl;
+
++(UIImage*)loadingImageFromCache:(NSString*)urlString;
+
++(void) loadingImageFromUrl:(NSString*)urlString withCompletion:(void (^)(UIImage* ,NSString*))completionBlock;
+
+
+
 @end

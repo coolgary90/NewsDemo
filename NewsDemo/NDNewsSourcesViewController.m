@@ -95,14 +95,15 @@
     }
 }
 
+
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString* cellIdentifier = @"CollectionCell";
-    
+
     CustomCollectionViewCell* customCollectionViewCell =(CustomCollectionViewCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     SourceElement* sourceElementObj = [_newsSources objectAtIndex:indexPath.row];
-    
     [customCollectionViewCell loadCellData:sourceElementObj];
     if([_newsOptions containsObject:sourceElementObj.sourceID ])
         {
@@ -113,7 +114,9 @@
             [self makeCellLookDeselectedwithIndexPath:customCollectionViewCell];
 
         }
+    
     return customCollectionViewCell;
+    
 
     
 }
@@ -217,6 +220,7 @@
     }
     else
     {
+        
         UIStoryboard* storyBoard = [UIStoryboard storyboardWithName:kMain bundle:nil];
         NDNewsListViewController* newsListObj = [storyBoard instantiateViewControllerWithIdentifier:kNewsList];
         newsListObj.selectedNewsSources = _newsOptions ;
@@ -226,6 +230,8 @@
     }
     
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
