@@ -36,8 +36,8 @@
     
     UIImage *image = [[UIImage imageNamed:@"menu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     menu = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuClicked:)];
-    self.navigationItem.leftBarButtonItem=menu;
-    self.collectionView.allowsMultipleSelection=YES;
+    self.navigationItem.leftBarButtonItem = menu;
+    self.collectionView.allowsMultipleSelection = YES;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CustomCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"CollectionCell"];
     [self fetchNewsSources];
 
@@ -62,7 +62,6 @@
             _newsOptions = [[NSMutableArray alloc]init];
             _newsSources = newsSourceList;
             [self.activityIndicator stopAnimating];
-            [self.activityIndicator setHidden:YES];
             [self.collectionView reloadData];
         });
     }];
@@ -116,8 +115,6 @@
         }
     
     return customCollectionViewCell;
-    
-
     
 }
 
@@ -179,7 +176,7 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             
         }
-       cell.textLabel.text =[[[[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] capitalizedString];
+       cell.textLabel.text = [[[[NSUserDefaults standardUserDefaults]objectForKey:kNewsUniqueSourceCategories] objectAtIndex:indexPath.row] capitalizedString];
         cell.textLabel.numberOfLines=0;
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.backgroundColor = [UIColor whiteColor];
@@ -197,7 +194,6 @@
         [_newsSources removeAllObjects];
         _newsSources = newSourceList;
             [self.activityIndicator stopAnimating];
-            [self.activityIndicator setHidden:YES];
             [self reloadCollectionView];
         });
 
@@ -255,8 +251,8 @@
             backGroundView.sideView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
             backGroundView.tableNewsCategories.backgroundColor=[UIColor whiteColor];
             backGroundView.tableNewsCategories.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-            backGroundView.tableNewsCategories.delegate=self;
-            backGroundView.tableNewsCategories.dataSource=self;
+            backGroundView.tableNewsCategories.delegate = self;
+            backGroundView.tableNewsCategories.dataSource = self;
             [backGroundView.tableNewsCategories reloadData];
             gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeCustomMenu)];
             [backGroundView.sideView addGestureRecognizer:gesture];
@@ -307,7 +303,6 @@
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         [self.view addSubview:backgroundView];
         [self.view bringSubviewToFront:self.activityIndicator];
-        [self.activityIndicator setHidden:NO];
         [self.activityIndicator startAnimating];
         menu.tag=0;
 

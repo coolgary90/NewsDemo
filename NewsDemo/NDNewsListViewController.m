@@ -207,8 +207,7 @@
     [self presentViewController:alert animated:YES completion:nil];
     dispatch_async(dispatch_get_main_queue(), ^
     {
-    [self.activityIndicator startAnimating];
-    [self.activityIndicator setHidden:YES];
+    [self.activityIndicator stopAnimating];
     [backgroundView removeFromSuperview];
     });
 }
@@ -228,7 +227,6 @@
         backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         [self.view addSubview:backgroundView];
         [self.view bringSubviewToFront:self.activityIndicator];
-        [self.activityIndicator setHidden:NO];
         self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
         [self.activityIndicator  startAnimating];
     });
@@ -244,7 +242,6 @@
 dispatch_async(dispatch_get_main_queue(), ^
     {
         [self.activityIndicator stopAnimating];
-        [self.activityIndicator setHidden:YES];
         [backgroundView removeFromSuperview];
         self.topFilterButton.enabled = YES;
         self.popularFilterButton.enabled = YES;

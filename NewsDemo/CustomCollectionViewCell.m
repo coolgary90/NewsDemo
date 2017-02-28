@@ -25,13 +25,13 @@
     self.sourceElement = sourceElementObj;
     self.sourceLabel.text = sourceElementObj.sourceName;
     [self.sourceLabel setFont:[UIFont systemFontOfSize:15]];
-    [self loadingImage:sourceElementObj.sourceImage ];
+    [self loadingImage:sourceElementObj.sourceImage];
     
 }
 
 
 
-// This method loads the images of News Sources  from url and set the image on ImageView
+// This method loads the images of News Sources  from passed Url and set the image on ImageView
 
 -(void) loadingImage:(NSString*)urlString
 {
@@ -39,22 +39,22 @@
 __block UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
 if(!sourceimage)
 {
-    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:
-      ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+[[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:
+  ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+  {
+      if(data)
       {
-          if(data)
-          {
-              sourceimage = [UIImage imageWithData:data];
-              [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
-        if(_sourceElement.sourceImage == urlString)
-            
-                  dispatch_async(dispatch_get_main_queue(), ^
-                    {
-                    self.sourceImage.image= sourceimage;
-                    self.sourceImage.contentMode = UIViewContentModeScaleToFill;
-                });
-              
-          }}] resume];
+          sourceimage = [UIImage imageWithData:data];
+          [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
+    if(_sourceElement.sourceImage == urlString)
+        
+              dispatch_async(dispatch_get_main_queue(), ^
+                {
+                self.sourceImage.image= sourceimage;
+                self.sourceImage.contentMode = UIViewContentModeScaleToFill;
+            });
+          
+      }}] resume];
 }
 else
 {

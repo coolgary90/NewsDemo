@@ -5,6 +5,7 @@
 //  Created by Amanpreet Singh on 03/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
+#import "DataManager.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -48,8 +49,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-//    ImageLoader* sharedObject  = [ImageLoader sharedInstance];
-//    sharedObject.cache =nil;
+    DataManager* sharedObject  = [DataManager sharedInstance];
+    sharedObject.cache = nil;
     
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
