@@ -5,7 +5,6 @@
 //  Created by Amanpreet Singh on 03/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-#import "ImageLoader.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()

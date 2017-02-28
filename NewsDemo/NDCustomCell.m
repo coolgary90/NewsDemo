@@ -5,7 +5,6 @@
 //  Created by Amanpreet singh on 06/02/17.
 //  Copyright © 2017 Amanpreet Singh. All rights reserved.
 //
-#import "ImageLoader.h"
 #import "ImageManager.h"
 #import "NDCustomCell.h"
 
@@ -32,10 +31,10 @@
     self.newsDescription.text = newsList.newsDescription;
     self.newsDescription.numberOfLines = 0;
     [ImageManager loadImageWithName:newsList.newsImage withCompletion:^(UIImage* receivedImage){
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                self.newsImage.image = receivedImage;
-                       });
+    dispatch_async(dispatch_get_main_queue(), ^
+      {
+       self.newsImage.image = receivedImage;
+       });
     }];
 }
 

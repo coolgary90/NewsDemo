@@ -22,9 +22,6 @@
 		6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE712F1E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
 		6DCE71301E47A848000B30BC /* NDCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DCE712A1E47A848000B30BC /* NDCustomCell.xib */; };
-		E71C3A821E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
-		E71C3A831E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
-		E71C3A841E5D63230038A31B /* ImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C3A811E5D63230038A31B /* ImageLoader.m */; };
 		E71E29181E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E29191E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
 		E71E291A1E4B3692002BE33A /* NDNewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */; };
@@ -70,6 +67,7 @@
 		E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
 		E75DEBA51E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
 		E75DEBA61E56D05E0084665B /* NewsListElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E75DEBA31E56D05E0084665B /* NewsListElement.m */; };
+		E75E9E201E604F6A00531511 /* loader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E75E9E1F1E604F6A00531511 /* loader.jpg */; };
 		E7714EF01E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
 		E7714EF11E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
 		E7714EF21E488E310065002A /* NDCustomMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7714EEF1E488E310065002A /* NDCustomMenu.xib */; };
@@ -107,8 +105,6 @@
 		6DCE71281E47A848000B30BC /* NDCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomCell.h; sourceTree = "<group>"; };
 		6DCE71291E47A848000B30BC /* NDCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomCell.m; sourceTree = "<group>"; };
 		6DCE712A1E47A848000B30BC /* NDCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomCell.xib; sourceTree = "<group>"; };
-		E71C3A801E5D63230038A31B /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLoader.h; sourceTree = "<group>"; };
-		E71C3A811E5D63230038A31B /* ImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLoader.m; sourceTree = "<group>"; };
 		E71E29161E4B3692002BE33A /* NDNewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDNewsDetailViewController.h; sourceTree = "<group>"; };
 		E71E29171E4B3692002BE33A /* NDNewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDNewsDetailViewController.m; sourceTree = "<group>"; };
 		E72CC7941E49D8330084F901 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
@@ -150,6 +146,7 @@
 		E75C64C21E44A90D003C6245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E75DEBA21E56D05E0084665B /* NewsListElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsListElement.h; sourceTree = "<group>"; };
 		E75DEBA31E56D05E0084665B /* NewsListElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsListElement.m; sourceTree = "<group>"; };
+		E75E9E1F1E604F6A00531511 /* loader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loader.jpg; sourceTree = "<group>"; };
 		E7714EEF1E488E310065002A /* NDCustomMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NDCustomMenu.xib; sourceTree = "<group>"; };
 		E7714EF31E488F950065002A /* NDCustomMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDCustomMenu.h; sourceTree = "<group>"; };
 		E7714EF41E488F950065002A /* NDCustomMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDCustomMenu.m; sourceTree = "<group>"; };
@@ -200,8 +197,6 @@
 				E73FF3551E557C9500348C4C /* WebServiceResponse.m */,
 				E7302F251E5EBF9F0078998F /* ImageManager.h */,
 				E7302F261E5EBF9F0078998F /* ImageManager.m */,
-				E71C3A801E5D63230038A31B /* ImageLoader.h */,
-				E71C3A811E5D63230038A31B /* ImageLoader.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -319,6 +314,7 @@
 		E7714EDC1E484B900065002A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E75E9E1F1E604F6A00531511 /* loader.jpg */,
 				E7C434A31E4C991C00AAB187 /* menu.png */,
 				6D8C6C611E470A1E0006D4FF /* No-image.png */,
 			);
@@ -474,6 +470,7 @@
 				E75C64A81E44A90C003C6245 /* Assets.xcassets in Resources */,
 				6DCE712E1E47A848000B30BC /* NDCustomCell.xib in Resources */,
 				E7C434A41E4C991C00AAB187 /* menu.png in Resources */,
+				E75E9E201E604F6A00531511 /* loader.jpg in Resources */,
 				E73FF3811E55955800348C4C /* CustomCollectionViewCell.xib in Resources */,
 				E75C64A31E44A90C003C6245 /* Main.storyboard in Resources */,
 			);
@@ -518,7 +515,6 @@
 				E75DEBA41E56D05E0084665B /* NewsListElement.m in Sources */,
 				E75C649D1E44A90C003C6245 /* AppDelegate.m in Sources */,
 				E7302F271E5EBF9F0078998F /* ImageManager.m in Sources */,
-				E71C3A821E5D63230038A31B /* ImageLoader.m in Sources */,
 				E73FF3731E55883D00348C4C /* SourceElement.m in Sources */,
 				E73FF3681E557C9500348C4C /* UIUtils.m in Sources */,
 				E73FF3621E557C9500348C4C /* MFLog.m in Sources */,
@@ -539,7 +535,6 @@
 			files = (
 				E73FF35A1E557C9500348C4C /* DataManager.m in Sources */,
 				E73FF3631E557C9500348C4C /* MFLog.m in Sources */,
-				E71C3A831E5D63230038A31B /* ImageLoader.m in Sources */,
 				6DCE712C1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF61E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3741E55883D00348C4C /* SourceElement.m in Sources */,
@@ -563,7 +558,6 @@
 			files = (
 				E73FF35B1E557C9500348C4C /* DataManager.m in Sources */,
 				E73FF3641E557C9500348C4C /* MFLog.m in Sources */,
-				E71C3A841E5D63230038A31B /* ImageLoader.m in Sources */,
 				6DCE712D1E47A848000B30BC /* NDCustomCell.m in Sources */,
 				E7714EF71E488F950065002A /* NDCustomMenu.m in Sources */,
 				E73FF3751E55883D00348C4C /* SourceElement.m in Sources */,

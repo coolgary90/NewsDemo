@@ -7,10 +7,9 @@
 //
 #import <UIKit/UIKit.h>
 #import "Define.h"
-#import "ImageLoader.h"
+#import "DataManager.h"
 #import "ImageManager.h"
 #import "CustomCollectionViewCell.h"
-#import "DataManager.h"
 
 @implementation CustomCollectionViewCell
 
@@ -26,12 +25,15 @@
     self.sourceElement = sourceElementObj;
     self.sourceLabel.text = sourceElementObj.sourceName;
     [self.sourceLabel setFont:[UIFont systemFontOfSize:15]];
-    [self loadingImage:sourceElementObj.sourceImage withImageView:self.sourceImage];
+    [self loadingImage:sourceElementObj.sourceImage ];
     
 }
 
 
--(void) loadingImage:(NSString*)urlString withImageView:(UIImageView*)imageView
+
+// This method loads the images of News Sources  from url and set the image on ImageView
+
+-(void) loadingImage:(NSString*)urlString
 {
 
 __block UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
@@ -48,8 +50,8 @@ if(!sourceimage)
             
                   dispatch_async(dispatch_get_main_queue(), ^
                     {
-                    imageView.image= sourceimage;
-                    imageView.contentMode = UIViewContentModeScaleToFill;
+                    self.sourceImage.image= sourceimage;
+                    self.sourceImage.contentMode = UIViewContentModeScaleToFill;
                 });
               
           }}] resume];
@@ -58,20 +60,13 @@ else
 {
     if(_sourceElement.sourceImage == urlString)
     dispatch_async(dispatch_get_main_queue(), ^{
-        imageView.image= sourceimage;
-        imageView.contentMode = UIViewContentModeScaleToFill;
+        self.sourceImage.image = sourceimage;
+        self.sourceImage.contentMode = UIViewContentModeScaleToFill;
     });
 }
 }
 
-//    [ImageLoader loadingImageFromUrl:sourceElementObj.sourceImage withCompletion:^(UIImage* receivedImage , NSString* receivedUrlString){
-//        if(receivedUrlString==sourceElementObj.sourceImage)
-//        {
-//            self.sourceImage.image = receivedImage;
-//        }
-//
-//
-//    }];
+
 
 
 @end

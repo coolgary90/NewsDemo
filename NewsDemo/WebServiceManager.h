@@ -10,16 +10,9 @@
 @interface WebServiceManager : NSObject
 
 
-//+ (NSMutableURLRequest*) getAuthorizationRequestWithService:(NSString*)service;
-//+ (NSMutableURLRequest*) getRequestWithUrl:(NSString*)url;
+
 
 + (NSMutableURLRequest*) getRequestWithService:(NSString*)service;
-
-//+ (NSMutableURLRequest*) postAuthorizationRequestWithService:(NSString*)service
-//                                                withpostDict:(NSDictionary*)postDict;
-
-//+ (NSMutableURLRequest*) postRequestWithService:(NSString*)service
-//                            withpostDict:(NSDictionary*)postDict;
 
 + (void) sendRequest:(NSURLRequest*)request
 		  completion:(void (^)(WebServiceResponse* response)) callback;

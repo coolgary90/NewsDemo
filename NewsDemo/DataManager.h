@@ -29,8 +29,6 @@
 
 -(void)getNewsListFromSources:(NSMutableArray*)sources filterBy:(NSString*)filter withCompletionHandler:(void(^)(NSMutableArray* newsList))completionBlock;
 
--(void) loadingImage:(NSString*)urlString withImageView:(UIImageView*)imageView;
-
 #pragma mark -
 @end
 

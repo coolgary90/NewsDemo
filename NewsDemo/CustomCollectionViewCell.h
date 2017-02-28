@@ -18,5 +18,4 @@
 @property (strong,nonatomic) SourceElement* sourceElement;
 -(void)loadCellData:(SourceElement*)sourceElementObj ;
 
-
 @end

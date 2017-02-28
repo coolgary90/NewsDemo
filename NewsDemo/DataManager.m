@@ -50,13 +50,12 @@ return self;
 
 // This method fetched news sources and send it to NDNewsSources class on completion
 
+
 - (void)getNewsList :(void(^)(NSMutableArray* sourceList))completionBlock;
 {
 
-
 NSURLRequest* request  = [WebServiceManager getRequestWithService:kNewsSourcesUrl];
 [WebServiceManager sendRequest:request completion:^(WebServiceResponse* response){
-    
     
     if(response.status)
     {
@@ -66,35 +65,26 @@ NSURLRequest* request  = [WebServiceManager getRequestWithService:kNewsSourcesUr
         NSMutableArray* uniqueCategories  = [[NSMutableArray alloc]init];
         for (NSDictionary* data in newsSourcesList)
         {
-            [finalSourceListArray addObject:[SourceElement createSourceList:data]];
-            
+          [finalSourceListArray addObject:[SourceElement createSourceList:data]];
         }
-        
         SourceCategories* sourceCategoriesObj = [SourceCategories sharedInstance];
         uniqueCategories =[sourceCategoriesObj uniqueSourceCategories:newsSourcesList];
         [[NSUserDefaults standardUserDefaults]setObject:uniqueCategories forKey:kNewsUniqueSourceCategories];
         completionBlock(finalSourceListArray);
         
-        
-        
-        
     }
 }];
-
-
 }
 
-// This method fetched news sources with particular category and send it to NDNewsSources class on completion
 
+// This method fetched news sources with particular category and send it to NDNewsSources class on completion
 
 
 - (void)getNewsListWithCategory:(NSString*)category withCompetionHandler :(void(^)(NSMutableArray* sourceList))completionBlock{
 
 NSString* Urlstring = [kNewsSourcesUrl stringByAppendingString:[NSString stringWithFormat:@"&category=%@",category]];
-
 NSURLRequest* request  = [WebServiceManager getRequestWithService:Urlstring];
 [WebServiceManager sendRequest:request completion:^(WebServiceResponse* response){
-    
     
     if(response.status)
     {
@@ -107,18 +97,16 @@ NSURLRequest* request  = [WebServiceManager getRequestWithService:Urlstring];
             
         }
         completionBlock(finalSourceListArray);
-        
-        
-        
-        
     }
 }];
 
-
-
 }
 
+
+
 // This method fetch News list from selected sources by calling fetchNewsList method and return array of News list to NDNewsList class in completion block
+
+
 
 -(void)getNewsListFromSources:(NSMutableArray*)sources  withCompetionHandler:(void (^)(NSMutableArray *))completionBlock
 {
@@ -152,11 +140,7 @@ for(int i=0;i<[sources count];i++)
              completionBlock(fetchedSources);
      }];
 }
-
-
 }
-
-
 
 
 - (void)fetchNewsList:(NSString*)newsSource  withFilter:(NSString*)filter withCompetionHandler:(void (^)(NSMutableArray *))completionBlock{
@@ -251,44 +235,5 @@ NSDictionary* dictJ=[NSJSONSerialization JSONObjectWithData:responseData options
 return dictJ;
 }
 
--(void) loadingImage:(NSString*)urlString withImageView:(UIImageView*)imageView
-{
-self.imageUrl = urlString;
-imageView.image = nil;
-__block UIImage* sourceimage  = [[DataManager sharedInstance].cache objectForKey:urlString];
-if(!sourceimage)
-{
-    
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    // NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-    
-    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:
-      ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-      {
-          if(data)
-          {
-              sourceimage = [UIImage imageWithData:data];
-              [[DataManager sharedInstance].cache setObject:sourceimage forKey:urlString];
-              if(self.imageUrl==urlString)
-                  dispatch_async(dispatch_get_main_queue(), ^
-                                 {
-                                     imageView.image= sourceimage;
-                                     imageView.contentMode = UIViewContentModeScaleToFill;
-                                 });
-              
-          }}] resume];
-    
-}
-//});
-
-else
-{
-    //if(self.imageUrl==urlString)
-        dispatch_async(dispatch_get_main_queue(), ^{
-            imageView.image= sourceimage;
-            imageView.contentMode = UIViewContentModeScaleToFill;
-        });
-}
-}
 
 @end

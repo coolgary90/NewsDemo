@@ -17,28 +17,7 @@
 @implementation WebServiceManager
 
 #pragma mark - GET requests
-//+ (NSMutableURLRequest*) getAuthorizationRequestWithService:(NSString*)service
-//{
-//    NSMutableURLRequest* request = [WebServiceManager getRequestWithService:service];
-////    NSString* token = gDataManager.user.token;
-//    if (token)
-//    {
-//        [request setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
-//    }
-//    return request;
-//}
-//
-//+ (NSMutableURLRequest*) getRequestWithUrl:(NSString*)url
-//{
-//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:
-//                                    [NSURL URLWithString:url]];
-//    [request setHTTPMethod:@"GET"];
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-////    [request setValue:KSecretKey forHTTPHeaderField:@"x-api-key"];
-//    [request setTimeoutInterval:60.0];
-//    
-//    return request;
-//}
+
 
 + (NSMutableURLRequest*) getRequestWithService:(NSString*)service
 {
@@ -51,42 +30,7 @@
 	return request;
 }
 
-#pragma mark - POST requests
-//+ (NSMutableURLRequest*) postAuthorizationRequestWithService:(NSString*)service
-//                                   withpostDict:(NSDictionary*)postDict
-//{
-//    NSMutableURLRequest* request = [WebServiceManager postRequestWithService:service withpostDict:postDict];
-////    NSString* token = gDataManager.user.token;
-//    if (token)
-//    {
-//        [request setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
-//    }
-//    return request;
-//}
-//
-//+ (NSMutableURLRequest*) postRequestWithService:(NSString*)service
-//                                withpostDict:(NSDictionary*)postDict
-//{
-////    NSString* urlString = [kBaseURL stringByAppendingString:service];
-////    urlString = [urlString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-//
-//    NSData* postData = [NSJSONSerialization dataWithJSONObject:postDict
-//                                                       options:NSJSONWritingPrettyPrinted error:nil];;
-//    
-//    NSString* postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
-//    
-//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:
-//                                    [NSURL URLWithString:urlString]];
-//    
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-////    [request setValue:KSecretKey forHTTPHeaderField:@"x-api-key"];
-//	[request setTimeoutInterval:60.0];
-//    [request setHTTPBody:postData];
-//	
-//    return request;
-//}
+
 
 #pragma mark - Send Request
 
@@ -134,10 +78,6 @@
                                 responseDict = [[NSJSONSerialization
                                              JSONObjectWithData:responseData options:kNilOptions error:nil] objectForKey:@"response"];
                             }
-                            
-//							NSString* errorString = (responseDict) ? [responseDict objectForKey:@"message"] : kServiceErrorMessage;
-//                            serviceResponse.isSuccess = NO;
-//                            serviceResponse.errorString = errorString;
                              callback(serviceResponse);
                          });
       }
